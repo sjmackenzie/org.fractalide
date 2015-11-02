@@ -1,0 +1,14 @@
+(ns fractalide.image)
+
+(def image-alts
+  {"/images/Fractalide-logo.png" "fractalide"
+   "/images/landing-page/build.png" "build apps"
+   "/images/landing-page/manage.png" "manage"
+   "/images/landing-page/promote.png" "promote"
+   })
+
+(defelem elem [{:keys [src class-opts]
+                :or {class-opts ""}} kids]
+  (img :class class-opts
+       :src src
+       :alt (cell= (image-alts src))))

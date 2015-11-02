@@ -1,0 +1,33 @@
+#C4 #page-title h1 {
+	font-size: 2.5em;
+	padding-top: 80px;
+	margin: 0;
+	font-size: 45px;
+ color: #333333;
+ font-weight: 300;
+ text-align: center;
+}
+
+.C4-details .C4-heading {
+	font-weight: 600 !important;
+	font-size: 1em;
+	line-height: 4.5em;
+	margin-left: -15px;
+}
+
+.C4-details ol li{
+	font-weight: 300 !important;
+	font-size: 1em;
+	line-height:1.5em;
+	margin-bottom: 20px;
+}
+
+.C4-details ul li{
+ list-style: none;
+}
+
+.C4-details ul li li{
+ list-style: circle;
+ margin-bottom: 5px;
+}
+

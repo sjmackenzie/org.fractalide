@@ -1,0 +1,483 @@
+*:not(i) {
+	font-family: "Helvetica", sans-serif !important;
+}
+
+body {
+	overflow-x:hidden;
+	background: white;
+	padding: 0 !important;
+	margin: 0!important;
+	width: 100% !important;
+	color:#333 !important;
+}
+a{
+	color: #59d2d9;
+	text-decoration: none;
+	cursor: pointer;
+}
+a:hover{
+	text-decoration: none;
+}
+
+p{
+	font-weight: 100;
+	font-size: 1em;
+	line-height: 1.4em;
+}
+
+html body *.exicon-teal.word {
+	color: #59d2d9 !important;
+}
+
+html body .exicon-teal.bkg {
+	background-color: #59d2d9;
+}
+
+html body .exicon-teal.bd {
+	border-top-color: #59d2d9 !important;
+	border-bottom-color: #59d2d9 !important;
+	border-left-color: #59d2d9 !important;
+	border-right-color: #59d2d9 !important;
+}
+
+#app-builder h2.ui.header, #app-builder h3.ui.header, #app-builder h4.ui.header{
+	font-weight: 300;
+}
+
+
+.default.text{
+	color: #333 !important;
+}
+div p.small-text {
+	font-size: 0.9em;
+	line-height: 150%;
+}
+.ui.clearing{
+	clear:both;
+	height: 1em;
+}
+
+.inline-header{
+	display: inline;
+	padding-right: 1em !important;
+	vertical-align: middle;
+}
+
+/*TEAL COLOR CUSTOMIZATION*/
+i.teal.icon {
+	color:#59d2d9 !important;
+}
+
+/* Exicon customized BUTTONS*/
+.ui.button{
+	text-transform: none !important;
+	font-weight: 400;
+	letter-spacing: 0.03em;
+	background-color: #59d2d9;
+	color: white;
+	background-image: none !important;
+}
+.dark-green.ui.button{
+	background-color: #379aa6;
+	color: white;
+}
+
+.ui.white.button{
+	background-color: white !important;
+	color: #59d2d9 !important;
+}
+
+.gray.ui.button {
+	background-color: #cccccc;
+	color: white;
+}
+.ui.inverted.white.button {
+	background-color: transparent !important;
+	color: white;
+	box-shadow:inset 0px 0px 0px 1px white;
+}
+
+.ui.inverted.dark-green.button {
+	background-image: none;
+	background-color: transparent !important;
+	color: #379aa6 ;
+	box-shadow:inset 0px 0px 0px 1px #379aa6;
+}
+.ui.inverted.gray.button{
+	background-image: none;
+	background-color: transparent !important;
+	color: #cccccc ;
+	box-shadow:inset 0px 0px 0px 1px #cccccc;
+}
+
+.ui.circular.button {
+	border-radius: 50%;
+	padding: 0.5em;
+	height: 2em;
+	width: 2em;
+	text-align: center;
+	line-height: 1em;
+}
+
+/* Top Navigation */
+#top-nav {
+	box-shadow: none !important;
+}
+
+#top-nav-container{
+	width: 100%;
+	height: 67px;
+	background: rgba(255, 255, 255, 0.9);
+	position: fixed;
+	z-index: 999;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+#top-nav-container .logo-container{
+	margin-bottom: 0;
+	padding-bottom: 0;
+	margin-top: 0.5em;
+	padding-left: 2em;
+}
+#logo {
+	position: relative;
+	z-index: 10;
+}
+#logo img {
+	max-width: 100%;
+	min-width: 160px;
+}
+#top-nav-container .inner-container{
+	width: 100%;
+}
+.ui.menu .item:before{
+	background-image: white !important;
+}
+
+#signup {
+	position: relative;
+	top: -3px;
+}
+
+#menu-container {
+	margin: 0;
+	padding: 0;
+}
+
+
+/* Intro Section*/
+
+.intro .column.intro-right-info{
+	margin-top:90px;
+	padding-left: 3em;
+}
+
+.intro .video-btn{
+	margin-left: -175px;
+	padding-top: 218px;
+	background: transparent;
+	border: none;
+	box-shadow: none;
+}
+
+.intro h1{
+	font-size: 48px;
+	font-weight: 400;
+
+}
+.intro h2{
+	font-size: 27px;
+	font-weight: 300;
+}
+
+.anchor {
+	top: -90px;
+	position: relative;
+}
+
+#get-in-touch	{
+	cursor: pointer;
+	width: 119px;
+	height: 113px;
+	background-image: url('/images/header/contact-us.png');
+	transition: background-color 0.4s ease-out;
+	position: fixed;
+	z-index: 18;
+	right: 0px;
+	top: 140px;
+}
+
+#subscribe-stick {
+	cursor: pointer;
+	width: 143px;
+	height: 62px;
+	background: url('/images/header/subscribe-btn.png');
+	transition: background-color 0.4s ease-out;
+	position: fixed;
+	z-index: 18;
+	right: 0px;
+	top: 138px;
+	display:none;
+}
+
+#subscribe-stick-layer, #subscribe-stick-form {
+	width: 239px;
+	background-color: rgba(0,0,0,0.4);
+	color: white;
+	position: fixed;
+	z-index: 18;
+	right: 0px;
+	top: 7em;
+	display:none;
+}
+
+.hs_submit .ui.submit.button{
+	margin-top: 1em;
+}
+
+#subscribe-stick-form .remove.icon{
+	cursor: pointer;
+	margin-bottom: 0.5em;
+}
+
+#subscribe-stick-layer.show, #subscribe-stick-form.show, #subscribe-stick.show {
+	display:block;
+}
+
+#subscribe-stick-form p {
+	text-align: center;
+	margin: 0;
+}
+
+#subscribe-stick-form label span{
+	color:white;
+}
+
+#subscribe-stick-layer {
+	background-color: black;
+	opacity: 0.4;
+	border-radius: 0.2em;
+}
+
+/* Customer Quotes Section */
+.customer-quote-list h2{
+	font-weight: 400;
+	font-size: 1.4em;
+	min-height: 50px;
+}
+
+p.quote{
+	font-style: italic;
+}
+
+section.quote h2{
+	font-weight: 300;
+	font-size: 1.5em;
+	font-style: italic;
+}
+
+section.quote  h3{
+	font-weight: 500;
+	font-size: 1.5em;
+	padding-right: 1.5em;
+}
+
+/* Features Section */
+.features img.appboard-img{
+	width: 100%;
+}
+
+.features-group img{
+	vertical-align: bottom;
+	margin-right: 0.5em;
+}
+
+.features-group .column{
+	margin-bottom: 1em;
+	width: 90%;
+}
+
+/* Pricing Packages */
+section.packages{
+	background-color: #ebebeb;
+	padding: 2em 0;
+}
+
+section.packages .ui.segment{
+	margin-bottom: 1em !important;
+}
+
+section.packages .icon.column{
+	width: 25%!important;
+}
+
+section.packages .icon.column img{
+	width: 100%;
+}
+
+section.packages .details.column{
+	width: 75%!important;
+}
+
+section.packages .details.column h2, section.packages .details.column h3{
+	font-weight: 300;
+}
+section.packages .details.column h2{
+	color: #59d2d9;
+}
+
+/* Testimonials Section */
+
+.testimonials .ui.header .content span {
+	color: #59d2d9;
+}
+
+.testimonials .ui.header .content {
+	vertical-align: middle;
+}
+
+.testimonials .ui.image {
+	background-color: rgba(0,0,0,0)
+}
+
+.testimonials .testimonial {
+	font-style: italic;
+}
+
+.testimonials .testimonial-name{
+	font-weight: 400;
+}
+
+.clear {
+	clear: both;
+}
+
+.ui.image.custom-m {
+	width: 135px;
+	font-size: 0.95rem;
+	margin-top: 1em;
+}
+
+#appendix {
+	font-size: 0.8rem
+}
+
+#ux-statements p {
+	min-height: 4em;
+	text-align: center;
+	color: black;
+}
+
+#ux-statements .segment.secondary h1 {
+	font-size:  3em;
+	margin: 0;
+}
+
+#ux-statements .column{
+	margin-bottom: 1em;
+}
+.pkg-note {
+	font-size: 0.6em;
+	margin-top: -1px;
+}
+
+/*Bottom Navigation*/
+#bottom-nav ul li{
+	list-style:  none;
+	color: white;
+	font-weight: 100;
+	margin-bottom: 0.5em;
+}
+
+#bottom-nav li.header{
+	font-weight: 600 !important;
+	margin-bottom: 1em;
+}
+
+#bottom-nav li a{
+	color: white;
+}
+
+#bottom-nav ul {
+	padding-left: 0;
+}
+
+.follow-us-icon img {
+	width: 25px;
+}
+
+
+/* Tablet*/
+@media only screen and (max-width: 991px) and (min-width: 768px){
+	.intro {
+		height: 560px;
+	}
+
+	.intro h1{
+		font-size: 38px;
+	}
+
+	.intro h2{
+		font-size: 24px;
+	}
+
+	.intro .intro-right-info{
+		margin-top: 90px !important;
+	}
+	#top-nav ul.menu{
+		margin-left: 0px;
+	}
+}
+
+@media only screen and (max-width: 1000px){
+	.equal.height.computer.three.column.only.row{
+		display: none;
+	}
+}
+
+/* Mobile */
+@media only screen and (max-width: 767px){
+	#get-in-touch, #subscribe-stick,
+	#subscribe-stick-layer, #subscribe-stick-form {
+		display: none !important;
+	}
+
+	#menu-container{
+		margin-top: -1px;
+	}
+	#top-nav input[type=checkbox]:checked ~ .menu{
+		display: block!important;
+		clear: both;
+		box-shadow: 0px 3px 11px -2px rgba(61,61,61,0.7);
+	}
+
+	.intro {
+		height: 630px;
+	}
+	.intro .column{
+		width: 100% !important;
+	}
+	.intro .column.intro-right-info {
+		margin-top: 0;
+		padding-left: 0;
+		text-align: center !important;
+	}
+	.intro h1{
+		font-size: 28px;
+	}
+	.intro h2{
+		font-size: 20px;
+	}
+	.intro .video-btn {
+		margin-left: 0;
+		padding-top: 101px;
+		width: 140px;
+	}
+	#imaginary-quote .eight.wide.column{
+		width: 80%;
+	}
+	#show-menu-button {
+		display: block;
+	}
+}
+

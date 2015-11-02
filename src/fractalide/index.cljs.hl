@@ -1,0 +1,145 @@
+(page "index.html"
+      (:require
+        [fractalide.layout :as layout]
+        [fractalide.image :as image]
+        [fractalide.C4.index]
+        [fractalide.about-us.index]
+        [fractalide.contact-us.index]
+        [fractalide.docs.index]
+        [fractalide.fargo.index]
+        [fractalide.founder.index]
+        [fractalide.fractalide.index]
+        [fractalide.freedom.index]
+        [fractalide.fvm.index]
+        [fractalide.how.index]
+        [fractalide.news.index]
+        [fractalide.privacy-policy.index]
+        [fractalide.rustfbp.index]
+        [fractalide.terms-of-use.index]))
+
+
+(def feature-list
+  [
+   {:icon "/images/landing-page/freesoftware.png"
+    :title "Free Software"
+    :desc "Mozilla Public License 2 and a slight variation of the Collective Code Construction Contract (C4) as used by the ZeroMQ community."
+    :link "/freedom/"}
+   {:icon "/images/landing-page/commercial.png"
+    :title "Be a Founding Member"
+    :desc "Help us feed our families and we'll help you feed your families by buying a commercial license. Continuing founding members get a 30 USD per month lock-in rate."
+    :link "/founder/"}
+   {:icon "/images/landing-page/news.png"
+    :title "News"
+    :desc "Find the latest peer reviewed components and help others create components in the browser. A Stackoverflow for Flow-based Programming components."
+    :link "/news/"}
+   ])
+
+(defn feature [ftr]
+  (a :class  "center aligned column title sizer"
+     :href (cell= (:link ftr))
+     (image/elem :size "small"
+                 :class-opts "ui image small circular centered inverted grey segment"
+                 :src (cell= (:icon ftr)))
+     (h3 :class"ui small header"
+         :style "color: rgba(64,170,84,1);"
+         :text (cell= (:title ftr)))
+     (div :class "description sizer"
+          (h3 :class "ui tiny inverted header" :text (cell= (:desc ftr))))))
+
+(def role-list {
+                :non-programmer "non-programmer"
+                :beginner "beginner programmer"
+                :programmer "programmer"
+                :greybeard "grey beard guru programmer"
+                :founder "startup founder"
+                :sme-owner "SME owner"
+                :hc-ethusiast "HyperCard enthusiast"})
+(def topic-list {
+                 :quick-build "building software quickly."
+                 :hypercard "HyperCard."
+                 :fbp "Flow-based Programming."
+                 :ndn "Named Data Networing."
+                 :cut-costs "obliterating operation costs."
+                 :rust "the use of Rust in this project."})
+
+(defc visitor-role [:programmer "programmer"])
+(defc visitor-topic [:quick-build "building software quickly."])
+(defn change-role! [role]
+  (reset! visitor-role role))
+(defn change-topic! [topic]
+  (reset! visitor-topic topic))
+
+(defn features-section [feature-list]
+  ((section :class "ui vertical segment"
+            :style "background-color: rgba(64,170,84,1);"
+            (img :class "ui medium centered image"
+                 :src "/images/fractalide_logo.png")
+            (div :class "sixteen wide center aligned column title sizer"
+                 (div :class "ui huge center aligned header" "Fractalide")))
+   (section :class "ui inverted black vertical segment"
+            (div :id "features" :class "anchor" )
+            (div :class "ui hidden divider")
+            (div :class "ui stackable container grid"
+                 (div :class "sixteen wide center aligned column title sizer"
+                      (div :class "description sizer"
+                           (h2 :class "ui medium inverted header" "An easy to program Rapid Application Development tool designed to slash development time in half and reduce operation costs an order of magnitude.")
+                           (div :class "ui hidden divider")
+                           (div :class "content"
+                                "I am a "
+                                (div :class "ui simple dropdown"
+                                     :style "color: rgba(64,170,84,1);"
+                                     (text (val visitor-role))
+                                     (div :class "menu"
+                                          (loop-tpl :bindings [role role-list]
+                                                    (div :class "item"
+                                                         :click #(change-role! @role)
+                                                         (val @role)))))
+                                " interested in "
+                                (div :class "ui simple dropdown"
+                                     :style "color: rgba(64,170,84,1);"
+                                     (text (val visitor-topic))
+                                     (div :class "menu"
+                                          (loop-tpl :bindings [topic topic-list]
+                                                    (div :class "item"
+                                                         :click #(change-topic! @topic)
+                                                         (val @topic))))))
+                           (div :class "ui hidden divider")
+                           (cell= (a :class "ui massive green button"
+                              :href (str "/"(name (key visitor-role))"-"(name (key visitor-topic))"/")
+                              :style "background-color: rgba(64,170,84,1);"
+                              "Explain"))))
+                 (div :class "three column row feature-description"
+                      (loop-tpl :bindings [f feature-list]
+                                (feature f)))))))
+
+(defn pg []
+  (layout/primary
+    :page-title "Fractalide"
+    :description (str "Noware Fractalide is a Rapid Application Development Platform "
+                      "That helps Startups and SMEs,"
+                      "Build, Peer-to-Peer Portable Applications for Mobile, Desktop and Website.")
+    :keywords "Build Apps, Noware, HyperCard, Named Data Networking, What is HyperCard, Cross Platform, Fractalide, Rust Language, Open Source, Peer-to-Peer Apps"
+    (features-section feature-list)))
+
+(defn pg? [pg curr-pg]
+  (re-find (re-pattern
+             (str pg "(index.html)?$"))
+           curr-pg))
+
+((condp pg? (.. js/window -location -pathname)
+   "/C4/" fractalide.C4.index/pg
+   "/about-us/" fractalide.about-us.index/pg
+   "/contact-us/" fractalide.contact-us.index/pg
+   "/docs/" fractalide.docs.index/pg
+   "/fargo/" fractalide.fargo.index/pg
+   "/founder/" fractalide.founder.index/pg
+   "/fractalide/" fractalide.fractalide.index/pg
+   "/freedom/" fractalide.freedom.index/pg
+   "/fvm/" fractalide.fvm.index/pg
+   "/how/" fractalide.how.index/pg
+   "/news/" fractalide.news.index/pg
+   "/privacy-policy/" fractalide.privacy-policy.index/pg
+   "/rustfbp/" fractalide.rustfbp.index/pg
+   "/terms-of-use/" fractalide.terms-of-use.index/pg
+   "/" pg
+   #(html (body (h1 "Unknown path")))))

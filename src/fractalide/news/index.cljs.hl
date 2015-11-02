@@ -1,0 +1,50 @@
+(ns fractalide.news.index
+  (:require
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]
+    [fractalide.news.rpc :refer [get-problems problems]]))
+
+(with-init! (get-problems))
+
+(defn problem-row [problem]
+  (div :class "item"
+       :style "padding-top: 0.2em; padding-bottom: 0.2em; "
+       (i :class "large caret up icon")
+       (div :class "content"
+            (a :class "header" :text (cell= (:problem problem)) :href (cell= (:url problem)))
+            (div :class "description" (cell= (:points problem)) " points by  " (cell= (:author problem)) " " (cell= (:time problem)) " | " (cell= (:answers problem)) " answers"))))
+
+(defn pg []
+  (layout/primary
+    :page-title "News | Fractalide"
+    :description "Help Fractalide become the most potent development platform for the mobile."
+    :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segments"
+                     (div :class "ui segment"
+                          :style "background-color: rgba(64,170,84,1);"
+                          (div :class "ui secondary menu"
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
+                               (div :class "item "
+                                    (a :class "ui large header"
+                                       :href "/news/" "Fractal News"))
+                               (div :class "item"
+                                    (a :class "ui small header"
+                                       :href "/new-problem/" "submit problem"))
+                               (div :class "right menu"
+                                    (div :class "ui item"
+                                         (a :class "ui small header"
+                                            :href "/login" "login")))))
+                     (div :class "ui secondary segment"
+                          (div :class "ui middle aligned very relaxed ordered medium list"
+                               (loop-tpl :bindings [problem problems]
+                                         (problem-row problem)))))
+                (div :class "ui hidden divider"))
+           (div :class "one wide column")))))

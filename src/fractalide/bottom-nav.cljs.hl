@@ -1,0 +1,38 @@
+(ns fractalide.bottom-nav
+  (:require [fractalide.image :as image]))
+
+(defelem bottom-nav []
+  (footer
+    :id "bottom-nav"
+    (div
+      :class "ui six column vertically padded doubling container grid"
+      (div :class "column"
+           (ul
+             (li :class "header" "Company")
+             (li (a :href "/about-us/" "About Us"))
+             (li (a :href "/contact-us/" "Contact Us"))))
+      (div :class "column"
+           (ul
+             (li :class "header" "Projects")
+             (li (a :href "/fractalide/" "Fractalide"))
+             (li (a :href "/fvm/" "FVM"))
+             (li (a :href "/fargo/" "Fargo"))
+             (li (a :href "/rustfbp/" "RustFBP"))))
+(div :class "column"
+           (ul
+             (li :class "header" "Documentation")
+             (li (a :href "/docs/" "Read The Fine Manual"))))
+(div :class "column"
+           (ul
+             (li :class "header" "Products")
+             (li (a :href "/founder/" "Commercial License"))))
+      (div :class "column"
+           (ul
+             (li :class "header" "Developers")
+             (li (a :href "/news/" "News"))
+             (li (a :href "/C4/" "C4"))))
+      (div :class "column"
+           (ul
+             (li :class "header" "Legal")
+             (li (a :href "/privacy-policy/" "Privacy"))
+             (li (a :href "/terms-of-use/" "Terms & Conditions")))))))
