@@ -1,2 +1,3 @@
 $ boot dev
-$ $browser localhost:3000
+
+$browser localhost:3000
