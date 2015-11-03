@@ -9,7 +9,7 @@
     [org.clojure/clojurescript "1.7.48"]
     [adzerk/cljs-console "0.1.1"]
     [adzerk/boot-cljs "1.7.48-5"]
-    [sjmackenzie/boot-nix "0.1.0-SNAPSHOT"]
+    [fractalide/boot-nix "0.1.0-SNAPSHOT"]
     [cljsjs/boot-cljsjs "0.5.0" :scope "test"]
     [exicon/semantic-ui "2.1.4-SNAPSHOT"]]
   :source-paths #{"src"}
@@ -20,7 +20,7 @@
   '[pandeiro.boot-http :refer [serve]]
   '[adzerk.boot-cljs :refer [cljs]]
   '[cljsjs.boot-cljsjs :refer [from-cljsjs]]
-  '[sjmackenzie.boot-nix :refer [nixos]]
+  '[fractalide.boot-nix :refer [nixos]]
   '[clojure.java.io :as io]
   '[clojure.pprint :refer :all]
   '[boot.util :refer [info]])
@@ -51,19 +51,60 @@
 (deftask copy-index-htmls []
   (copy-index-html
     :dirs #{
-            "C4/"
             "about-us/"
+            "beginner-cut-op-costs/"
+            "beginner-fbp/"
+            "beginner-hypercard/"
+            "beginner-ndn/"
+            "beginner-quick-build/"
+            "beginner-rust/"
+            "C4/"
             "contact-us/"
             "docs/"
             "fargo/"
             "founder/"
+            "founder-cut-op-costs/"
+            "founder-fbp/"
+            "founder-hypercard/"
+            "founder-ndn/"
+            "founder-quick-build/"
+            "founder-rust/"
             "fractalide/"
             "freedom/"
             "fvm/"
-            "how/"
+            "greybeard-cut-op-costs/"
+            "greybeard-fbp/"
+            "greybeard-hypercard/"
+            "greybeard-ndn/"
+            "greybeard-quick-build/"
+            "greybeard-rust/"
+            "hc-enthusiast-cut-op-costs/"
+            "hc-enthusiast-fbp/"
+            "hc-enthusiast-hypercard/"
+            "hc-enthusiast-ndn/"
+            "hc-enthusiast-quick-build/"
+            "hc-enthusiast-rust/"
             "news/"
+            "non-programmer-cut-op-costs/"
+            "non-programmer-fbp/"
+            "non-programmer-hypercard/"
+            "non-programmer-ndn/"
+            "non-programmer-quick-build/"
+            "non-programmer-rust/"
             "privacy-policy/"
+            "programmer-cut-op-costs/"
+            "programmer-fbp/"
+            "programmer-hypercard/"
+            "programmer-ndn/"
+            "programmer-quick-build/"
+            "programmer-rust/"
             "rustfbp/"
+            "sme-owner-cut-op-costs/"
+            "sme-owner-fbp/"
+            "sme-owner-hypercard/"
+            "sme-owner-ndn/"
+            "sme-owner-quick-build/"
+            "sme-owner-rust/"
             "terms-of-use/"
             }))
 

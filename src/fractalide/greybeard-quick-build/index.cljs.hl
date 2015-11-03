@@ -1,0 +1,14 @@
+(ns fractalide.greybeard-quick-build.index
+      (:require
+        [fractalide.layout :as layout]
+        [fractalide.image :as image]))
+
+(defn pg []
+  (layout/primary
+    :page-title "greybeard-quick-build"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (h1 "greybeard-quick-build")))
+
+

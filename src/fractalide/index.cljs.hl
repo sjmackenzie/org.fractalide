@@ -2,19 +2,60 @@
       (:require
         [fractalide.layout :as layout]
         [fractalide.image :as image]
-        [fractalide.C4.index]
         [fractalide.about-us.index]
+        [fractalide.beginner-cut-op-costs.index]
+        [fractalide.beginner-fbp.index]
+        [fractalide.beginner-hypercard.index]
+        [fractalide.beginner-ndn.index]
+        [fractalide.beginner-quick-build.index]
+        [fractalide.beginner-rust.index]
+        [fractalide.C4.index]
         [fractalide.contact-us.index]
         [fractalide.docs.index]
         [fractalide.fargo.index]
         [fractalide.founder.index]
+        [fractalide.founder-cut-op-costs.index]
+        [fractalide.founder-fbp.index]
+        [fractalide.founder-hypercard.index]
+        [fractalide.founder-ndn.index]
+        [fractalide.founder-quick-build.index]
+        [fractalide.founder-rust.index]
         [fractalide.fractalide.index]
         [fractalide.freedom.index]
         [fractalide.fvm.index]
-        [fractalide.how.index]
+        [fractalide.greybeard-cut-op-costs.index]
+        [fractalide.greybeard-fbp.index]
+        [fractalide.greybeard-hypercard.index]
+        [fractalide.greybeard-ndn.index]
+        [fractalide.greybeard-quick-build.index]
+        [fractalide.greybeard-rust.index]
+        [fractalide.hc-enthusiast-cut-op-costs.index]
+        [fractalide.hc-enthusiast-fbp.index]
+        [fractalide.hc-enthusiast-hypercard.index]
+        [fractalide.hc-enthusiast-ndn.index]
+        [fractalide.hc-enthusiast-quick-build.index]
+        [fractalide.hc-enthusiast-rust.index]
         [fractalide.news.index]
+        [fractalide.non-programmer-cut-op-costs.index]
+        [fractalide.non-programmer-fbp.index]
+        [fractalide.non-programmer-hypercard.index]
+        [fractalide.non-programmer-ndn.index]
+        [fractalide.non-programmer-quick-build.index]
+        [fractalide.non-programmer-rust.index]
         [fractalide.privacy-policy.index]
+        [fractalide.programmer-cut-op-costs.index]
+        [fractalide.programmer-fbp.index]
+        [fractalide.programmer-hypercard.index]
+        [fractalide.programmer-ndn.index]
+        [fractalide.programmer-quick-build.index]
+        [fractalide.programmer-rust.index]
         [fractalide.rustfbp.index]
+        [fractalide.sme-owner-cut-op-costs.index]
+        [fractalide.sme-owner-fbp.index]
+        [fractalide.sme-owner-hypercard.index]
+        [fractalide.sme-owner-ndn.index]
+        [fractalide.sme-owner-quick-build.index]
+        [fractalide.sme-owner-rust.index]
         [fractalide.terms-of-use.index]))
 
 
@@ -53,13 +94,13 @@
                 :greybeard "grey beard guru programmer"
                 :founder "startup founder"
                 :sme-owner "SME owner"
-                :hc-ethusiast "HyperCard enthusiast"})
+                :hc-enthusiast "HyperCard enthusiast"})
 (def topic-list {
                  :quick-build "building software quickly."
                  :hypercard "HyperCard."
                  :fbp "Flow-based Programming."
                  :ndn "Named Data Networing."
-                 :cut-costs "obliterating operation costs."
+                 :cut-op-costs "obliterating operation costs."
                  :rust "the use of Rust in this project."})
 
 (defc visitor-role [:programmer "programmer"])
@@ -127,19 +168,60 @@
            curr-pg))
 
 ((condp pg? (.. js/window -location -pathname)
-   "/C4/" fractalide.C4.index/pg
    "/about-us/" fractalide.about-us.index/pg
+   "/beginner-cut-op-costs/" fractalide.beginner-cut-op-costs.index/pg
+   "/beginner-fbp/" fractalide.beginner-fbp.index/pg
+   "/beginner-hypercard/" fractalide.beginner-hypercard.index/pg
+   "/beginner-ndn/" fractalide.beginner-ndn.index/pg
+   "/beginner-quick-build/" fractalide.beginner-quick-build.index/pg
+   "/beginner-rust/" fractalide.beginner-rust.index/pg
+   "/C4/" fractalide.C4.index/pg
    "/contact-us/" fractalide.contact-us.index/pg
    "/docs/" fractalide.docs.index/pg
    "/fargo/" fractalide.fargo.index/pg
    "/founder/" fractalide.founder.index/pg
+   "/founder-cut-op-costs/" fractalide.founder-cut-op-costs.index/pg
+   "/founder-fbp/" fractalide.founder-fbp.index/pg
+   "/founder-hypercard/" fractalide.founder-hypercard.index/pg
+   "/founder-ndn/" fractalide.founder-ndn.index/pg
+   "/founder-quick-build/" fractalide.founder-quick-build.index/pg
+   "/founder-rust/" fractalide.founder-rust.index/pg
    "/fractalide/" fractalide.fractalide.index/pg
    "/freedom/" fractalide.freedom.index/pg
    "/fvm/" fractalide.fvm.index/pg
-   "/how/" fractalide.how.index/pg
+   "/greybeard-cut-op-costs/" fractalide.greybeard-cut-op-costs.index/pg
+   "/greybeard-fbp/" fractalide.greybeard-fbp.index/pg
+   "/greybeard-hypercard/" fractalide.greybeard-hypercard.index/pg
+   "/greybeard-ndn/" fractalide.greybeard-ndn.index/pg
+   "/greybeard-quick-build/" fractalide.greybeard-quick-build.index/pg
+   "/greybeard-rust/" fractalide.greybeard-rust.index/pg
+   "/hc-enthusiast-cut-op-costs/" fractalide.hc-enthusiast-cut-op-costs.index/pg
+   "/hc-enthusiast-fbp/" fractalide.hc-enthusiast-fbp.index/pg
+   "/hc-enthusiast-hypercard/" fractalide.hc-enthusiast-hypercard.index/pg
+   "/hc-enthusiast-ndn/" fractalide.hc-enthusiast-ndn.index/pg
+   "/hc-enthusiast-quick-build/" fractalide.hc-enthusiast-quick-build.index/pg
+   "/hc-enthusiast-rust/" fractalide.hc-enthusiast-rust.index/pg
    "/news/" fractalide.news.index/pg
+   "/non-programmer-cut-op-costs/" fractalide.non-programmer-cut-op-costs.index/pg
+   "/non-programmer-hypercard/" fractalide.non-programmer-hypercard.index/pg
+   "/non-programmer-fbp/" fractalide.non-programmer-fbp.index/pg
+   "/non-programmer-ndn/" fractalide.non-programmer-ndn.index/pg
+   "/non-programmer-quick-build/" fractalide.non-programmer-quick-build.index/pg
+   "/non-programmer-rust/" fractalide.non-programmer-rust.index/pg
    "/privacy-policy/" fractalide.privacy-policy.index/pg
+   "/programmer-cut-op-costs/" fractalide.programmer-cut-op-costs.index/pg
+   "/programmer-fbp/" fractalide.programmer-fbp.index/pg
+   "/programmer-hypercard/" fractalide.programmer-hypercard.index/pg
+   "/programmer-ndn/" fractalide.programmer-ndn.index/pg
+   "/programmer-quick-build/" fractalide.programmer-quick-build.index/pg
+   "/programmer-rust/" fractalide.programmer-rust.index/pg
    "/rustfbp/" fractalide.rustfbp.index/pg
+   "/sme-owner-cut-op-costs/" fractalide.sme-owner-cut-op-costs.index/pg
+   "/sme-owner-fbp/" fractalide.sme-owner-fbp.index/pg
+   "/sme-owner-hypercard/" fractalide.sme-owner-hypercard.index/pg
+   "/sme-owner-ndn/" fractalide.sme-owner-ndn.index/pg
+   "/sme-owner-quick-build/" fractalide.sme-owner-quick-build.index/pg
+   "/sme-owner-rust/" fractalide.sme-owner-rust.index/pg
    "/terms-of-use/" fractalide.terms-of-use.index/pg
    "/" pg
    #(html (body (h1 "Unknown path")))))
