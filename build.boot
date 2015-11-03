@@ -9,7 +9,7 @@
     [org.clojure/clojurescript "1.7.48"]
     [adzerk/cljs-console "0.1.1"]
     [adzerk/boot-cljs "1.7.48-5"]
-    [sjmackenzie/boot-nix "0.1.0-SNAPSHOT"]
+    [fractalide/boot-nix "0.1.0-SNAPSHOT"]
     [cljsjs/boot-cljsjs "0.5.0" :scope "test"]
     [exicon/semantic-ui "2.1.4-SNAPSHOT"]]
   :source-paths #{"src"}
@@ -20,7 +20,7 @@
   '[pandeiro.boot-http :refer [serve]]
   '[adzerk.boot-cljs :refer [cljs]]
   '[cljsjs.boot-cljsjs :refer [from-cljsjs]]
-  '[sjmackenzie.boot-nix :refer [nixos]]
+  '[fractalide.boot-nix :refer [nixos]]
   '[clojure.java.io :as io]
   '[clojure.pprint :refer :all]
   '[boot.util :refer [info]])
