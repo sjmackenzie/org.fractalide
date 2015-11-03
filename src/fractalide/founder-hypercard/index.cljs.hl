@@ -1,0 +1,14 @@
+(ns fractalide.founder-hypercard.index
+      (:require
+        [fractalide.layout :as layout]
+        [fractalide.image :as image]))
+
+(defn pg []
+  (layout/primary
+    :page-title "founder-hypercard"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (h1 "founder-hypercard")))
+
+

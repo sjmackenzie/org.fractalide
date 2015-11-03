@@ -1,0 +1,14 @@
+(ns fractalide.sme-owner-fbp.index
+      (:require
+        [fractalide.layout :as layout]
+        [fractalide.image :as image]))
+
+(defn pg []
+  (layout/primary
+    :page-title "sme-owner-fbp"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (h1 "sme-owner-fbp")))
+
+
