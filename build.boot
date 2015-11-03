@@ -51,7 +51,6 @@
 (deftask copy-index-htmls []
   (copy-index-html
     :dirs #{
-            "C4/"
             "about-us/"
             "beginner-cut-op-costs/"
             "beginner-fbp/"
@@ -59,6 +58,7 @@
             "beginner-ndn/"
             "beginner-quick-build/"
             "beginner-rust/"
+            "C4/"
             "contact-us/"
             "docs/"
             "fargo/"
@@ -84,7 +84,6 @@
             "hc-enthusiast-ndn/"
             "hc-enthusiast-quick-build/"
             "hc-enthusiast-rust/"
-            "how/"
             "news/"
             "non-programmer-cut-op-costs/"
             "non-programmer-fbp/"

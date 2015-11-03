@@ -2,7 +2,6 @@
       (:require
         [fractalide.layout :as layout]
         [fractalide.image :as image]
-        [fractalide.C4.index]
         [fractalide.about-us.index]
         [fractalide.beginner-cut-op-costs.index]
         [fractalide.beginner-fbp.index]
@@ -10,6 +9,7 @@
         [fractalide.beginner-ndn.index]
         [fractalide.beginner-quick-build.index]
         [fractalide.beginner-rust.index]
+        [fractalide.C4.index]
         [fractalide.contact-us.index]
         [fractalide.docs.index]
         [fractalide.fargo.index]
@@ -35,7 +35,6 @@
         [fractalide.hc-enthusiast-ndn.index]
         [fractalide.hc-enthusiast-quick-build.index]
         [fractalide.hc-enthusiast-rust.index]
-        [fractalide.how.index]
         [fractalide.news.index]
         [fractalide.non-programmer-cut-op-costs.index]
         [fractalide.non-programmer-fbp.index]
@@ -169,7 +168,6 @@
            curr-pg))
 
 ((condp pg? (.. js/window -location -pathname)
-   "/C4/" fractalide.C4.index/pg
    "/about-us/" fractalide.about-us.index/pg
    "/beginner-cut-op-costs/" fractalide.beginner-cut-op-costs.index/pg
    "/beginner-fbp/" fractalide.beginner-fbp.index/pg
@@ -177,6 +175,7 @@
    "/beginner-ndn/" fractalide.beginner-ndn.index/pg
    "/beginner-quick-build/" fractalide.beginner-quick-build.index/pg
    "/beginner-rust/" fractalide.beginner-rust.index/pg
+   "/C4/" fractalide.C4.index/pg
    "/contact-us/" fractalide.contact-us.index/pg
    "/docs/" fractalide.docs.index/pg
    "/fargo/" fractalide.fargo.index/pg
@@ -202,7 +201,6 @@
    "/hc-enthusiast-ndn/" fractalide.hc-enthusiast-ndn.index/pg
    "/hc-enthusiast-quick-build/" fractalide.hc-enthusiast-quick-build.index/pg
    "/hc-enthusiast-rust/" fractalide.hc-enthusiast-rust.index/pg
-   "/how/" fractalide.how.index/pg
    "/news/" fractalide.news.index/pg
    "/non-programmer-cut-op-costs/" fractalide.non-programmer-cut-op-costs.index/pg
    "/non-programmer-hypercard/" fractalide.non-programmer-hypercard.index/pg
