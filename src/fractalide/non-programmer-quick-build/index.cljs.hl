@@ -1,14 +1,73 @@
 (ns fractalide.non-programmer-quick-build.index
-      (:require
-        [fractalide.layout :as layout]
-        [fractalide.image :as image]))
+  (:require
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]))
 
 (defn pg []
   (layout/primary
-    :page-title "non-programmer-quick-build"
+    :page-title "Build Apps Quickly | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (h1 "non-programmer-quick-build")))
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segments"
+                     (div :class "ui segment"
+                          :style "background-color: rgba(64,170,84,1);"
+                          (div :class "ui secondary menu"
+                               (div :class "item "
+                                    (a :class "ui large header"
+                                       :href "/news/" "Quickly and cheaply building apps for the non-programmer."))))
+                     (div :class "ui secondary segment"
+                          (h1 :class "ui header" "Your budget is tight and want to build a Fractalide subnet (app).")
+                          (h2 :class "ui subheader" "This article shows you can build apps without needing to be a programmer.")
+                          (h3 :class "ui subheader" "What is a Rapid Application Development tool?")
+                          (p "It's a tool which allows a person to quickly build an application. The best example would be HyperCard.")
+                          (h3 :class "ui subheader" "What is HyperCard?")
+                          (p "Back in the 80's a chap name Bill Atkinson created tool called HyperCard, it allowed non-programmers to build applications
+                             using a point and click, drag and drop interface. This tool heavily influenced the web browser of today and many other Rapid
+                             Application Development environments. ")
+                          (h3 :class "ui subheader" "Does one have to write code to program HyperCard?")
+                          (p "HyperCard came with a programming language called HyperTalk, this language resembled English and thus was simple for
+                             non-programmers to write logic.")
+                          (h3 :class "ui subheader" "Where is HyperCard today?")
+                          (p "HyperCard died for a number of reasons, primarily because it didn't support networking, the process of sending information
+                             over the Internet to other HyperCard applications. It could have been the Internet browser of today instead of Firefox, Chrome
+                             or Internet Explorer. Since then a number of HyperCard clones were created, some successful some not.")
+                          (h3 :class "ui subheader" "Why do you speak about HyperCard?")
+                          (p "Fractalide is a modern day implementation of HyperCard, but instead it swaps out HyperTalk for a different, possibly more
+                             powerful, yet simpler programming language called Flow-based Programming. Within HyperCard is an insanely powerful way
+                             to program, yet simple enough for the normal people to program and use. We decided HyperCard would be the best starting
+                             point to fulfil our dream of creating an application")
+                          (h3 :class "ui subheader" "What's special about your HyperCard?")
+                          (p "We've got a secret sauce for our HyperCard implementation. The ingredients are:
+                             "(ul
+                                (li (a :href "/non-programmer-ndn/" "a transparent Named Data Networking - "))
+                                (li (a :href "/non-programmer-fbp/" "an easy to program Flow-based Programming"))
+                                (li (a :href "/non-programmer-hypercard/" "a simple to use HyperCard")))
+                             "All data is cheaply disseminated over a Named Data Network. These cost cuts allow you to quickly create a subnet (app) then
+                             distribute that app at no cost to you. Secondly by replacing the English like programming language called HyperTalk with
+                             Flow-based programming we dramatically increase code sharing and reuse. Many people also appreciate not having to program
+                             in textual code and like having their application logic represented by a graph of connected boxes and lines.
+                             Indeed we share these Flow-based components over the Named Data Network. This means in the majority of cases you
+                             do not need to program the components, you may just include those components into your Fractalide subnet and publish your
+                             application via the Named Data Network. This approach is a thing of beauty, no one, to our knowledge, has created.
+                             It'll dramatically reduce time to create and publish apps.")
+                          (h3 :class "ui subheader" "I need help making components!")
+                          (p "Sure, head on over to the "
+                             (a :href "/news/" "News")
+                             " page and write out a problem statement. If you are clear about your problem, someone will help out implementing
+                             your component. Though if your problem statement in vague it will fall away into obscurity unanswered. Answers to your
+                             problem are actual Flow-based components, and may be immediately included into your Fractalide app by name. If you are
+                             unsure about how to write out an accurate problem statement, then take a look at other problems and learn from them.
+                             Soon you'll master the art of problem statement writing. Maybe one day you can try your hand at implementing other
+                             people's problem statements!")))
+                (div :class "ui hidden divider"))
+           (div :class "one wide column")))))
 
 

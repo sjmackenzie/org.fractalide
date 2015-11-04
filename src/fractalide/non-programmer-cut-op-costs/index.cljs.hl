@@ -1,14 +1,91 @@
 (ns fractalide.non-programmer-cut-op-costs.index
-      (:require
-        [fractalide.layout :as layout]
-        [fractalide.image :as image]))
+  (:require
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]))
 
 (defn pg []
   (layout/primary
-    :page-title "non-programmer-cut-op-costs"
+    :page-title "Cut Operations Costs | Fractalide "
     :description "Fractalide is Free Software"
     :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (h1 "non-programmer-cut-op-costs")))
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segments"
+                     (div :class "ui segment"
+                          :style "background-color: rgba(64,170,84,1);"
+                          (div :class "ui secondary menu"
+                               (div :class "item "
+                                    (a :class "ui large header"
+                                       :href "/news/" "Greatly reducing operation costs for the non-programmer."))))
+                     (div :class "ui secondary segment"
+                          (h1 :class "ui header" "Your budget is tight and want interested people to get your Fractalide subnet (app)")
+                          (h2 :class "ui subheader" "This article shows that you do not need large companies to disseminate your data.")
+                          (p "You need to become familiar with two terms. The explanation below is kept super simple.")
+                          (ul
+                            (li "Point-to-point network")
+                            (li "Data dissemination"))
+                          (h2 :class "ui subheader" "What is a point-to-point network?")
+                          (p "Good grief - I hope I'm not losing you here. The best example is your home address. Indeed, most houses have an address.
+                             This is how companies send their bills to you. Each of these companies need to record your address on paper or computers to ensure they
+                             can get you to pay for services rendered. This globally unique home address forms part of a much larger point-to-point network connected together
+                             by the postal service.
+                             The Internet works in the same way, in that every computer connected to the Internet has a globally unique address.
+                             It's an extremely expensive affair maintaining, looking up and sending parcels/letters to an address.
+                             That's why the post office charges money for packages/letters sent over their delivery network."
+                             (ul "Things you need to maintain such a point-to-point network"
+                                 (li "Street names.")
+                                 (li "House numbers.")
+                                 (li "City names.")
+                                 (li "Country names.")
+                                 (li "Maps to locate a house.")
+                                 (li "Teams of people familiar with each location to deliver the packages.")
+                                 (li "Teams of people specializing in sorting packages for each area or forwarding them to other areas.")
+                                 (li "Teams of people specializing in taking payment for packages.")
+                                 (li "Each person requires a salary; so teams of people to allocate earnings for team salaries.")
+                                 (li "Airlines to transport international packages, I'm trying and failing to comprehend the amount of specialization needed to run an airline.")
+                                 (li "The list goes on and on."))
+                             "All of the above has its equivalent in the Internet of today.")
+                          (h2 :class "ui subheader" "What is data dissemination?")
+                          (p "Data, sometimes referred to as content, be it a photo, prose, document, a music file or any digital content is disseminated from a single
+                             source to multiple locations across the world (over a point-to-point network).")
+                          (h2 :class "ui subheader" "What are operation costs?")
+                          (p "Data dissemination over a point-to-point network is insanely expensive. It requires paying the best engineers to overcome the difficulties
+                             associated with such a network.")
+                          (p "Probably you have never run your own website, nor intend to ever do such a thing! The costs associated with such activities can
+                             get costly should your website or mobile app get popular. What you most likely do is use companies such as Facebook
+                             to disseminate your content. They specialize in overcoming disseminating data over a point-to-point network.
+                             The cost you pay is reading their advertisements. Every time you do a Google search or read Facebook you are inundated with
+                             advertisements. Google and Facebook make enough money from selling advertisements to ensure they can overcome the insane costs of
+                             data dissemination over a point-to-point network.")
+                          (h2 :class "ui subheader" "Why is data dissemination expensive?")
+                          (p "The underlying cause is deeply rooted in the way we use the Internet works today. Fear not, we'll not go into the details. The analogy we'll use
+                             is simple. This is roughly how we use the Internet:")
+                          (p "Imagine 1000 people send a letter to you, via the postal system, asking for a photo of your kitten. You'll then make 1000 copies
+                             of your kitten photo, stick them in envelopes with the correct return address, drag them to the post office and post them.
+                             This is expensive both in terms of money and time.")
+                          (h2 :class "ui subheader" "Is there a more efficient and cheaper way to disseminate data?")
+                          (p "As it turns out, there is, it's called Named Data Networking: Give your kitten photo a unique name, \"CAT-PHOTO\", will do for this contrived
+                             example, then use a magic stamp to stamp the photo thus preventing people from swapping out the photo with a photo of their bulldog.
+                             This stamp will allow anyone to see that you are the original creator of the photo, and the photo is exactly as you intended it to be.
+                             Now sit back and have a coffee.")
+                          (p "Sooner or later your neighbour will knock on your door and ask for something called a \"CAT-PHOTO\" reach over and hand him a copy
+                             the photo (which includes this magic stamp). Very soon, all 1000 people will get your kitten photo with magic stamp, without you lifting a finger.
+                             The reason being, each neighbour made a copy of the photo when asked by a different neighbour for \"CAT-PHOTO\". Quite simple really.
+                             The amount of time and energy needed to get the photo to people is distributed across the network of people. Essentially the photo is being
+                             copied through the six-degrees of separation. Indeed most effort went into making the photo and stamping it. You'll also need to setup
+                             a \"connection\" with your neigbour but this process doesn't require a globally unique expensive to maintain address such as house addresses,
+                             communication with your neigbour could be as simple as a polite knock on your door.")
+                          (h2 :class "ui subheader" "What does this mean for you?")
+                          (p "It means you no longer need to rely of 3rd party data dissemination companies to disseminate your data. You can focus on
+                             content creation and this Named Data Networking will spread out across the world at zero cost to you. You do not need to hire expensive engineers to get your content out to the world.
+                             In combination with an easy to use tool Rapid Application Development tool even non-programmers may use these are huge advantages.")))
+                (div :class "ui hidden divider"))
+           (div :class "one wide column")))))
 
 
