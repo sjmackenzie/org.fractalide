@@ -52,8 +52,6 @@
   (copy-index-html
     :dirs #{
             "about-us/"
-            "beginner-cut-op-costs/"
-            "beginner-quick-build/"
             "C4/"
             "contact-us/"
             "docs/"
@@ -64,8 +62,6 @@
             "fractalide/"
             "freedom/"
             "fvm/"
-            "greybeard-cut-op-costs/"
-            "greybeard-quick-build/"
             "news/"
             "non-programmer-cut-op-costs/"
             "non-programmer-quick-build/"

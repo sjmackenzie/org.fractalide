@@ -3,8 +3,6 @@
         [fractalide.layout :as layout]
         [fractalide.image :as image]
         [fractalide.about-us.index]
-        [fractalide.beginner-cut-op-costs.index]
-        [fractalide.beginner-quick-build.index]
         [fractalide.C4.index]
         [fractalide.contact-us.index]
         [fractalide.docs.index]
@@ -15,8 +13,6 @@
         [fractalide.fractalide.index]
         [fractalide.freedom.index]
         [fractalide.fvm.index]
-        [fractalide.greybeard-cut-op-costs.index]
-        [fractalide.greybeard-quick-build.index]
         [fractalide.news.index]
         [fractalide.non-programmer-cut-op-costs.index]
         [fractalide.non-programmer-quick-build.index]
@@ -57,9 +53,7 @@
 
 (def role-list {
                 :non-programmer "non-programmer"
-                :beginner "beginner programmer"
                 :programmer "programmer"
-                :greybeard "grey beard guru programmer"
                 :founder "company owner"})
 (def topic-list {
                  :quick-build "building software quickly."
@@ -131,8 +125,6 @@
 
 ((condp pg? (.. js/window -location -pathname)
    "/about-us/" fractalide.about-us.index/pg
-   "/beginner-cut-op-costs/" fractalide.beginner-cut-op-costs.index/pg
-   "/beginner-quick-build/" fractalide.beginner-quick-build.index/pg
    "/C4/" fractalide.C4.index/pg
    "/contact-us/" fractalide.contact-us.index/pg
    "/docs/" fractalide.docs.index/pg
@@ -143,8 +135,6 @@
    "/fractalide/" fractalide.fractalide.index/pg
    "/freedom/" fractalide.freedom.index/pg
    "/fvm/" fractalide.fvm.index/pg
-   "/greybeard-cut-op-costs/" fractalide.greybeard-cut-op-costs.index/pg
-   "/greybeard-quick-build/" fractalide.greybeard-quick-build.index/pg
    "/news/" fractalide.news.index/pg
    "/non-programmer-cut-op-costs/" fractalide.non-programmer-cut-op-costs.index/pg
    "/non-programmer-quick-build/" fractalide.non-programmer-quick-build.index/pg
