@@ -1,14 +1,101 @@
 (ns fractalide.non-programmer-quick-build.index
-      (:require
-        [fractalide.layout :as layout]
-        [fractalide.image :as image]))
+  (:require
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]))
 
 (defn pg []
   (layout/primary
-    :page-title "non-programmer-quick-build"
+    :page-title "Build Apps Quickly | Fractalide"
     :description "Fractalide is Free Software"
-    :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :keywords "Noware, App Management, Fractalide, Build apps, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (h1 "non-programmer-quick-build")))
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segments"
+                     (div :class "ui segment"
+                          :style "background-color: rgba(64,170,84,1);"
+                          (div :class "ui secondary menu"
+                               (div :class "item "
+                                    (a :class "ui large header"
+                                       :href "/news/" "Fast App Builds"))))
+                     (div :class "ui secondary segment"
+                          (h2 :class "ui subheader" "You don't need to be a programmer to build apps quickly.")
+                          (h3 :class "ui subheader" "What is a Rapid Application Development tool?")
+                          (p "A tool for building applications quickly. The best example would be HyperCard.")
+                          (h3 :class "ui subheader" "What is HyperCard?")
+                          (p "Back in the 80's a chap name Bill Atkinson created tool called HyperCard, it allowed non-programmers to build applications
+                             using a point and click, drag and drop interface. This tool heavily influenced the web browser of today and many other Rapid
+                             Application Development environments. ")
+                          (a :href "http://www.loper-os.org/?p=568" (img :src "/images/hypercard.jpg"))
+                          (h3 :class "ui subheader" "Does one have to write code to program HyperCard?")
+                          (p "HyperCard came with a programming language called HyperTalk, this language resembled English and was simple for
+                             non-programmers to write logic.")
+                          (a :href "http://basalgangster.macgui.com/RetroMacComputing/The_Long_View/Entries/2010/10/23_HyperCard.html" (img :src "/images/hypertalk.jpg"))
+                          (h3 :class "ui subheader" "Where is HyperCard today?")
+                          (p "HyperCard "
+                             (a :href "https://www.reddit.com/r/programming/comments/os3fa/why_hypercard_had_to_die/" "died")
+                             " for a number of reasons, primarily because it didn't support networking, the process of sending information
+                             over the Internet to other HyperCard applications. It "
+                             (a :href "http://www.wired.com/2002/08/hypercard-what-could-have-been/" "could")
+                             " have been the WWW browser of today instead of Firefox, Chrome
+                             or Internet Explorer. Since then a number of HyperCard clones were created, some successful some not.")
+                          (h3 :class "ui subheader" "What has HyperCard got to do with Fractalide?")
+                          (p "Fractalide is a modern day implementation of HyperCard, but swaps out HyperTalk for a different, more powerful, yet simpler
+                             programming language called Flow-based Programming. ")
+                          (h3 :class "ui subheader" "Flow-based programming?")
+                          (p "It's quite simple, one programs with boxes and lines. Type the desired component name into Fractalide and it appears
+                             on your canvas. Each component does one and only one thing, say \"Add\", \"Subtract\" or \"Write to File\".
+                             Click and drag the box around on the canvas then connect it to other boxes, during execution, data flows between these boxes.
+                             This level of abstraction hides each box's implementation logic and allows you to focus on the application's business logic.
+                             The area you want to focus on, not, the complex implementation logic of each component.")
+                          (img :src "/images/fbp.jpg")
+                          (p "Essentially we define applications as networks of \"black box\" processes, which exchange data across
+                             predefined connections by message passing, where the connections are specified externally to the
+                             processes. These black box processes can be reconnected endlessly to form different applications
+                             without having to be changed internally.")
+                          (p "We strongly feel developers play a critical role in creating quality software, it's our opinion that HyperTalk was suitable for
+                             non-programmers learning to program computers. Though, most unsuitable for high end graphics or advanced programming tasks.
+                             Modern day programming languages have much to offer in this regard. We want to create a happy harmony, by joining the worlds
+                             of easy programming with the rich, precise, complex programming languages of today. By using Flow-based Programming
+                             our non-programmers coordinate business logic of their applications by manipulating the graph without needing to dip into the
+                             component logic. Our programmer community can revel in the very powerful, strict programming language called "
+                             (a :href "https://www.rust-lang.org/" "Rust")
+                             " to implement components. A happy side effect of replacing HyperTalk with a Flow-based programming is we
+                             increase code sharing and reuse. One becomes familiar with these components by name as if they are tools in your toolbox.")
+                          (h3 :class "ui subheader" "Rust?")
+                          (p (i "\"Rust is a systems programming language that runs blazingly fast, prevents nearly all segfaults, and guarantees thread safety.\""))
+                          (p  "This is the perfect language to use for Fractalide. It ensures a high level of stability and "
+                             (b "forces")
+                             " the programmer to write correct code, which translates into a rock solid platform for your use. It's our hope that
+                             anyone can create components that will "
+                             (b "not")
+                             " crash your system. We've seen too many unstable shoddy systems and it's time for this nonsense to stop.")
+                          (h3 :class "ui subheader" "What differentiates Fractalide from other Rapid Application Development environments out there?")
+                          (p "Our secret sauce is:
+                             "(ul
+                                (li "a simple to use HyperCard clone.")
+                                (li "an easy to program Flow-based Programming approach.")
+                                (li (a :href "/non-programmer-cut-op-costs/" "and a transparent Named Data Networking layer.")))
+                             "Possibly our greatest advantage is disseminating Flow Based Programming components over a Named Data Network.
+                             This particular combination of technologies allows you to quickly create advanced apps, then distribute them and associated in-app
+                             data at no cost to you. Secondly sharing Flow-based components over the Named Data Network means in many of cases you
+                             do not need to program components, you may just include those components into your Fractalide app and share your
+                             application via the Named Data Network. This approach, to our knowledge, has never been done before.")
+                          (h3 :class "ui subheader" "I need help making components!")
+                          (p "Sure, head on over to the "
+                             (a :href "/news/" "News")
+                             " page and write out a problem statement. If you are clear about your problem, someone will help out implementing
+                             your component. Though, if your problem statement in vague it will fall away into obscurity, unanswered. Answers to your
+                             problem are actual Flow-based components, and may be immediately included into your Fractalide app by name. If you are
+                             unsure about how to write an accurate problem statement, take a look at other problem statements and learn from them.
+                             Soon you'll master the art of problem statement writing. Maybe one day you can try your hand at implementing other
+                             people's problem statements!")))
+                (div :class "ui hidden divider"))
+           (div :class "one wide column")))))
 
 
