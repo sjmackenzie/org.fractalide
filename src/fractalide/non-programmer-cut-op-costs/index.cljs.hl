@@ -17,14 +17,15 @@
            (div :class "one wide column")
            (div :class "fourteen wide column"
                 (div :class "ui hidden divider")
-                (div :class "ui segments"
                      (div :class "ui segment"
-                          :style "background-color: rgba(64,170,84,1);"
-                          (div :class "ui secondary menu"
-                               (div :class "item "
-                                    (a :class "ui large header"
-                                       :href "/news/" "Even non-programmers can write progams millions of people use."))))
-                     (div :class "ui secondary segment"
+                     :style "background-color: rgba(64,170,84,1);"
+                     (div :class "ui secondary menu"
+                          (div :class "item "
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png")))
+                          (div :class "item"
+                          (a :class "ui large header"
+                             :href "/non-programmer-cut-op-costs/" "Cutting Operating Costs an Order of Magnitude for Non-Programmers"))))
+                     (div :class "ui segment"
                           (h2 :class "ui subheader" "This article shows one does not need large monopolies like Facebook to disseminate your data.")
                           (p "You need to become familiar with two terms. The explanation below is kept super simple.")
                           (ul
@@ -99,7 +100,7 @@
                              content creation which you'll own (not Facebook) and the Named Data Network will disseminate it across the
                              world at zero cost to you. Also there is no need to hire expensive engineers to get your content out to the world.
                              In combination with an easy to use tool Rapid Application Development tool even non-programmers may use
-                             the advantages and cost savings are huge.")))
+                             the advantages and cost savings are huge."))
                 (div :class "ui hidden divider"))
            ))))
 

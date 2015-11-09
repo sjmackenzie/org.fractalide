@@ -1,14 +1,154 @@
 (ns fractalide.programmer-quick-build.index
-      (:require
-        [fractalide.layout :as layout]
-        [fractalide.image :as image]))
+  (:require
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]
+    [fractalide.programmer-quick-build.examples :as examples]))
 
 (defn pg []
   (layout/primary
-    :page-title "programmer-quick-build"
+    :page-title "Rapid Application Development | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (h1 "programmer-quick-build")))
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segment"
+                     :style "background-color: rgba(64,170,84,1);"
+                     (div :class "ui secondary menu"
+                          (div :class "item "
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png")))
+                          (div :class "item"
+                               (a :class "ui large header"
+                                  :href "/programmer-quick-build/" "Rapid Application Development for Programmers"))))
+                (div :class "ui secondary segment"
+                     (h2 :class "ui subheader" "Fast, safe, cost effective development")
+                     (h4 :class "ui subheader" (b :class "ui header" "Fractalide is a Rapid Application Development tool that strongly promotes code reuse,
+                                                                     removes almost all operation costs, and is rock solid."))
+                     (ul
+                       (li (b "Rapid Application Development tool:") " Fractalide is a modern day "
+                           (a :href "https://en.wikipedia.org/wiki/HyperCard" "HyperCard")
+                           " clone.")
+                       (li (b "Code reuse:")
+                           " "
+                           (a :href "http://www.jpaulmorrison.com/fbp/" "Classical Flow-based Programming")
+                           " (FBP) replaces HyperTalk; allowing programmers to make reusable components shareable with other programmers and non-programmers.")
+                       (li (b "Removes almost all operation costs: ") "Flow-based Programming components are named then published and retrieved over a "
+                           (a :href "/programmer-cut-op-costs/" "Named Data Network")
+                           " by longest name matches. Flow-based Programming also reduces the cost of the most expensive phase in the
+                           systems development life cycle; the maintanence phase.")
+                       (li (b "Rock solid: ") "Fractalide and every Flow-based Programming component is implemented in "
+                           (a :href "http://www.rust-lang.org" "Rust")
+                           " so the community inherits "(i (b "\"a systems programming language that runs blazingly fast,
+                                                              prevents nearly all segfaults, and guarantees thread safety.") "\"")
+                           (ul "Therefore your Flow-based Programming components may feature:"
+                               (li "zero-cost abstractions")
+                               (li "move semantics")
+                               (li "guaranteed memory safety")
+                               (li "threads without data races")
+                               (li "trait-based generics")
+                               (li "pattern matching")
+                               (li "type inference")
+                               (li "minimal runtime")
+                               (li "efficient C bindings"))
+                           (p "We hope this project will strengthen the Rust Programming language community.")))
+
+                     (h3 :class "ui subheader" "An example of FBP abstractions and code reuse.")
+                     (h4 :class "ui subheader" "Rust Components; where programmers hack for fun and profit.")
+                     (p "We'll set out implementing the XOR logic gate from 'scratch' by implementing a NAND component in Rust.")
+                     (div :class "ui raised segment"
+                          examples/nand)
+                     (p
+                       (u :style "color: red" "⓪") ": A standard Rust source code file."(br)
+                       (u :style "color: red" "①") ": A Rust macro, which " (a :href "https://github.com/fractalide/rustfbp/blob/master/src/component.rs#L458-L866" " hides ")" much of the component boilerplate."(br)
+                       (u :style "color: red" "②") ": The name of the component" (br)
+                       (u :style "color: red" "③") ": 0 to many simple input ports. Extend it further like such: inputs(a: bool, b: bool, numbers: i32)" (br)
+                       (u :style "color: red" "④") ": 0 to many array input ports" (br)
+                       (u :style "color: red" "⑤") ": 0 to many simple output ports" (br)
+                       (u :style "color: red" "⑥") ": 0 to many array output ports" (br)
+                       (u :style "color: red" "⑦") ": The options port" (br)
+                       (u :style "color: red" "⑧") ": The acc port" (br)
+                       (u :style "color: red" "⑨") ": The processing function of the component. This is where the component's logic goes." (br)
+                       (u :style "color: red" "⑩") ": Extracting the data from incoming Information Packet (IP) on the input port." (br)
+                       (u :style "color: red" "⑪") ": Inserting data into an IP on an outgoing port." (br)
+                       (u :style "color: red" "⑫") ": Should anything go wrong it'll be handled here.")
+                     (div :class "ui raised segment"
+                          examples/clone)
+                     (p
+                       (u :style "color: red" "⓪") ": CloneC is of type <T> with trait CloneIP."(br)
+                       (u :style "color: red" "①") ": Declaring the types of the input ports."(br)
+                       (u :style "color: red" "②") ": Declaring the traits and implementations here keeps all needed information wrapped within the macro. Thus keeping the code modular as possible." (br))
+
+                     (h4 :class "ui subheader" "Fractalide Subnets, where programmers and non-programmers have fun with each other.")
+                     (p "Programmers will probably prefer the textual layout of subnets, whereas the below can easily be represented graphically as a box-and-line graph for our non-programmers.")
+                     (div (b "Graphical example non-programmers") " (not part of the XOR example):")
+                     (img :src "/images/fbp.jpg")
+                     (div (b "Textual Flow-based Programming code for programmers:"))
+                     (div :class "ui horizontal segments"
+                          (div :class "ui raised segment"
+                               examples/not)
+                          (div :class "ui raised right aligned segment"
+                               (img :src "/images/not3.png")))
+                     (p
+                       (u :style "color: red" "⓪") ": A FraCtaLide file, used to create a network or graph of components (subnet)."(br)
+                       (ul "There are a few rules to this file:"
+                           (li (b "\"x =>\"") " : x indicates the subnet's input port, multiple " (b "\"x =>\"") " on different lines reference the same input " (b "x")".")
+                           (li (b "\"=> x\"") " : x indicates the subnet's output port.")
+                           (li (b "\"nand(nand)\"") " : nand(_) indicates an instantiated variable name.")
+                           (li (b "\"nand(nand)\"") " : the 'nand' in parentheses indicates a rust component or subnet type.")
+                           (li (b "\"nand()\"") " : indicates a previously instantiated component, therefore doesn't need a type.")
+                           (li (b "\"a nand(nand) out\"") " : the 'a' and 'out' indicate the input port 'a' and the output port 'out'.")
+                           (li (b "\"->\"") " : indicates a link between the outputs and inputs of components/subnets.")
+                           (li (b"\"in clone(clone) output[1] -> a nand(nand) ...\"") " : indicates the output array port of element 1 connects to the simple input port 'a' of the nand gate."))
+                       )
+                     (div :class "ui horizontal segments"
+                          (div :class "ui raised segment"
+                               examples/and)
+                          (div :class "ui raised right aligned segment"
+                               (img :src "/images/and.png")))
+                     (p
+                       (u :style "color: red" "⓪") ": The " (b "not") " is our previous " (b "not.fcl")" subnet, the " (b "nand") " is our previous " (b "nand.rs")" component."(br))
+                     (div :class "ui horizontal segments"
+                          (div :class "ui raised segment"
+                               examples/or)
+                          (div :class "ui raised right aligned segment")
+                          (img :src "/images/or.png"))
+                     (p
+                       (u :style "color: red" "⓪") ": We can instantiate multiple " (b "not") ", requiring different names, ie "(b "not1(), not2()") " and " (b "not3") " etc."(br))
+                     (div :class "ui horizontal segments"
+                          (div :class "ui raised segment"
+                               examples/xor)
+                          (div :class "ui raised right aligned segment"
+                               (img :src "/images/xor.png")))
+                     (hr)
+                     (p "still rough")
+                     (h3 :class "ui subheader" "Rapid Application Development")
+                     (p "FBP promotes code reuse to a degree comparable to LISP. We can achieve a much higher degree of code reuse by
+                        giving the component a name and disseminating it over the NDN.")
+                     (h3 :class "ui subheader" "Code reuse")
+                     (h3 :class "ui subheader" "Remove almost all operation costs")
+                     (h3 :class "ui subheader" "Rock solid")
+
+                     (h3 :class "ui subheader" "Community")
+
+                     (p "Community is critical, we use the ZeroMQ's "
+                        (a :src "/C4/" "C4") " to build the community. RFCs will be adopted to make decisions.")
+
+                     (h3 :class "ui subheader" "FBP Rust subnets")
+                     (ul
+                       (li "The idea of HyperCard brings software construction to the masses, yet FBP allows specialization in that components are created
+                           using normal code and not HyperTalk.")
+                       (li "Programmers may assist non-programmers and newbies in building components by participating in the "
+                           (a :src "/news/" "News")
+                           " section. This will hopefully satisfy the community need that surrounds a platform.
+                           Essentially it's a HackerNews for components where answers given are executing code. Indeed one cannot submit an answer
+                           unless the code compiles. This means we can whittle out the keyboard, and social justice warriors.")
+                       ))()
+                (div :class "ui hidden divider"))
+           (div :class "one wide column")))))
 
 

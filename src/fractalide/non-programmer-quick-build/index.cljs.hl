@@ -5,7 +5,7 @@
 
 (defn pg []
   (layout/primary
-    :page-title "Build Apps Quickly | Fractalide"
+    :page-title "Rapid Application Development | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, App Management, Fractalide, Build apps, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
@@ -16,14 +16,15 @@
            (div :class "one wide column")
            (div :class "fourteen wide column"
                 (div :class "ui hidden divider")
-                (div :class "ui segments"
                      (div :class "ui segment"
-                          :style "background-color: rgba(64,170,84,1);"
-                          (div :class "ui secondary menu"
-                               (div :class "item "
-                                    (a :class "ui large header"
-                                       :href "/news/" "Fast App Builds"))))
-                     (div :class "ui secondary segment"
+                     :style "background-color: rgba(64,170,84,1);"
+                     (div :class "ui secondary menu"
+                          (div :class "item "
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png")))
+                          (div :class "item"
+                          (a :class "ui large header"
+                             :href "/non-programmer-quick-build/" "Rapid Application Development for Non-Programmers"))))
+                     (div :class "ui segment"
                           (h2 :class "ui subheader" "You don't need to be a programmer to build apps quickly.")
                           (h3 :class "ui subheader" "What is a Rapid Application Development tool?")
                           (p "A tool for building applications quickly. The best example would be HyperCard.")
@@ -94,7 +95,7 @@
                              problem are actual Flow-based components, and may be immediately included into your Fractalide app by name. If you are
                              unsure about how to write an accurate problem statement, take a look at other problem statements and learn from them.
                              Soon you'll master the art of problem statement writing. Maybe one day you can try your hand at implementing other
-                             people's problem statements!")))
+                             people's problem statements!"))
                 (div :class "ui hidden divider"))
            (div :class "one wide column")))))
 
