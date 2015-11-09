@@ -73,8 +73,8 @@ b => in not2(not) out -> b and()
   (code (pre
 "// xor.fcl
 // XOR logic gate subnet implementation
-a => a and1(and) out -> a or(or) out => out
-a => in not1(not) out -> a and2(and)
-b => in not2(not) out -> b and1()
-b => b and2() out -> b or()
+a => in clone1(clone) output[1] -> a and1(and) out -> a or(or) out => out
+clone1() output[2] -> in not1(not) out -> a and2(and) out -> b or(or)
+b => in clone2(clone) output[1] -> in not2(not) out -> b and1()
+clone2() output[2] -> b and2()
 ")))
