@@ -49,7 +49,7 @@ component! {
   (code (pre
 "// not.fcl "(u :style "color: red" "⓪")"
 // NOT logic gate subnet implementation
-in => in clone(clone) output[1] -> a nand(nand) out => out "(u :style "color: red" "①")"
+in => in clone(clone) output[1] -> a nand(nand) out => out
 clone() output[2] -> b nand()
 ")))
 

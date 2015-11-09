@@ -100,11 +100,11 @@
                            (li (b "\"=> x\"") " : x indicates the subnet's output port.")
                            (li (b "\"nand(nand)\"") " : nand(_) indicates an instantiated variable name.")
                            (li (b "\"nand(nand)\"") " : the 'nand' in parentheses indicates a rust component or subnet type.")
-                           (li (b "\"nand()\"") " : indicates an previously instantiated component, therefore doesn't need a type.")
+                           (li (b "\"nand()\"") " : indicates a previously instantiated component, therefore doesn't need a type.")
                            (li (b "\"a nand(nand) out\"") " : the 'a' and 'out' indicate the input port 'a' and the output port 'out'.")
                            (li (b "\"->\"") " : indicates a link between the outputs and inputs of components/subnets.")
-                           (li (b"\"in clone(clone) output[0] -> a nand(nand) ...\"") " : indicates the output array port of element 0 connects to the simple input port 'a' of the nand gate."))
-                       (u :style "color: red" "①") " :  Notice how both " (b "clone")" and " (b "nand") " are our previously implemented Rust components."(br))
+                           (li (b"\"in clone(clone) output[1] -> a nand(nand) ...\"") " : indicates the output array port of element 1 connects to the simple input port 'a' of the nand gate."))
+                       )
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
                                examples/and)
