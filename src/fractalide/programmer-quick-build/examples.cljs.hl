@@ -10,7 +10,7 @@ component! { "(u :style "color: red" "①")"
     Nand, "(u :style "color: red" "②")"
     inputs(a: bool, b: bool), "(u :style "color: red" "③")"
     inputs_array(), "(u :style "color: red" "④")"
-    outputs(output:bool), "(u :style "color: red" "⑤")"
+    outputs(out: bool), "(u :style "color: red" "⑤")"
     outputs_array(), "(u :style "color: red" "⑥")"
     option(), "(u :style "color: red" "⑦")"
     acc(), "(u :style "color: red" "⑧")"
@@ -18,25 +18,25 @@ component! { "(u :style "color: red" "①")"
         let a = self.inputs.a.recv().unwrap(); "(u :style "color: red" "⑩")"
         let b = self.inputs.b.recv().unwrap();
         let out = if a == false || b == false { true } else {false}; "(u :style "color: red" "⑪")"
-        let _ = self.outputs.output.send(out).ok().expect(\"Nand: cannot send out\"); "(u :style "color: red" "⑫")"
+        let _ = self.outputs.out.send(out).ok().expect(\"Nand: cannot send out\"); "(u :style "color: red" "⑫")"
     }
 }")))
 
-(def clonefbp
+(def clone-component
   (code (pre
 "// clone.rs
 // Clone component implementation
 component! {
     CloneC, (T: CloneIP), "(u :style "color: red" "⓪")"
-    inputs(input: T where T: CloneIP), "(u :style "color: red" "①")"
+    inputs(in: T where T: CloneIP), "(u :style "color: red" "①")"
     inputs_array(),
     outputs(),
-    outputs_array(output: T where T: CloneIP),
+    outputs_array(out: T where T: CloneIP),
     option(),
     acc(),
     fn run(&mut self) {
-        let msg = self.inputs.input.recv().unwrap();
-        for out in self.outputs_array.output.values() {
+        let msg = self.inputs.in.recv().unwrap();
+        for out in self.outputs_array.out.values() {
             out.send(msg.clone()).ok().unwrap();
         }
     }
@@ -45,33 +45,33 @@ component! {
 }
 ")))
 
-(def notfbp
+(def not-fbp
   (code (pre
-"// not.fcl "(u :style "color: red" "⓪")"
+"// not.subnet "(u :style "color: red" "⓪")"
 // NOT logic gate subnet implementation
 in => in clone(clone) output[1] -> a nand(nand) out => out
 clone() output[2] -> b nand()
 ")))
 
-(def andfbp
+(def and-fbp
   (code (pre
-"// and.fcl
+"// and.subnet
 // AND logic gate subnet implementation
 a => a nand(nand) out -> in not(not) out => out "(u :style "color: red" "⓪")"
 b => b nand()
 ")))
 
-(def orfbp
+(def or-fbp
   (code (pre
-"// or.fcl
+"// or.subnet
 // OR logic gate subnet implementation
 a => in not1(not) out -> a and(and) out -> in not3(not) out => out "(u :style "color: red" "⓪")"
 b => in not2(not) out -> b and()
 ")))
 
-(def xorfbp
+(def xor-fbp
   (code (pre
-"// xor.fcl
+"// xor.subnet
 // XOR logic gate subnet implementation
 a => in clone1(clone) output[1] -> a and1(and) out -> a or(or) out => out
 clone1() output[2] -> in not1(not) out -> a and2(and) out -> b or(or)
