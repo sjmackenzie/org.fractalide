@@ -57,7 +57,13 @@
                                (li "efficient C bindings"))
                            (p "We hope this project will strengthen the Rust Programming language community.")))
 
-                     (h3 :class "ui subheader" "An example of FBP abstractions and code reuse.")
+                     (h3 :class "ui subheader" "Rapid Application Development")
+                     (p "In the 80's and 90's HyperCard was quite a revolutionary application. It influenced the modern web browser but unlike the browser it
+                        wasn't just for browsing, but also for creating material. Recently HyperCard had their "
+                        (a :href "http://library.fora.tv/2012/08/12/Berkeley_Cybersalon_on_the_Legacy_of_the_Apple_Hypercard" "25th anniversary")
+                        " the meeting raises many use cases, and demonstrated the appreciation people had towards HyperCard.")
+
+                     (h3 :class "ui subheader" "Code reuse.")
                      (h4 :class "ui subheader" "Rust Components; where programmers hack for fun and profit.")
                      (p "We'll set out implementing the XOR logic gate from 'scratch' by implementing a NAND component in Rust.")
                      (div :class "ui raised segment"
@@ -77,7 +83,7 @@
                        (u :style "color: red" "⑪") ": Inserting data into an IP on an outgoing port." (br)
                        (u :style "color: red" "⑫") ": Should anything go wrong it'll be handled here.")
                      (div :class "ui raised segment"
-                          examples/clone)
+                          examples/clonefbp)
                      (p
                        (u :style "color: red" "⓪") ": CloneC is of type <T> with trait CloneIP."(br)
                        (u :style "color: red" "①") ": Declaring the types of the input ports."(br)
@@ -90,7 +96,7 @@
                      (div (b "Textual Flow-based Programming code for programmers:"))
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/not)
+                               examples/notfbp)
                           (div :class "ui raised right aligned segment"
                                (img :src "/images/not3.png")))
                      (p
@@ -107,31 +113,30 @@
                        )
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/and)
+                               examples/andfbp)
                           (div :class "ui raised right aligned segment"
                                (img :src "/images/and.png")))
                      (p
                        (u :style "color: red" "⓪") ": The " (b "not") " is our previous " (b "not.fcl")" subnet, the " (b "nand") " is our previous " (b "nand.rs")" component."(br))
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/or)
+                               examples/orfbp)
                           (div :class "ui raised right aligned segment")
                           (img :src "/images/or.png"))
                      (p
                        (u :style "color: red" "⓪") ": We can instantiate multiple " (b "not") ", requiring different names, ie "(b "not1(), not2()") " and " (b "not3") " etc."(br))
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/xor)
+                               examples/xorfbp)
                           (div :class "ui raised right aligned segment"
                                (img :src "/images/xor.png")))
                      (hr)
                      (p "still rough")
-                     (h3 :class "ui subheader" "Rapid Application Development")
-                     (p "FBP promotes code reuse to a degree comparable to LISP. We can achieve a much higher degree of code reuse by
-                        giving the component a name and disseminating it over the NDN.")
-                     (h3 :class "ui subheader" "Code reuse")
+
                      (h3 :class "ui subheader" "Remove almost all operation costs")
+                     (p "Head on over to " (a :href "/programmer-cut-op-costs/" "this page") " for more details.")
                      (h3 :class "ui subheader" "Rock solid")
+                     (p "Fractalide is implemened in Rust, ")
 
                      (h3 :class "ui subheader" "Community")
 

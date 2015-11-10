@@ -22,7 +22,7 @@ component! { "(u :style "color: red" "①")"
     }
 }")))
 
-(def clone
+(def clonefbp
   (code (pre
 "// clone.rs
 // Clone component implementation
@@ -45,7 +45,7 @@ component! {
 }
 ")))
 
-(def not
+(def notfbp
   (code (pre
 "// not.fcl "(u :style "color: red" "⓪")"
 // NOT logic gate subnet implementation
@@ -53,7 +53,7 @@ in => in clone(clone) output[1] -> a nand(nand) out => out
 clone() output[2] -> b nand()
 ")))
 
-(def and
+(def andfbp
   (code (pre
 "// and.fcl
 // AND logic gate subnet implementation
@@ -61,7 +61,7 @@ a => a nand(nand) out -> in not(not) out => out "(u :style "color: red" "⓪")"
 b => b nand()
 ")))
 
-(def or
+(def orfbp
   (code (pre
 "// or.fcl
 // OR logic gate subnet implementation
@@ -69,7 +69,7 @@ a => in not1(not) out -> a and(and) out -> in not3(not) out => out "(u :style "c
 b => in not2(not) out -> b and()
 ")))
 
-(def xor
+(def xorfbp
   (code (pre
 "// xor.fcl
 // XOR logic gate subnet implementation
