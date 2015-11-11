@@ -67,10 +67,10 @@
                      (p "We'd like Fractalide to be seen, not as a software project, but as a community of people who resonate with a clean, efficient solution to WWW bloat."
                         (p"Governed by the "
                                     (a :href "/C4/" "Collective Code Contruction Contract")
-                                    ", this allows us to remove pain and bad actors quickly. Fractalide's community building approach is heavily
-                                    influenced by the ZeroMQ community and the work of "
+                                    ", this allows us to remove bad actors quickly in a scientific manner. Fractalide's community building approach is heavily
+                                    influenced by the ZeroMQ community, developed by "
                                     (a :href "http://hintjens.com/" "Pieter Hintjens")
-                                    ", especially "
+                                    ", who also wrote "
                                     (a :href "http://hintjens.com/blog:_psychopaths" "Psychopaths")
                                     ". These tools allow us to create a fun collaborative environment that's as enjoyable as a 4 year old playing Minecraft. "))
                      (h3 :class "ui subheader" "Rapid Application Development")
@@ -84,10 +84,13 @@
                         " the meeting raises many use cases, and demonstrates the appreciation people had towards HyperCard.")
                      (p "HyperCard with Flow-based programming most closely models this Minecraft type of environment we envisage.
                         Though, this vision is quite possibly, incorrect and needs to be guided by a diverse, distributed community who quickly and efficiently solve problems.")
-                     (p "Above all this must be a fun project to collaborate on. ")
+                     (p "Above all this must be a fun project to collaborate on.")
 
                      (h3 :class "ui subheader" "Code reuse.")
                      (h4 :class "ui subheader" "Rust Components; where programmers hack for fun and profit.")
+                     (p "FBP defines applications as networks of \"black box\" processes, which exchange data across predefined connections by message passing,
+                        where the connections are specified externally to the processes. These black box processes can be reconnected
+                        endlessly to form different applications without having to be changed internally. FBP is thus naturally component-oriented.")
                      (p "We'll set out implementing the XOR logic gate from 'scratch' by implementing a NAND component in Rust.")
                      (div :class "ui raised segment"
                           examples/nand)
@@ -180,12 +183,10 @@
                         it makes sense that we adopt Rust as the implementation language. Speed just a bit slower than
                         C, proper memory management and sane concurrency are features which contribute to a
                         good user experience. As we use Flow-based Programming which hides the component implementation from
-                        non-programmers. We'll be able to get away with \"complex\" component implementation and be able to
+                        non-programmers. We'll be able to get away with \"complex\" efficient component implementations yet be able to
                         present a very simple component interface. Rust's memory management concepts allows programmers to
-                        create shareable components which will not segfault taking out user's Fractalide programs.
-                        Lastly speed and battery power are critical needs in today's mobile world. Rust's footprint is very
-                        low allowing us to expand Fractalide onto the mobile platforms confidently. Lastly the use of Flow-based
-                        Programming means we can use multi-cores in a very natural fashion. We've had an
+                        create shareable components which tend not to segfault taking out user's Fractalide programs.
+                        Lastly the use of Flow-based Programming means we can use multi-cores in a very natural fashion. We've had an
                         enjoyable experience with the Rust language so far and are confident this decision will not hold
                         reason for regret.")
 
@@ -197,35 +198,34 @@
                         " and is the instructor of the "
                         (a :href "https://www.edx.org/course/paradigms-computer-programming-louvainx-louv1-1x-0" "Paradigms of Computer Programming on EdX")
                         ". Both exceptionally good for learning programming. A very gracious thank you goes out to Peter Van Roy. We raise beers in your honour!")
-                     (h3 :class "ui subheader" "I want to help others make components for fun and profit!")
+
+                     (h3 :class "ui subheader" "Test your skill by helping others make components.")
                      (p "Programmers may assist non-programmers and newbies in building components by participating in the "
                         (a :src "/news/" "News")
-                        " section. This will hopefully satisfy the community need that surrounds a platform.
-                        Essentially it's a HackerNews for components where answers given are executing code. Indeed one cannot submit an answer
-                        unless the code compiles. This means we whittle out the keyboard, and social justice warriors.")
+                        " section. Essentially it's a Hacker News for components where given answers are actual executing code. Indeed, one cannot submit an answer
+                        unless the component compiles. This means we whittle out the keyboard, and social justice warriors.")
                      (h3 :class "ui subheader" "Support Fractalide")
-                     (p "Our ultimate goal is a faster, safter, advertisement free World Wide Web that allows the normal person to create and publish free of charge.
+                     (p "Our ultimate goal is a faster, safer, advertisement free World Wide Web that allows the normal person to create and publish free of charge.
                         Essentially we are trashing CSS, Javascript and HTML and looking in a new new direction.
                         These are lofty goals and requires your support.")
                      (p "Fractalide is a Free and Open Source project using the Mozilla Public License 2 (MPL2). Any component
-                        you create using the Open Source version requires that the resulting components be
-                        licensed as MPL2, thus the component source code for each MPL2 licensed component will be automatically
+                        you create using the Open Source version oof Fractalide requires that the resulting components be
+                        licensed as MPL2, thus the component source code for each MPL2 licensed component will be automatically distributed
                         along with the binary.")
                      (p "If you wish to make a commercial venture and not publish the source code, you'll
                         need to purchase a commercial license. You may use MPL2 licensed components in your commercial application,
-                        as long as you publish the source of those components, which will happen automatically, then you'll be
+                        as long as you publish the source of those components, which will happen automatically, then you'll not be
                         infringing on the MPL2 license. Thus a commercial licensee gains a significant advantage over other
                         software projects in other languages as you may leverage the entire Fractalide Community's components.
                         Instead of building everything from scratch, as is so often the case.")
                      (p "We are strongly hesitant in taking venture capital as the goals of a community using the Collective Code
-                        Construction Contract do not align with VC interests.")
+                        Construction Contract do not align with VC interests. Our goals are happy hackingness, VC's goals are to make them money.")
                      (p "We therefore request you assist us by purchasing a commercial license.")
                      (p "As a Founding Member you get:"
                         (ul
                           (li "Life-time price lock-in of 30 USD per month for a single person, only if you are a continuing paying Founding Member.
                               As soon as you stop paying, the only option to become a member again will be the normal post-BETA price of 50 USD per month.")
                           (li "Your license is activated only after we reach the BETA phase which will hopefully be in April 2016")
-                          (li "Downloading the commercial version of Fractalide")
                           (li "You will receive a one month free discount for every new person you introduce and becomes a Fractalide Founding Member.")
                           (li "You'll have a special colour badge next to your name on the "
                               (a :href "/news/" "Fractal News")
