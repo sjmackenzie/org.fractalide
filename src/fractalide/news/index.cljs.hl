@@ -41,7 +41,7 @@
                                (div :class "right menu"
                                     (div :class "ui item"
                                          (a :class "ui small header"
-                                            :href "/login" "login")))))
+                                            :href "/login/" "login")))))
                      (div :class "ui secondary segment"
                           (div :class "ui middle aligned very relaxed ordered medium list"
                                (loop-tpl :bindings [problem problems]
