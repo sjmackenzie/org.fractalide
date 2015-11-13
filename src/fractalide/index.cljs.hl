@@ -8,8 +8,6 @@
         [fractalide.docs.index]
         [fractalide.fargo.index]
         [fractalide.founder.index]
-        [fractalide.founder-cut-op-costs.index]
-        [fractalide.founder-quick-build.index]
         [fractalide.fractalide.index]
         [fractalide.freedom.index]
         [fractalide.fvm.index]
@@ -53,8 +51,7 @@
 
 (def role-list {
                 :non-programmer "non-programmer"
-                :programmer "programmer"
-                :founder "company owner"})
+                :programmer "programmer"})
 (def topic-list {
                  :quick-build "building software quickly."
                  :cut-op-costs "obliterating operation costs."})
@@ -130,8 +127,6 @@
    "/docs/" fractalide.docs.index/pg
    "/fargo/" fractalide.fargo.index/pg
    "/founder/" fractalide.founder.index/pg
-   "/founder-cut-op-costs/" fractalide.founder-cut-op-costs.index/pg
-   "/founder-quick-build/" fractalide.founder-quick-build.index/pg
    "/fractalide/" fractalide.fractalide.index/pg
    "/freedom/" fractalide.freedom.index/pg
    "/fvm/" fractalide.fvm.index/pg
