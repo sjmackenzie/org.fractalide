@@ -36,16 +36,18 @@
                        (li (b "Code reuse:")
                            " "
                            (a :href "http://www.jpaulmorrison.com/fbp/" "Classical Flow-based Programming")
-                           " (FBP) replaces HyperTalk; allowing programmers to make reusable components shareable with other programmers and non-programmers.")
+                           " (FBP) replaces "
+                           (a :href "https://en.wikipedia.org/wiki/HyperTalk" "HyperTalk")
+                           "; allowing programmers to make reusable components shareable with other programmers and non-programmers.")
                        (li (b "Removes almost all operation costs: ") "Flow-based Programming components are named then published and retrieved over a "
                            (a :href "/programmer-cut-op-costs/" "Named Data Network")
-                           " by longest name matches. Flow-based Programming also reduces the cost of the most expensive phase in the
+                           " by longest name match. Flow-based Programming also reduces the cost of the most expensive phase in the
                            systems development life cycle; the maintanence phase.")
                        (li (b "Rock solid: ") "Fractalide and every Flow-based Programming component is implemented in "
                            (a :href "http://www.rust-lang.org" "Rust")
                            " so the community inherits "(i (b "\"a systems programming language that runs blazingly fast,
                                                               prevents nearly all segfaults, and guarantees thread safety.") "\"")
-                           (ul "Therefore your Flow-based Programming components may feature:"
+                           (ul "Therefore your Flow-based Programming components feature:"
                                (li "zero-cost abstractions")
                                (li "move semantics")
                                (li "guaranteed memory safety")
@@ -57,8 +59,38 @@
                                (li "efficient C bindings"))
                            (p "We hope this project will strengthen the Rust Programming language community.")))
 
-                     (h3 :class "ui subheader" "An example of FBP abstractions and code reuse.")
+                     (h3 :class "ui subheader" "Revengeware")
+                     (p "Fractalide is created to prove that the current course of the World Wide Web is "
+                        (a :href "http://homepages.cwi.nl/~steven/Talks/2015/11-06-xml-amsterdam/" "painful, unnecessarily bloated")
+                        " and can be done better.")
+                     (h3 :class "ui subheader" "Community")
+                     (p "We'd like Fractalide to be seen, not as a software project, but as a community of people who resonate with a clean, efficient solution to WWW bloat."
+                        (p"Governed by the "
+                                    (a :href "/C4/" "Collective Code Contruction Contract")
+                                    ", this allows us to remove bad actors quickly in a scientific manner. Fractalide's community building approach is heavily
+                                    influenced by the ZeroMQ community, developed by "
+                                    (a :href "http://hintjens.com/" "Pieter Hintjens")
+                                    ", who also wrote "
+                                    (a :href "http://hintjens.com/blog:_psychopaths" "Psychopaths")
+                                    ". These tools allow us to create a fun collaborative environment that's as enjoyable as a 4 year old playing Minecraft. "))
+                     (h3 :class "ui subheader" "Rapid Application Development")
+                     (p "Our litmus test for programming simplicity is Minecraft, "
+                        (a :href "http://hintjens.com/blog:80" "believe it or not. "))
+                     (p "Possibly the closest thing to Minecraft is HyperCard. In the 80's and 90's HyperCard was quite a revolutionary application.
+                        It influenced the modern web browser, unlike modern browsers, HyperCard wasn't just for browsing or consuming, but was designed for non-programmers
+                        to create new interactive material.
+                        Recently HyperCard had their "
+                        (a :href "http://library.fora.tv/2012/08/12/Berkeley_Cybersalon_on_the_Legacy_of_the_Apple_Hypercard" "25th anniversary")
+                        " the meeting raises many use cases, and demonstrates the appreciation people had towards HyperCard.")
+                     (p "HyperCard with Flow-based programming most closely models this Minecraft type of environment we envisage.
+                        Though, this vision is quite possibly, incorrect and needs to be guided by a diverse, distributed community who quickly and efficiently solve problems.")
+                     (p "Above all this must be a fun project to collaborate on.")
+
+                     (h3 :class "ui subheader" "Code reuse.")
                      (h4 :class "ui subheader" "Rust Components; where programmers hack for fun and profit.")
+                     (p "FBP defines applications as networks of \"black box\" processes, which exchange data across predefined connections by message passing,
+                        where the connections are specified externally to the processes. These black box processes can be reconnected
+                        endlessly to form different applications without having to be changed internally. FBP is thus naturally component-oriented.")
                      (p "We'll set out implementing the XOR logic gate from 'scratch' by implementing a NAND component in Rust.")
                      (div :class "ui raised segment"
                           examples/nand)
@@ -77,7 +109,7 @@
                        (u :style "color: red" "⑪") ": Inserting data into an IP on an outgoing port." (br)
                        (u :style "color: red" "⑫") ": Should anything go wrong it'll be handled here.")
                      (div :class "ui raised segment"
-                          examples/clone)
+                          examples/clone-component)
                      (p
                        (u :style "color: red" "⓪") ": CloneC is of type <T> with trait CloneIP."(br)
                        (u :style "color: red" "①") ": Declaring the types of the input ports."(br)
@@ -90,64 +122,118 @@
                      (div (b "Textual Flow-based Programming code for programmers:"))
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/not)
+                               examples/not-fbp)
                           (div :class "ui raised right aligned segment"
                                (img :src "/images/not3.png")))
                      (p
-                       (u :style "color: red" "⓪") ": A FraCtaLide file, used to create a network or graph of components (subnet)."(br)
+                       (u :style "color: red" "⓪") ": A "(b"SUB")"-"(b "NET")
+                       "work file (*.subnet), is used to compose a network, or graph, of components and/or
+                       recursively other subnets. It also allows us to remove the concept of an application entirely.
+                       Thus allowing the dissemination of subnets to be included in other subnets by name alone."(br)
                        (ul "There are a few rules to this file:"
-                           (li (b "\"x =>\"") " : x indicates the subnet's input port, multiple " (b "\"x =>\"") " on different lines reference the same input " (b "x")".")
+                           (li (b "\"x =>\"") " : x indicates the subnet's input port, multiple
+                                              " (b "\"x =>\"")
+                                              " on different lines reference the same input " (b "x")".")
                            (li (b "\"=> x\"") " : x indicates the subnet's output port.")
                            (li (b "\"nand(nand)\"") " : nand(_) indicates an instantiated variable name.")
                            (li (b "\"nand(nand)\"") " : the 'nand' in parentheses indicates a rust component or subnet type.")
                            (li (b "\"nand()\"") " : indicates a previously instantiated component, therefore doesn't need a type.")
                            (li (b "\"a nand(nand) out\"") " : the 'a' and 'out' indicate the input port 'a' and the output port 'out'.")
                            (li (b "\"->\"") " : indicates a link between the outputs and inputs of components/subnets.")
-                           (li (b"\"in clone(clone) output[1] -> a nand(nand) ...\"") " : indicates the output array port of element 1 connects to the simple input port 'a' of the nand gate."))
+                           (li (b"\"in clone(clone) output[1] -> a nand(nand) ...\"") " : indicates the output array port
+                                                                                      of element 1 connects to the simple input port 'a' of the nand gate."))
                        )
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/and)
+                               examples/and-fbp)
                           (div :class "ui raised right aligned segment"
                                (img :src "/images/and.png")))
                      (p
-                       (u :style "color: red" "⓪") ": The " (b "not") " is our previous " (b "not.fcl")" subnet, the " (b "nand") " is our previous " (b "nand.rs")" component."(br))
+                       (u :style "color: red" "⓪") ": The " (b "not") " is our previous " (b "not.subnet")" subnet, the " (b "nand") " is our previous " (b "nand.rs")" component."(br))
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/or)
+                               examples/or-fbp)
                           (div :class "ui raised right aligned segment")
                           (img :src "/images/or.png"))
                      (p
                        (u :style "color: red" "⓪") ": We can instantiate multiple " (b "not") ", requiring different names, ie "(b "not1(), not2()") " and " (b "not3") " etc."(br))
                      (div :class "ui horizontal segments"
                           (div :class "ui raised segment"
-                               examples/xor)
+                               examples/xor-fbp)
                           (div :class "ui raised right aligned segment"
                                (img :src "/images/xor.png")))
-                     (hr)
-                     (p "still rough")
-                     (h3 :class "ui subheader" "Rapid Application Development")
-                     (p "FBP promotes code reuse to a degree comparable to LISP. We can achieve a much higher degree of code reuse by
-                        giving the component a name and disseminating it over the NDN.")
-                     (h3 :class "ui subheader" "Code reuse")
                      (h3 :class "ui subheader" "Remove almost all operation costs")
+                     (p "Head on over to " (a :href "/programmer-cut-op-costs/" "this page") " for more details.")
                      (h3 :class "ui subheader" "Rock solid")
+                     (p "There is plenty of material on the web and in books to learn how to program Rust:"
+                        (ul
+                          (li (a :href "http://rustbyexample.com/" "Rust by Example"))
+                          (li (a :href "https://www.ralfj.de/projects/rust-101/main.html" "Rust-101"))
+                          (li (a :href "https://www.packtpub.com/application-development/rust-essentials" "Rust Essentials"))
+                          (li (a :href "http://shop.oreilly.com/product/0636920040385.do" "Programming Rust"))
+                          (li (a :href "http://doc.rust-lang.org/nightly/book/" "The Rust Programming Language"))
+                          (li (a :href "https://doc.rust-lang.org/nightly/nomicon/" "The Rustonomicon - The Dark Arts of Advanced and Unsafe Rust Programming"))
+                          (li (a :href "https://www.kickstarter.com/projects/1712125778/rust-programming-concepts-book/description" "Rust Programming Concepts Book"))))
 
-                     (h3 :class "ui subheader" "Community")
+                     (p "Fractalide was initially implemented in "
+                        (a :href "http://mozart.github.io/" "Mozart-Oz ")
+                        "but due to performance issues is being reimplemented in Rust. Rust is chosen because of the programming
+                        language concepts such as ownership, borrowing and lifetimes. Rust was designed to implement
+                        browsers, namely Servo, as Fractalide could be seen as a browser which targets mobile platforms
+                        it makes sense that we adopt Rust as the implementation language. Speed just a bit slower than
+                        C, proper memory management and sane concurrency are features which contribute to a
+                        good user experience. As we use Flow-based Programming which hides the component implementation from
+                        non-programmers. We'll be able to get away with \"complex\" efficient component implementations yet be able to
+                        present a very simple component interface. Rust's memory management concepts allows programmers to
+                        create shareable components which tend not to segfault taking out user's Fractalide programs.
+                        Lastly the use of Flow-based Programming means we can use multi-cores in a very natural fashion. We've had an
+                        enjoyable experience with the Rust language so far and are confident this decision will not hold
+                        reason for regret.")
 
-                     (p "Community is critical, we use the ZeroMQ's "
-                        (a :src "/C4/" "C4") " to build the community. RFCs will be adopted to make decisions.")
+                     (h3 :class "ui subheader" "The Birth of Fractalide")
+                     (p "Fractalide started life as a Masters Thesis under "
+                        (a :href "https://www.info.ucl.ac.be/~pvr/cvvanroy.html" "Prof. Peter Van Roy")
+                        " of Université catholique de Louvain. Peter is the co-author of "
+                        (a :href "http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695" "Concepts Techniques and Models of Computer Programming")
+                        " and is the instructor of the "
+                        (a :href "https://www.edx.org/course/paradigms-computer-programming-louvainx-louv1-1x-0" "Paradigms of Computer Programming on EdX")
+                        ". Both exceptionally good for learning programming. A very gracious thank you goes out to Peter Van Roy. We raise beers in your honour!")
 
-                     (h3 :class "ui subheader" "FBP Rust subnets")
-                     (ul
-                       (li "The idea of HyperCard brings software construction to the masses, yet FBP allows specialization in that components are created
-                           using normal code and not HyperTalk.")
-                       (li "Programmers may assist non-programmers and newbies in building components by participating in the "
-                           (a :src "/news/" "News")
-                           " section. This will hopefully satisfy the community need that surrounds a platform.
-                           Essentially it's a HackerNews for components where answers given are executing code. Indeed one cannot submit an answer
-                           unless the code compiles. This means we can whittle out the keyboard, and social justice warriors.")
-                       ))()
+                     (h3 :class "ui subheader" "Test your skill by helping others make components.")
+                     (p "Programmers may assist non-programmers and newbies in building components by participating in the "
+                        (a :src "/news/" "News")
+                        " section. Essentially it's a Hacker News for components where given answers are actual executing code. Indeed, one cannot submit an answer
+                        unless the component compiles. This means we whittle out the keyboard, and social justice warriors.")
+                     (h3 :class "ui subheader" "Support Fractalide")
+                     (p "Our ultimate goal is a faster, safer, advertisement free World Wide Web that allows the normal person to create and publish free of charge.
+                        Essentially we are trashing CSS, Javascript and HTML and looking in a new new direction.
+                        These are lofty goals and requires your support.")
+                     (p "Fractalide is a Free and Open Source project using the Mozilla Public License 2 (MPL2). Any component
+                        you create using the Open Source version oof Fractalide requires that the resulting components be
+                        licensed as MPL2, thus the component source code for each MPL2 licensed component will be automatically distributed
+                        along with the binary.")
+                     (p "If you wish to make a commercial venture and not publish the source code, you'll
+                        need to purchase a commercial license. You may use MPL2 licensed components in your commercial application,
+                        as long as you publish the source of those components, which will happen automatically, then you'll not be
+                        infringing on the MPL2 license. Thus a commercial licensee gains a significant advantage over other
+                        software projects in other languages as you may leverage the entire Fractalide Community's components.
+                        Instead of building everything from scratch, as is so often the case.")
+                     (p "We are strongly hesitant in taking venture capital as the goals of a community using the Collective Code
+                        Construction Contract do not align with VC interests. Our goals are happy hackingness, VC's goals are to make them money.")
+                     (p "We therefore request you assist us by purchasing a commercial license.")
+                     (p "As a Founding Member you get:"
+                        (ul
+                          (li "Life-time price lock-in of 30 USD per month for a single person, only if you are a continuing paying Founding Member.
+                              As soon as you stop paying, the only option to become a member again will be the normal post-BETA price of 50 USD per month.")
+                          (li "Your license is activated only after we reach the BETA phase which will hopefully be in April 2016")
+                          (li "You will receive a one month free discount for every new person you introduce and becomes a Fractalide Founding Member.")
+                          (li "You'll have a special colour badge next to your name on the "
+                              (a :href "/news/" "Fractal News")
+                              " section of the website, only valid as long as you are a paying Founding Member.")
+                          (li "We will not have any DRM built into the software, and there will be no difference in code between the commercial version and the open source version.
+                              Except that your component source code is not packaged with the binaries.")
+                          (li "Later once we setup the component market, you'll be able to sell your close source components.")
+                          (li "As a Founding Member you believe in us. You have our deepest gratitude."))))
                 (div :class "ui hidden divider"))
            (div :class "one wide column")))))
 

@@ -1,14 +1,140 @@
 (ns fractalide.programmer-cut-op-costs.index
-      (:require
-        [fractalide.layout :as layout]
-        [fractalide.image :as image]))
+  (:require
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]))
+
+(defn van-video []
+  )
 
 (defn pg []
   (layout/primary
-    :page-title "programmer-cut-op-costs"
+    :page-title "Cut Operations Costs | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (h1 "programmer-cut-op-costs")))
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segment"
+                     :style "background-color: rgba(64,170,84,1);"
+                     (div :class "ui secondary menu"
+                          (div :class "item "
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png")))
+                          (div :class "item"
+                               (a :class "ui large header"
+                                  :href "/programmer-cut-op-costs/" "Cutting Operating Costs an Order of Magnitude for Programmers"))))
+                (div :class "ui segment"
+                     (h2 :class "ui subheader" "Data Dissemination over a point-to-point network.")
+
+                     (p (b (i "\"Dissemination over a point-to-point communications system theoretically is best case quadratic time, worst case exponential time.\"")) " - Van Jacobson "
+                        (a :href "https://www.youtube.com/watch?v=3zOLrQJ5kbU&t=26m47s" "speaking") " about Leslie Lamport's research.")
+
+                     (h2 :class "ui subheader" "The birth of data dissemination monopolies")
+                     (h3 :class "ui subheader" "A simple start - I can do this!")
+                     (p "You decide you're not going to build your own stack (software which can talk to other pieces in a distributed architecture)
+                        on top of TCP, because it's hugely complex. So you follow what works, you use HTTP. Your startup appeals to people,
+                        you've got a webserver + database server on a machine and its hooked up to the Internet. You and your users are happy.
+                        Things are working out quite nicely.")
+                     (img :src "/images/simple-network.png")
+                     (p "... till you get " (b "more users") ". You separate out your database from your webserver. You've got money starting to flow in, so security becomes a priority.
+                        That money has gone into expensive Cisco equipment and more technical people, who are spending most their time on firewalls, IDS, and infrastructure in general.
+                        Programmers start writing code to get the core product to operate over this new distributed infrastructure, they consider things like "
+                        (a :href "http://martinfowler.com/articles/microservices.html" "microservices")
+                        ", then change their minds, then try it anyway, some try programming languages like Erlang or Elixir, others opt for ZeroMQ all aimed at
+                        trying to make the network as transparent as possible. Essentially programmers are not focusing on the core business problem.")
+                     (p "TCP keeps channelling all that traffic to one IP address, relentlessly like a magnifying glass refracting light. You're still able to make it
+                        appear to the Internet that you're one IP address people can make connections to. All of the expensive equipment and wetware
+                        you've invested in is just to present this facade. Because everything in this network revolves around the IP address.")
+                     (p "Spending time on your core product is a luxury.")
+                     (h3 :class "ui subheader" "Much more complex - starting to hurt.")
+                     (p "Soon you have something like the this:")
+                     (img :src "/images/complex-network.png")
+                     (p "You're starting to notice things like microservices are a pain in the ass, so you look at declarative package managers like NixOS to keep
+                        versions under control. Things like NixOps come in handy for deploying.")
+                     (p "You decide to start a freemium plan and now all hell breaks loose. Long term users are leaving as your pipes are saturated and your machines are overworked.
+                        So you purchase new machines and the biggest fibre the telco will sell you, an  "
+                        (a :href "https://en.wikipedia.org/wiki/Optical_Carrier_transmission_rates#OC-192_.2F_STM-64_.2F_10G_SONET" "OC192")
+                        ". You breathe, and do your sums. You realize this too will be maxed out and start to make plans.")
+                     (p "You're still able to make it appear to the Internet that you're one IP address
+                        people can make connections to. All of the expensive equipment and wetware you've invested in is just to present this facade.
+                        Because everything in this network revolves around the IP address.")
+                     (h3 :class "ui subheader" "This is insane - I'm in pain")
+                     (p "New user bombard your IP address in search of this cool new service, you're also getting Distributed Denial of Service attacks. You need more pipes.")
+                     (p "The only way you can get multiple OC192 wires into your building yet preserve this abstraction of a single IP address is to make yourself
+                        look like the cloud. You now have more runway, till you realize there are only 3 telcos in your area.")
+                     (p "You're still able to make it appear to the Internet that you're one IP address
+                        people can make connections to. All of the expensive equipment and wetware you've invested in is just to present this facade.
+                        Because everything in this network revolves around the IP address.")
+                     (img :src "/images/very-complex-network.png")
+                     (h3 :class "ui subheader" "I'm starting to look like an ISP - I'm in serious pain")
+                     (p "You've now maxed out the only 3 available OC192 cables and realize you have to go to other locations, where there are different telcos to plug into.")
+                     (p "Quite soon, you get the bright idea to start peering with ISPs and become your own transit. Soon (as is the case with Google) you become the biggest ISP in the
+                        world in terms of traffic (not paying users).")
+                     (p "You're still able to make it appear to the Internet that you're one IP address
+                        people can make connections to. All of the expensive equipment and wetware you've invested in is just to present this facade.
+                        Because everything in this network revolves around the IP address.")
+                     (h3 :class "ui subheader" "Congratulations you are now a Hyper Giant.")
+                     (p "You've figured out the rules of the game, you've developed a cookbook on how to do these things. Then you notice that you have loads of
+                        machines lying around during non-Christmas time. So you get the bright idea to create a nice GUI interface much like Amazon's AWS interface
+                        which will automate the whole shebang for other startups. Saving them from having to go through the almight hell you went through.")
+                     (p "The below is what the Internet looks like before you get your bright idea of peering with ISPs and creating AWS user interfaces.")
+
+                     (h4 :class "ui subheader" "The Internet pre-2009:")
+                     (p "Published by "
+                        (a :href "http://www.internetsociety.org/internet/how-internet-evolving/internet-evolution/data/atlas-internet-observatory-report" "ATLAS Internet Observatory"))
+                     (img :src "/images/traditional-internet.png")
+                     (p "Now that you've implemented your bright idea and are pairing with ISPs this is what the Internet is starting to look like.")
+                     (h4 :class "ui subheader" "The Internet post-2009:")
+                     (img :src "/images/emerging-internet.png"))
+                (p "Your company is now consuming the Internet. You've joined the ranks of the Hyper Giants, which consist of Google, Amazon, Akamai, Alibaba and Facebook.
+                   These companies are literally swallowing the Internet and turning it into some proprietary Internet one machine at a time. This proprietary Internet follows their
+                   rules as it's funded by their business model.")
+                (img :src "http://33.media.tumblr.com/tumblr_m9mqvoOsEX1rol1w1.gif")
+                (p "For new startups it's more economical to use Amazon AWS, Microsoft Azure or Google Cloud Platform than reproduce what the Hyper Giants achieved (see previous steps) because:"
+                   (ul
+                     (li "They now own the Internet (except some 30% of it)")
+                     (li "They have a cookbook in place that'll smooth companies through the previous steps with a point and click wizard interface")
+                     (li "Allow companies to specialize on their core problems")
+                     (li "Most companies won't reach the point of needing multiple OC192 so these guys are easy money. Your pipes are sufficiently large to handle all their traffic.")))
+                (p "But it'll still burns a huge hole in their wallet, because they like everyone else "
+                   (b "are doing dissemination over a point-to-point communications system"))
+
+                (h2 :class "ui subheader" "It's time to stop this lunacy and reduce costs an order of magnitude.")
+                (h3 :class "ui subheader" "Enter " (a :href "https://en.wikipedia.org/wiki/Van_Jacobson" "Van Jacobson") "")
+                (img :src "/images/van-jacobson1.jpg")
+                (p "This person is bad ass")
+                (img :src "/images/van-jacobson2.jpg")
+                (h3 :class "ui subheader" "Named Data Networking")
+                (h4 :class "ui subheader" "What is it?")
+                (img :src "/images/hourglasses.png" )
+                (h4 :class "ui subheader" "Legacy Internet")
+                (p "Everything revolves around making your machines look like you're one IP address. A lot of wetware and money is required to tell this lie.
+                   This model is equivalent to saying the Sun revolves around the Earth.")
+
+                (h4 :class "ui subheader" "Named Data Networking (NDN) Internet")
+                (p "This system is sane, here the Earth revolves around the Sun. Data no longer has a location, data moves to
+                   wherever there is interest for it.")
+                (p "For a detailed talk on the subject please watch: " (a :href "https://www.youtube.com/watch?v=oCZMoY3q2uM&t=4m1s" " A New Way to look at Networking"))
+                (ul
+                  (li "NDN may be a TCP overlay, indeed it may be overlayed on anything that can move bits - be it morse code, over Radio Frequency, or a USB drive in your jacket pocket.")
+                  (li "Names become the thin part of the hour glass. Your systems revolve around names and not IP addresses.")
+                  (li "Security is built into the network, payloads may be encrypted and pass through NSA servers without being tampered. You'll know immediately
+                      if there is tampering as you check the sha1-hash")
+                  (li "Programs react to incoming Interests for data and query a database then answer the Interest accordingly. Thus data in buffers is no different from data
+                      on the wire, which is no different from data in databases.  This level of abstraction is much better for programs to work with.
+                      You program referencing distributed data as if the data was on a filesystem or in memory.")
+                  (li "TCP solved the problem of plumbing at wire level, but requires that you plumb at the data level. Building dissemination into the networking protocol
+                      solves the need to plumb at the data level.")
+                  (li "Data moves to wherever there is interest for it, as it moves through the network it leave breadcrumb copies of itself in Least Recently Used buffers.")
+                  (li "Interest for data can be satisfied by a neighbour containing a breadcrumb copy of the data. Thus keeping the overall bandwidth usage at a theoretical minimum."))
+
+                (h3 :class "ui subheader" "Fractalide over NDN")
+                (p "Each " (a :href "/programmer-quick-build/" "Flow-based Programming") " component in Fractalide is designed from the ground up to interact over NDN." )
+                (div :class "ui hidden divider"))
+           (div :class "one wide column")))))
 
 

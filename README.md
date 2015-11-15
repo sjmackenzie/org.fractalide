@@ -1,3 +1,3 @@
 $ boot dev
 
-$browser localhost:3000
+navigate to localhost:3000
