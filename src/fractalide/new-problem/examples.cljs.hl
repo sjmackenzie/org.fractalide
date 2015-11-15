@@ -3,7 +3,7 @@
 ; separate file used to stop the editor formatter from destroying examples whitespace.
 
 (def inverter
-"// Simple example please change
+"// Simple example solution - please change it
 // inverter.rs
 component! {
     Inverter,

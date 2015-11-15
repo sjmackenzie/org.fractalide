@@ -25,30 +25,36 @@
                                     (a :class "ui large header"
                                        :href "/" "Fractalide"))))
                      (div :class "ui secondary segment"
-                          (div :class "ui equal width grid"
+                          (div :class "ui equal width row"
                                (div :class "column"
-                                    (h3 :class "ui header" "Problem")
-                                    (div :class "ui form"
-                                         (textarea
-                                           :rows 5)))
+                                    (div :class "ui hidden divider")
+                                    (div :class "ui input"
+                                         (input :type "text" :placeholder "Component Name"))
+                                    (div :class "ui hidden divider")))
+                          (div :class "ui equal width grid"
                                (div :class "equal width row"
                                     (div :class "column"
-                                         (h3 :class "ui header" "Solution")
+                                         (div :class "ui form focus"
+                                              (textarea
+                                                :placeholder "Problem"
+                                                :rows 5))))
+                               (div :class "ui equal width row"
+                                    (div :class "column"
                                          (div :class "ui form"
                                               (textarea
                                                 :text examples/inverter
+                                                :placeholder "Solution"
                                                 :rows 20)
                                               (div :class "ui hidden divider")
                                               (div :class "ui button"
                                                    :style "background-color: rgba(64,170,84,1);"
                                                    "Run")))
                                     (div :class "column"
-                                         (h3 :class "ui header" "Output")
                                          (div :class "ui form"
                                               (textarea
+                                                :placeholder "Compilation output"
                                                 :rows 20)
-                                              (div :class "ui hidden divider")
-                                              )))))))))
+                                              (div :class "ui hidden divider"))))))))))
     (div :class "ui hidden divider"))
   (div :class "one wide column"))
 
