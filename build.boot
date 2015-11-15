@@ -63,6 +63,7 @@
             "freedom/"
             "fvm/"
             "news/"
+            "new-problem/"
             "non-programmer-cut-op-costs/"
             "non-programmer-quick-build/"
             "privacy-policy/"

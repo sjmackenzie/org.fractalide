@@ -1,0 +1,57 @@
+(ns fractalide.new-problem.index
+  (:require
+    [fractalide.new-problem.examples :as examples]
+    [fractalide.layout :as layout]))
+
+(defn pg []
+  (layout/primary
+    :page-title "New Problem | Fractalide"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segments"
+                     (div :class "ui segment"
+                          :style "background-color: rgba(64,170,84,1);"
+                          (div :class "ui secondary menu"
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
+                               (div :class "item "
+                                    (a :class "ui large header"
+                                       :href "/" "Fractalide"))))
+                     (div :class "ui secondary segment"
+                          (div :class "ui equal width grid"
+                               (div :class "column"
+                                    (h3 :class "ui header" "Problem")
+                                    (div :class "ui form"
+                                         (textarea
+                                           :rows 5)))
+                               (div :class "equal width row"
+                                    (div :class "column"
+                                         (h3 :class "ui header" "Solution")
+                                         (div :class "ui form"
+                                              (textarea
+                                                :text examples/inverter
+                                                :rows 20)
+                                              (div :class "ui hidden divider")
+                                              (div :class "ui button"
+                                                   :style "background-color: rgba(64,170,84,1);"
+                                                   "Run")))
+                                    (div :class "column"
+                                         (h3 :class "ui header" "Output")
+                                         (div :class "ui form"
+                                              (textarea
+                                                :rows 20)
+                                              (div :class "ui hidden divider")
+                                              )))))))))
+    (div :class "ui hidden divider"))
+  (div :class "one wide column"))
+
+
+
+
