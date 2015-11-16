@@ -25,16 +25,15 @@
                                     (a :class "ui large header"
                                        :href "/" "Fractalide"))))
                      (div :class "ui secondary segment"
-                          (div :class "ui equal width row"
-                               (div :class "column"
+                          (div :class "column"
+                               (div :class "ui form"
                                     (div :class "ui hidden divider")
-                                    (div :class "ui input"
-                                         (input :type "text" :placeholder "Component Name"))
-                                    (div :class "ui hidden divider")))
+                                         (textarea :rows 1 :placeholder "Component Name"))
+                               (div :class "ui hidden divider"))
                           (div :class "ui equal width grid"
                                (div :class "equal width row"
                                     (div :class "column"
-                                         (div :class "ui form focus"
+                                         (div :class "ui form"
                                               (textarea
                                                 :placeholder "Problem"
                                                 :rows 5))))
