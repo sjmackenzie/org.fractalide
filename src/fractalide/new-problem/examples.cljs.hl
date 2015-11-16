@@ -1,0 +1,22 @@
+(ns fractalide.new-problem.examples)
+
+; separate file used to stop the editor formatter from destroying examples whitespace.
+
+(def inverter
+"// Simple example solution - please change it
+// inverter.rs
+component! {
+    Inverter,
+    inputs(in: bool),
+    inputs_array(),
+    outputs(out: bool),
+    outputs_array(),
+    option(),
+    acc(),
+    fn run(&mut self) {
+        let in = self.inputs.in.recv().unwrap();
+        let out = if in == false { true } else {false};
+        let _ = self.outputs.out.send(out).ok().expect(\"Inverter: cannot send out\");
+    }
+}")
+
