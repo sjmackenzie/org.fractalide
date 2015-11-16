@@ -1,0 +1,52 @@
+(ns fractalide.login.index
+  (:require
+    [fractalide.layout :as layout]))
+
+(defn pg []
+  (layout/primary
+    :page-title "Login | Fractalide"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (section
+      :id "news-list"
+      :class "ui grid"
+      (div :class "row"
+           (div :class "one wide column")
+           (div :class "fourteen wide column"
+                (div :class "ui hidden divider")
+                (div :class "ui segments"
+                     (div :class "ui segment"
+                          :style "background-color: rgba(64,170,84,1);"
+                          (div :class "ui secondary menu"
+                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
+                               (div :class "item "
+                                    (a :class "ui large header"
+                                       :href "/" "Fractalide"))))
+                     (div :class "ui secondary segment"
+                          (div :class "ui grid container"
+                               (div :class "ui four wide column"
+                                    (h1 :class "ui header" "Login")
+                                    (div :class "ui form"
+                                         (input :type "text" :placeholder "username")
+                                         (input :type "password" :placeholder "password")
+                                         (div :class "ui hidden divider")
+                                         (div :class "ui button"
+                                              :style "background-color: rgba(64,170,84,1);"
+                                              "Login")
+                                         (div (a :href "/reset-password/" "forgot your password?")))
+                                    (div :class "ui hidden divider")
+                                    (h1 :class "ui header" "Create account")
+                                    (div :class "ui form"
+                                         (input :type "text" :placeholder "username")
+                                         (input :type "password" :placeholder "password"))
+                                    (div :class "ui hidden divider")
+                                    (div :class "ui button"
+                                         :style "background-color: rgba(64,170,84,1);"
+                                         "Create account"))))))))
+    (div :class "ui hidden divider"))
+  (div :class "one wide column"))
+
+
+
+
