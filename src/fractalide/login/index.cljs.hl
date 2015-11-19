@@ -1,6 +1,51 @@
 (ns fractalide.login.index
+  (:require-macros
+    [fractalide.vform.core :refer [defv]])
   (:require
-    [fractalide.layout :as layout]))
+    [fractalide.layout :as layout]
+    [fractalide.login.rpc :refer [create-auth-token token]]))
+
+(defc form-login-username "")
+(defc form-login-password "")
+(defc form-signup-username "")
+(defc form-signup-password "")
+
+(defn validate-presence [v] (seq v))
+(defv form-login-username-valid? form-login-username validate-presence)
+(defv form-login-password-valid? form-login-password validate-presence)
+(defv form-signup-username-valid? form-signup-username validate-presence)
+(defv form-signup-password-valid? form-signup-password validate-presence)
+
+(defc= is-login-form-valid? (and  (:valid? form-login-password-valid?)  (:valid? form-login-username-valid?)))
+(defc= is-signup-form-valid? (and  (:valid? form-signup-password-valid?)  (:valid? form-signup-username-valid?)))
+
+(defc= login-form-data
+  {:username form-login-username
+   :password form-login-password})
+
+(defc= signup-form-data
+  {:username form-signup-username
+   :password form-signup-password})
+
+(defn submit-login-form [v] (js/alert (str "Send: " (pr-str @login-form-data))))
+(defn submit-signup-form [_] (js/alert (str "Send: " (pr-str @signup-form-data))))
+
+(defelem cell-input [{:keys [cell] :as attrs}]
+  (let [target-value #(do! (-> % .-currentTarget) :value)]
+    (input (-> attrs
+               (dissoc :cell)
+               (assoc :type (:type attrs "text")
+                 :value cell
+                 :input #(reset! cell (target-value %)))))))
+
+(defelem form-group [{:keys [valid?] :as attrs} body]
+  (let [dirty? (fn [v] (-> v nil? not))]
+    ((div (dissoc attrs :valid?) body)
+     :class (cell= {:form-group true
+                    :has-error (and (dirty? (:value valid?)) (not (:valid? valid?)))}))))
+
+(defelem input-control [attrs]
+  ((cell-input attrs) :class {:form-control true}))
 
 (defn pg []
   (layout/primary
@@ -27,23 +72,35 @@
                           (div :class "ui grid container"
                                (div :class "ui four wide column"
                                     (h1 :class "ui header" "Login")
-                                    (div :class "ui form"
-                                         (input :type "text" :placeholder "username")
-                                         (input :type "password" :placeholder "password")
-                                         (div :class "ui hidden divider")
-                                         (div :class "ui button"
-                                              :style "background-color: rgba(64,170,84,1);"
-                                              "Login")
-                                         (div (a :href "/reset-password/" "forgot your password?")))
-                                    (div :class "ui hidden divider")
+                                    (form :submit submit-login-form :class "ui form"
+                                          (form-group :valid? form-login-username-valid?
+                                                      (label "Username")
+                                                      (input-control :cell form-login-username))
+                                          (form-group :valid? form-login-password-valid?
+                                                      (label "Password")
+                                                      (input-control :cell form-login-password
+                                                                     :type "password"))
+                                          (div :class "ui hidden divider")
+                                          (button :class "ui button"
+                                                  :type "submit"
+                                                  :disabled (cell= (not is-login-form-valid?))
+                                                  :style "background-color: rgba(64,170,84,1);"
+                                                  "Login"))
                                     (h1 :class "ui header" "Create account")
-                                    (div :class "ui form"
-                                         (input :type "text" :placeholder "username")
-                                         (input :type "password" :placeholder "password"))
-                                    (div :class "ui hidden divider")
-                                    (div :class "ui button"
-                                         :style "background-color: rgba(64,170,84,1);"
-                                         "Create account"))))))))
+                                    (form :submit submit-signup-form :class "ui form"
+                                          (form-group :valid? form-signup-username-valid?
+                                                      (label "Username")
+                                                      (input-control :cell form-signup-username))
+                                          (form-group :valid? form-signup-password-valid?
+                                                      (label "Password")
+                                                      (input-control :cell form-signup-password
+                                                                     :type "password"))
+                                          (div :class "ui hidden divider")
+                                          (button :class "ui button"
+                                                  :type "submit"
+                                                  :disabled (cell= (not is-signup-form-valid?))
+                                                  :style "background-color: rgba(64,170,84,1);"
+                                                  "Create account")))))))))
     (div :class "ui hidden divider"))
   (div :class "one wide column"))
 
