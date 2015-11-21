@@ -1,7 +1,18 @@
 (ns fractalide.fractalide.index
-      (:require
-        [fractalide.layout :as layout]
-        [fractalide.image :as image]))
+  (:require
+    [fractalide.fractalide.rpc :as rpc]
+    [fractalide.layout :as layout]
+    [fractalide.image :as image]
+    [fractalide.fractalide.rpc :refer [ get-state state]]))
+
+
+(defelem message []
+  [
+   (button
+     :class "ui fluid button"
+     :click #(get-state 1000)
+     "button")
+   (h1 (text "Random Integer! ~{state}"))])
 
 (defn pg []
   (layout/primary
@@ -9,6 +20,6 @@
     :description "Fractalide is Free Software"
     :keywords "Noware, App Management, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (h1 "Open Source")))
+    (message)))
 
 

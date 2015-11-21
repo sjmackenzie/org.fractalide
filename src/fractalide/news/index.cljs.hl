@@ -4,7 +4,7 @@
     [fractalide.image :as image]
     [fractalide.news.rpc :refer [get-problems problems]]))
 
-(with-init! (get-problems))
+
 
 (defn problem-row [problem]
   (div :class "item"
@@ -15,6 +15,7 @@
             (div :class "description" (cell= (:points problem)) " points by  " (cell= (:author problem)) " " (cell= (:time problem)) " | " (cell= (:answers problem)) " answers"))))
 
 (defn pg []
+  [(with-init! (get-problems))
   (layout/primary
     :page-title "News | Fractalide"
     :description "Help Fractalide become the most potent development platform for the mobile."
@@ -47,4 +48,4 @@
                                (loop-tpl :bindings [problem problems]
                                          (problem-row problem)))))
                 (div :class "ui hidden divider"))
-           (div :class "one wide column")))))
+           (div :class "one wide column"))))])

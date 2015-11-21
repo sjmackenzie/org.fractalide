@@ -2,8 +2,10 @@
   (:require-macros
     [fractalide.vform.core :refer [defv]])
   (:require
+    [castra.core :refer [mkremote]]
     [fractalide.layout :as layout]
-    [fractalide.login.rpc :refer [create-auth-token token]]))
+    [fractalide.login.rpc :refer [create-auth-token auth-token
+                                  add-user! add-user-reply]]))
 
 (defc form-login-username "")
 (defc form-login-password "")
@@ -27,8 +29,8 @@
   {:username form-signup-username
    :password form-signup-password})
 
-(defn submit-login-form [v] (js/alert (str "Send: " (pr-str @login-form-data))))
-(defn submit-signup-form [_] (js/alert (str "Send: " (pr-str @signup-form-data))))
+(defn submit-login-form [_] (create-auth-token @login-form-data))
+(defn submit-signup-form [_] (add-user! @signup-form-data))
 
 (defelem cell-input [{:keys [cell] :as attrs}]
   (let [target-value #(do! (-> % .-currentTarget) :value)]
@@ -46,6 +48,9 @@
 
 (defelem input-control [attrs]
   ((cell-input attrs) :class {:form-control true}))
+
+(defelem message []
+  (h4 (text (str (get (second auth-token) :message ) add-user-reply))))
 
 (defn pg []
   (layout/primary
@@ -71,6 +76,7 @@
                      (div :class "ui secondary segment"
                           (div :class "ui grid container"
                                (div :class "ui four wide column"
+                                    (message)
                                     (h1 :class "ui header" "Login")
                                     (form :submit submit-login-form :class "ui form"
                                           (form-group :valid? form-login-username-valid?
