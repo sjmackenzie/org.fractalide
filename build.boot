@@ -59,7 +59,7 @@
             "founder/"
             "fractalide/"
             "freedom/"
-            "login/"
+            "auth/"
             "fvm/"
             "news/"
             "new-problem/"

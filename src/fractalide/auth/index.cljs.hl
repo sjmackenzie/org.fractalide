@@ -1,10 +1,11 @@
-(ns fractalide.login.index
+(ns fractalide.auth.index
   (:require-macros
     [fractalide.vform.core :refer [defv]])
   (:require
     [castra.core :refer [mkremote]]
     [fractalide.layout :as layout]
-    [fractalide.login.rpc :refer [create-auth-token auth-token
+    [fractalide.auth.rpc :refer [create-auth-token auth-token
+                                 set-token
                                   add-user! add-user-reply]]))
 
 (defc form-login-username "")
@@ -13,10 +14,20 @@
 (defc form-signup-password "")
 
 (defn validate-presence [v] (seq v))
+(defn validate-regexp [r]
+  (fn [v] (re-matches r (or v ""))))
+
 (defv form-login-username-valid? form-login-username validate-presence)
 (defv form-login-password-valid? form-login-password validate-presence)
 (defv form-signup-username-valid? form-signup-username validate-presence)
 (defv form-signup-password-valid? form-signup-password validate-presence)
+; uncomment when go live
+; valid password needs
+; * 8 or more characters
+; * At least 1 capital
+; * At least 1 numeric
+; * At least 1 special character
+#_(defv form-signup-password-valid? form-signup-password (validate-regexp #"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"))
 
 (defc= is-login-form-valid? (and  (:valid? form-login-password-valid?)  (:valid? form-login-username-valid?)))
 (defc= is-signup-form-valid? (and  (:valid? form-signup-password-valid?)  (:valid? form-signup-username-valid?)))
@@ -49,8 +60,13 @@
 (defelem input-control [attrs]
   ((cell-input attrs) :class {:form-control true}))
 
-(defelem message []
-  (h4 (text (str (get (second auth-token) :message ) add-user-reply))))
+(defn message [token]
+  (h4 (text (str
+              (if (first token)
+                (do
+                (set-token (second token))
+                (set! (.. js/window -location) "/news/"))
+                (get (second token) :message ))))))
 
 (defn pg []
   (layout/primary
@@ -76,7 +92,7 @@
                      (div :class "ui secondary segment"
                           (div :class "ui grid container"
                                (div :class "ui four wide column"
-                                    (message)
+
                                     (h1 :class "ui header" "Login")
                                     (form :submit submit-login-form :class "ui form"
                                           (form-group :valid? form-login-username-valid?
@@ -91,7 +107,9 @@
                                                   :type "submit"
                                                   :disabled (cell= (not is-login-form-valid?))
                                                   :style "background-color: rgba(64,170,84,1);"
-                                                  "Login"))
+                                                  "Login")
+                                          (message auth-token))
+                                    (message add-user-reply)
                                     (h1 :class "ui header" "Create account")
                                     (form :submit submit-signup-form :class "ui form"
                                           (form-group :valid? form-signup-username-valid?

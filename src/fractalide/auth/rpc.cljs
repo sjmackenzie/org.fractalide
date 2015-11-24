@@ -1,16 +1,34 @@
-(ns fractalide.login.rpc
+(ns fractalide.auth.rpc
   (:require-macros
     [javelin.core :refer [defc defc= cell=]]
     [config :as compile-time])
   (:require
     [javelin.core :refer [cell]]
+    ;  [goog.net.cookies :as cookies]
     [castra.core :refer [mkremote]]))
 
-(defc add-user-reply nil)
 (defc auth-token nil)
+(defc add-user-reply nil)
 (defc state nil)
 (defc error nil)
 (defc loading [])
+
+(def cookie-name "fractalide")
+
+(defc cookie-exists?
+  (not (nil? (.get goog.net.cookies cookie-name))))
+
+(defn delete-token []
+  (cell= (println "remove cookies: " (.isEmpty goog.net.cookies)))
+  (.remove goog.net.cookies cookie-name "/"))
+
+(defn get-token []
+  (.get goog.net.cookies cookie-name))
+
+(defn set-token [token]
+  (when token
+    (.set goog.net.cookies cookie-name token
+          86400 "/")))
 
 (cell= (when error
          (print "Error:")
@@ -18,7 +36,7 @@
                 (print line ":" (aget error line))))))
 
 (defn remote [fn-name result & [error* loading*]]
-  (mkremote (symbol (str "login.api/" fn-name))
+  (mkremote (symbol (str "auth.api/" fn-name))
             result
             (or error* error)
             (or loading* loading)

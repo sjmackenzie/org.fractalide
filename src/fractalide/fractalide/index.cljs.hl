@@ -5,14 +5,13 @@
     [fractalide.image :as image]
     [fractalide.fractalide.rpc :refer [ get-state state]]))
 
-
 (defelem message []
   [
    (button
      :class "ui fluid button"
-     :click #(get-state 1000)
+     :click #(get-state "hi")
      "button")
-   (h1 (text "Random Integer! ~{state}"))])
+   (h1 (text "Token: ~{state}"))])
 
 (defn pg []
   (layout/primary
