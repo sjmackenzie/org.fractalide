@@ -1,0 +1,30 @@
+(ns fractalide.change-password.index
+  (:require
+    [fractalide.news-layout :as news-layout]))
+
+(defn pg []
+  (news-layout/primary
+    :page-title "Change Password | Fractalide"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (div :class "ui form"
+         (div :class "ui sixteen width grid"
+              (div :class "equal width row"
+                   (div :class "two wide column"
+                        (div :class "ui large label" "current password: "))
+                   (div :class "column"
+                        (div :class "ui input"
+                             (input :type "text"))))
+              (div :class "equal width row"
+                   (div :class "two wide column"
+                        (div :class "ui large label" "new password: "))
+                   (div :class "column"
+                        (div :class "ui input"
+                             (input :type "text"))))
+              (div :class "equal width row"
+                   (div :class "two wide column")
+                   (div :class "column"
+                        (div :class "ui button"
+                             :style "background-color: rgba(64,170,84,1);"
+                             "Update")))))))

@@ -2,9 +2,6 @@
   (:require
     [fractalide.bottom-nav :refer [bottom-nav]]))
 
-(def route (route-cell))
-; (cell= (print "Route changed to:" route))
-
 (defelem primary
   [{:keys [page-css page-title description keywords] :as attrs} content]
   (let [ content-attrs (dissoc attrs

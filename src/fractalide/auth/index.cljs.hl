@@ -3,7 +3,7 @@
     [fractalide.vform.core :refer [defv]])
   (:require
     [castra.core :refer [mkremote]]
-    [fractalide.layout :as layout]
+    [fractalide.news-layout :as news-layout]
     [fractalide.auth.rpc :refer [create-auth-token auth-token
                                  set-token
                                   add-user! add-user-reply]]))
@@ -69,28 +69,12 @@
                 (get (second token) :message ))))))
 
 (defn pg []
-  (layout/primary
+  (news-layout/primary
     :page-title "Login | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (section
-      :id "news-list"
-      :class "ui grid"
-      (div :class "row"
-           (div :class "one wide column")
-           (div :class "fourteen wide column"
-                (div :class "ui hidden divider")
-                (div :class "ui segments"
-                     (div :class "ui segment"
-                          :style "background-color: rgba(64,170,84,1);"
-                          (div :class "ui secondary menu"
-                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
-                               (div :class "item "
-                                    (a :class "ui large header"
-                                       :href "/" "Fractalide"))))
-                     (div :class "ui secondary segment"
-                          (div :class "ui grid container"
+(div :class "ui grid container"
                                (div :class "ui four wide column"
 
                                     (h1 :class "ui header" "Login")
@@ -124,10 +108,4 @@
                                                   :type "submit"
                                                   :disabled (cell= (not is-signup-form-valid?))
                                                   :style "background-color: rgba(64,170,84,1);"
-                                                  "Create account")))))))))
-    (div :class "ui hidden divider"))
-  (div :class "one wide column"))
-
-
-
-
+                                                  "Create account"))))))

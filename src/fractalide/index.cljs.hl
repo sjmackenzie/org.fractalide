@@ -3,7 +3,9 @@
         [fractalide.layout :as layout]
         [fractalide.image :as image]
         [fractalide.about-us.index]
+        [fractalide.account.index]
         [fractalide.C4.index]
+        [fractalide.change-password.index]
         [fractalide.contact-us.index]
         [fractalide.docs.index]
         [fractalide.fargo.index]
@@ -123,7 +125,9 @@
 
 ((condp pg? (.. js/window -location -pathname)
    "/about-us/" fractalide.about-us.index/pg
+   "/account/" fractalide.account.index/pg
    "/C4/" fractalide.C4.index/pg
+   "/change-password/" fractalide.change-password.index/pg
    "/contact-us/" fractalide.contact-us.index/pg
    "/docs/" fractalide.docs.index/pg
    "/fargo/" fractalide.fargo.index/pg

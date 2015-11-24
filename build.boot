@@ -52,7 +52,9 @@
   (copy-index-html
     :dirs #{
             "about-us/"
+            "account/"
             "C4/"
+            "change-password/"
             "contact-us/"
             "docs/"
             "fargo/"
