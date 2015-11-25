@@ -1,12 +1,18 @@
 (ns fractalide.news-layout
   (:require
-    [fractalide.auth.rpc :refer [get-token delete-token]]
+    [fractalide.utils.token :refer
+     [get-username
+      get-token
+      delete-token
+      token-exists?]]
     [goog.net.cookies :as cookies]
+    [cljs.reader :as reader]
+    [clojure.string :as str]
     [fractalide.layout :as layout]))
 
 (defelem account-link []
   (let [token (get-token)
-        username (if "sjm" "login")
+        username (if token (get-username) "login")
         url (if token "/account/" "/auth/")]
     (div :class "right menu"
          (div :class "ui item"

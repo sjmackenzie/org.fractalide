@@ -13,23 +13,6 @@
 (defc error nil)
 (defc loading [])
 
-(def cookie-name "fractalide")
-
-(defc cookie-exists?
-  (not (nil? (.get goog.net.cookies cookie-name))))
-
-(defn delete-token []
-  (cell= (println "remove cookies: " (.isEmpty goog.net.cookies)))
-  (.remove goog.net.cookies cookie-name "/"))
-
-(defn get-token []
-  (.get goog.net.cookies cookie-name))
-
-(defn set-token [token]
-  (when token
-    (.set goog.net.cookies cookie-name token
-          86400 "/")))
-
 (cell= (when error
          (print "Error:")
          (vec (for [line (.keys js/Object error)]

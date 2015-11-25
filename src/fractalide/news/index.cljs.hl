@@ -2,6 +2,7 @@
   (:require
     [fractalide.news-layout :as news-layout]
     [fractalide.image :as image]
+    [javelin.core :refer [defc defc= cell=]]
     [fractalide.news.rpc :refer [get-problems problems]]))
 
 (defn problem-row [problem]

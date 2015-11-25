@@ -1,5 +1,6 @@
 (ns fractalide.account.index
   (:require
+    [fractalide.utils.token :refer [get-username]]
     [fractalide.news-layout :as news-layout]))
 
 (defn pg []
@@ -16,7 +17,7 @@
                      (div :class "two wide column"
                           (div :class "ui large label" "username: "))
                      (div :class "column"
-                          (div :class "ui large label" "sjm ")))
+                          (div :class "ui large label" (get-username))))
                 (div :class "equal width row"
                      (div :class "two wide column"
                           (div :class "ui large label" "created: "))

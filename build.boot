@@ -9,6 +9,7 @@
     [org.clojure/clojurescript "1.7.48"]
     [adzerk/cljs-console "0.1.1"]
     [adzerk/boot-cljs "1.7.48-5"]
+    [com.cognitect/transit-cljs "0.8.232"]
     [fractalide/boot-nix "0.1.0-SNAPSHOT"]
     [cljsjs/boot-cljsjs "0.5.0" :scope "test"]
     [exicon/semantic-ui "2.1.4-SNAPSHOT"]]

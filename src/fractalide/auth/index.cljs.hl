@@ -4,8 +4,8 @@
   (:require
     [castra.core :refer [mkremote]]
     [fractalide.news-layout :as news-layout]
+    [fractalide.utils.token :refer [set-token]]
     [fractalide.auth.rpc :refer [create-auth-token auth-token
-                                 set-token
                                   add-user! add-user-reply]]))
 
 (defc form-login-username "")

@@ -13,10 +13,18 @@
   }
   
 
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.232/transit-cljs-0.8.232.jar
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.232/transit-cljs-0.8.232.jar.sha1
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.232/transit-cljs-0.8.232.pom
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.232/transit-cljs-0.8.232.pom.sha1
 fetchArtifact https://clojars.org/repo/ adzerk/cljs-console/0.1.1/cljs-console-0.1.1.jar
 fetchArtifact https://clojars.org/repo/ adzerk/cljs-console/0.1.1/cljs-console-0.1.1.jar.sha1
 fetchArtifact https://clojars.org/repo/ adzerk/cljs-console/0.1.1/cljs-console-0.1.1.pom
 fetchArtifact https://clojars.org/repo/ adzerk/cljs-console/0.1.1/cljs-console-0.1.1.pom.sha1
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.jar
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.jar.sha1
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.pom
+fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.pom.sha1
 fetchArtifact https://clojars.org/repo/ fractalide/boot-nix/0.1.0-SNAPSHOT/boot-nix-0.1.0-SNAPSHOT.jar
 fetchArtifact https://clojars.org/repo/ fractalide/boot-nix/0.1.0-SNAPSHOT/boot-nix-0.1.0-SNAPSHOT.jar.sha1
 fetchArtifact https://clojars.org/repo/ fractalide/boot-nix/0.1.0-SNAPSHOT/boot-nix-0.1.0-SNAPSHOT.pom
@@ -85,14 +93,6 @@ fetchArtifact https://clojars.org/repo/ hoplon/castra/3.0.0-alpha1/castra-3.0.0-
 fetchArtifact https://clojars.org/repo/ hoplon/castra/3.0.0-alpha1/castra-3.0.0-alpha1.jar.sha1
 fetchArtifact https://clojars.org/repo/ hoplon/castra/3.0.0-alpha1/castra-3.0.0-alpha1.pom
 fetchArtifact https://clojars.org/repo/ hoplon/castra/3.0.0-alpha1/castra-3.0.0-alpha1.pom.sha1
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.225/transit-cljs-0.8.225.jar
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.225/transit-cljs-0.8.225.jar.sha1
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.225/transit-cljs-0.8.225.pom
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-cljs/0.8.225/transit-cljs-0.8.225.pom.sha1
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.jar
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.jar.sha1
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.pom
-fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.pom.sha1
 fetchArtifact https://clojars.org/repo/ ring/ring-core/1.4.0/ring-core-1.4.0.jar
 fetchArtifact https://clojars.org/repo/ ring/ring-core/1.4.0/ring-core-1.4.0.jar.sha1
 fetchArtifact https://clojars.org/repo/ ring/ring-core/1.4.0/ring-core-1.4.0.pom
