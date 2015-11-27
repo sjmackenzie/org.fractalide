@@ -1,9 +1,12 @@
-(ns fractalide.login.index
+(ns fractalide.auth.index
   (:require-macros
     [fractalide.vform.core :refer [defv]])
   (:require
-    [fractalide.layout :as layout]
-    [fractalide.login.rpc :refer [create-auth-token token]]))
+    [castra.core :refer [mkremote]]
+    [fractalide.news-layout :as news-layout]
+    [fractalide.utils.token :refer [set-token]]
+    [fractalide.auth.rpc :refer [create-auth-token auth-token
+                                  add-user! add-user-reply]]))
 
 (defc form-login-username "")
 (defc form-login-password "")
@@ -11,10 +14,20 @@
 (defc form-signup-password "")
 
 (defn validate-presence [v] (seq v))
+(defn validate-regexp [r]
+  (fn [v] (re-matches r (or v ""))))
+
 (defv form-login-username-valid? form-login-username validate-presence)
 (defv form-login-password-valid? form-login-password validate-presence)
 (defv form-signup-username-valid? form-signup-username validate-presence)
 (defv form-signup-password-valid? form-signup-password validate-presence)
+; uncomment when go live
+; valid password needs
+; * 8 or more characters
+; * At least 1 capital
+; * At least 1 numeric
+; * At least 1 special character
+#_(defv form-signup-password-valid? form-signup-password (validate-regexp #"(?=^.{8,}$)(?=.*\d)(?=.*[!@#$%^&*]+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"))
 
 (defc= is-login-form-valid? (and  (:valid? form-login-password-valid?)  (:valid? form-login-username-valid?)))
 (defc= is-signup-form-valid? (and  (:valid? form-signup-password-valid?)  (:valid? form-signup-username-valid?)))
@@ -27,8 +40,8 @@
   {:username form-signup-username
    :password form-signup-password})
 
-(defn submit-login-form [v] (js/alert (str "Send: " (pr-str @login-form-data))))
-(defn submit-signup-form [_] (js/alert (str "Send: " (pr-str @signup-form-data))))
+(defn submit-login-form [_] (create-auth-token @login-form-data))
+(defn submit-signup-form [_] (add-user! @signup-form-data))
 
 (defelem cell-input [{:keys [cell] :as attrs}]
   (let [target-value #(do! (-> % .-currentTarget) :value)]
@@ -47,30 +60,23 @@
 (defelem input-control [attrs]
   ((cell-input attrs) :class {:form-control true}))
 
+(defn message [token]
+  (h4 (text (str
+              (if (first token)
+                (do
+                (set-token (second token))
+                (set! (.. js/window -location) "/news/"))
+                (get (second token) :message ))))))
+
 (defn pg []
-  (layout/primary
+  (news-layout/primary
     :page-title "Login | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (section
-      :id "news-list"
-      :class "ui grid"
-      (div :class "row"
-           (div :class "one wide column")
-           (div :class "fourteen wide column"
-                (div :class "ui hidden divider")
-                (div :class "ui segments"
-                     (div :class "ui segment"
-                          :style "background-color: rgba(64,170,84,1);"
-                          (div :class "ui secondary menu"
-                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
-                               (div :class "item "
-                                    (a :class "ui large header"
-                                       :href "/" "Fractalide"))))
-                     (div :class "ui secondary segment"
-                          (div :class "ui grid container"
+(div :class "ui grid container"
                                (div :class "ui four wide column"
+
                                     (h1 :class "ui header" "Login")
                                     (form :submit submit-login-form :class "ui form"
                                           (form-group :valid? form-login-username-valid?
@@ -85,7 +91,9 @@
                                                   :type "submit"
                                                   :disabled (cell= (not is-login-form-valid?))
                                                   :style "background-color: rgba(64,170,84,1);"
-                                                  "Login"))
+                                                  "Login")
+                                          (message auth-token))
+                                    (message add-user-reply)
                                     (h1 :class "ui header" "Create account")
                                     (form :submit submit-signup-form :class "ui form"
                                           (form-group :valid? form-signup-username-valid?
@@ -100,10 +108,4 @@
                                                   :type "submit"
                                                   :disabled (cell= (not is-signup-form-valid?))
                                                   :style "background-color: rgba(64,170,84,1);"
-                                                  "Create account")))))))))
-    (div :class "ui hidden divider"))
-  (div :class "one wide column"))
-
-
-
-
+                                                  "Create account"))))))

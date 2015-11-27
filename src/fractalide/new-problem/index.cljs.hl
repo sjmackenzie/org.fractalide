@@ -1,61 +1,46 @@
 (ns fractalide.new-problem.index
   (:require
     [fractalide.new-problem.examples :as examples]
-    [fractalide.layout :as layout]))
+    [fractalide.news-layout :as news-layout]))
 
 (defn pg []
-  (layout/primary
+  (news-layout/primary
     :page-title "New Problem | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (section
-      :id "news-list"
-      :class "ui grid"
-      (div :class "row"
-           (div :class "one wide column")
-           (div :class "fourteen wide column"
+    (div
+      (div :class "column"
+           (div :class "ui form"
                 (div :class "ui hidden divider")
-                (div :class "ui segments"
-                     (div :class "ui segment"
-                          :style "background-color: rgba(64,170,84,1);"
-                          (div :class "ui secondary menu"
-                               (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
-                               (div :class "item "
-                                    (a :class "ui large header"
-                                       :href "/" "Fractalide"))))
-                     (div :class "ui secondary segment"
-                          (div :class "column"
-                               (div :class "ui form"
-                                    (div :class "ui hidden divider")
-                                         (textarea :rows 1 :placeholder "Component Name"))
-                               (div :class "ui hidden divider"))
-                          (div :class "ui equal width grid"
-                               (div :class "equal width row"
-                                    (div :class "column"
-                                         (div :class "ui form"
-                                              (textarea
-                                                :placeholder "Problem"
-                                                :rows 5))))
-                               (div :class "ui equal width row"
-                                    (div :class "column"
-                                         (div :class "ui form"
-                                              (textarea
-                                                :text examples/inverter
-                                                :placeholder "Solution"
-                                                :rows 20)
-                                              (div :class "ui hidden divider")
-                                              (div :class "ui button"
-                                                   :style "background-color: rgba(64,170,84,1);"
-                                                   "Run")))
-                                    (div :class "column"
-                                         (div :class "ui form"
-                                              (textarea
-                                                :placeholder "Compilation output"
-                                                :rows 20)
-                                              (div :class "ui hidden divider"))))))))))
-    (div :class "ui hidden divider"))
-  (div :class "one wide column"))
+                (textarea
+                  :rows 1
+                  :placeholder "Component Name"))
+           (div :class "ui hidden divider"))
+      (div :class "ui equal width grid"
+           (div :class "equal width row"
+                (div :class "column"
+                     (div :class "ui form"
+                          (textarea
+                            :placeholder "Problem"
+                            :rows 5))))
+           (div :class "ui equal width row"
+                (div :class "column"
+                     (div :class "ui form"
+                          (textarea
+                            :text examples/inverter
+                            :placeholder "Solution"
+                            :rows 20)
+                          (div :class "ui hidden divider")
+                          (div :class "ui button"
+                               :style "background-color: rgba(64,170,84,1);"
+                               "Run")))
+                (div :class "column"
+                     (div :class "ui form"
+                          (textarea
+                            :placeholder "Compilation output"
+                            :rows 20)
+                          (div :class "ui hidden divider"))))))))
 
 
 

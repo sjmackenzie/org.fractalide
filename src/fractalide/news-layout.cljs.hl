@@ -1,0 +1,62 @@
+(ns fractalide.news-layout
+  (:require
+    [fractalide.utils.token :refer
+     [get-username
+      get-token
+      delete-token
+      token-exists?]]
+    [goog.net.cookies :as cookies]
+    [cljs.reader :as reader]
+    [clojure.string :as str]
+    [fractalide.layout :as layout]))
+
+(defelem account-link []
+  (let [token (get-token)
+        username (if token (get-username) "login")
+        url (if token "/account/" "/auth/")]
+    (div :class "right menu"
+         (div :class "ui item"
+              (a :class "ui small header"
+                 :href url username))
+         (if token
+           (div :class "ui item"
+                (a :class "ui small header"
+                   :style "background-color: rgba(64,170,84,1);"
+                   :href "/news/"
+                   :click #(delete-token)
+                   "logout"))))))
+
+(defelem primary
+  [{:keys [page-css page-title section-title description keywords] :as attrs} content]
+  (let [ content-attrs (dissoc attrs
+                               :page-title :description :keywords :page-css)]
+    (layout/primary
+      :page-title page-title
+      :description description
+      :keywords keywords
+      :page-css page-css
+      (section
+        :id "news-list"
+        :class "ui grid"
+        (div :class "row"
+             (div :class "one wide column")
+             (div :class "fourteen wide column"
+                  (div :class "ui hidden divider")
+                  (div :class "ui segments"
+                       (div :class "ui segment"
+                            :style "background-color: rgba(64,170,84,1);"
+                            (div :class "ui secondary menu"
+                                 (a :href "/" (img :src "/images/fractalide_50x50_logo.png"))
+                                 (div :class "item "
+                                      (a :class "ui large header"
+                                         :href "/news/" "Fractal News"))
+                                 (div :class "item"
+                                      (a :class "ui small header"
+                                         :href "/new-problem/" "new problem"))
+                                 (account-link)))
+                       (div :class "ui secondary segment"
+                            (div :class "ui hidden divider")
+                            ((div :id "content") content-attrs content))))
+             (div :class "one wide column"))
+        (div :class "ui hidden divider")))))
+

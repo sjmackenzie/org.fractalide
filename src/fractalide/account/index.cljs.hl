@@ -1,0 +1,50 @@
+(ns fractalide.account.index
+  (:require
+    [fractalide.utils.token :refer [get-username]]
+    [fractalide.news-layout :as news-layout]))
+
+(defn pg []
+  (news-layout/primary
+    :page-title "Account | Fractalide"
+    :description "Fractalide is Free Software"
+    :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
+    :page-css "index.inc.css"
+    (div
+      (div :class "ui hidden divider")
+      (div :class "ui form"
+           (div :class "ui sixteen width grid"
+                (div :class "equal width row"
+                     (div :class "two wide column"
+                          (div :class "ui large label" "username: "))
+                     (div :class "column"
+                          (div :class "ui large label" (get-username))))
+                (div :class "equal width row"
+                     (div :class "two wide column"
+                          (div :class "ui large label" "created: "))
+                     (div :class "column"
+                          (div :class "ui large label" "2935 days ago")))
+                (div :class "equal width row"
+                     (div :class "two wide column"
+                          (div :class "ui large label" "about: "))
+                     (div :class "five wide column"
+                          (textarea
+                            :rows 5
+                            :placeholder "")))
+                (div :class "equal width row"
+                     (div :class "two wide column"
+                          (div :class "ui large label" "email: "))
+                     (div :class "five wide column"
+                          (div :class "ui input"
+                               (input
+                                 :type "text"
+                                 :placeholder "email@email.org"))))
+                (div :class "row"
+                     (div :class "two wide column")
+                     (div :class "five wide column"
+                          (a :href "/change-password/" "change password")))
+                (div :class "equal width row"
+                     (div :class "two wide column")
+                     (div :class "column"
+                          (div :class "ui button"
+                               :style "background-color: rgba(64,170,84,1);"
+                               "Update"))))))))
