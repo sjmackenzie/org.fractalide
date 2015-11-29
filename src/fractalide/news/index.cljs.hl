@@ -5,7 +5,7 @@
     [javelin.core :refer [defc defc= cell=]]
     [fractalide.news.rpc :refer [get-problems problems]]))
 
-(defn problem-row [problem]
+(defn problem-item [problem]
   (div :class "item"
        :style "padding-top: 0.2em; padding-bottom: 0.2em; "
        (i :class "large caret up icon")
@@ -22,7 +22,7 @@
     :page-css "index.inc.css"
     (div :class "ui middle aligned very relaxed ordered medium list"
          (loop-tpl :bindings [problem problems]
-                   (problem-row problem)))))
+                   (problem-item problem)))))
 
 
 

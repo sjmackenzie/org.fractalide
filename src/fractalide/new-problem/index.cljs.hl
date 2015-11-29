@@ -3,45 +3,122 @@
     [fractalide.new-problem.examples :as examples]
     [fractalide.news-layout :as news-layout]))
 
+(def fbp-comp {
+               :name "component name"
+               :desc "problem description"
+               :src "src"
+               :author "author"
+               :inputs [
+                        {:name "input1" :type "simple" :schema "schema1" :error "error" }
+                        {:name "input2" :type "array" :schema "schema2" :error "error1" }]
+               :outputs [
+                         {:name "output1" :type "simple" :schema "schema1" :error "error"}
+                         {:name "output2" :type "array" :schema "schema2" :error "error1"}]})
+
+(defn port [port]
+  (div :class "item"
+       (div :class "content"
+            (div :class "header"
+                 :text (cell= (:name port)))
+            (textarea
+              :required true
+              :text (cell=(:capnp port))
+              :rows 5))))
+
+(defn port-list [type port-data]
+  (let [
+        new-port (cell false)
+        port-type (cell "simple")
+        simple-port-positive? (fn [] (if (= port-type "simple") "positive" ""))
+        array-port-positive? (fn [] (if (= port-type "array") "positive" ""))
+        port-error (cell "")
+        port-name (cell "")
+        port-schema (cell "")
+        ]
+    [(div :style "padding-bottom: 1em;"
+          (label :text "Describe " type " data schemas for each port: (" (a :target "_blank" :href "https://capnproto.org/language.html" "help!")")"
+                 (div :class "mini ui right floated button"
+                      :style "background-color: rgba(64,170,84,1);"
+                      :click #(do (reset! new-port true))
+                      "ADD") ))
+     (div :toggle new-port
+          [(div :style "padding-bottom: 0.3em;"
+                (input :class "ui input"
+                       :value port-name
+                       :change #(reset! port-name @%)
+                       :placeholder "new port name"))
+           (div :style "padding-bottom: 0.3em;"
+                (div :class "ui buttons"
+                     (button :class (str "ui " (simple-port-positive?)" button")
+                             :click #(reset! port-type "simple")
+                             :value port-type "simple")
+                     (div :class "or")
+                     (button :class (str "ui " (array-port-positive?)" button ")
+                             :click #(reset! port-type "array")
+                             :value port-type "array")))
+           (div :style "padding-bottom: 0.3em;"
+                (textarea
+                  :required true
+                  :value port-schema
+                  :change #(reset! port-schema @%)
+                  :placeholder (cell= examples/capnp)
+                  :rows 5))
+           (div :style "padding-bottom: 1.1em;"
+                (div :class "mini ui right floated button"
+                     :style "background-color: rgba(64,170,84,1);"
+                     :click #(dosync
+                               (swap! port-data conj {:name @port-name :type @port-type :schema @port-schema :error @port-error})
+                               (reset! port-name "")
+                               (reset! port-schema "")
+                               (reset! new-port false))
+                     "INSERT")
+                (div :class "mini ui right floated button"
+                     :style "background-color: rgba(64,170,84,1);"
+                     :click #(dosync
+                               (reset! port-name "")
+                               (reset! port-schema "")
+                               (reset! new-port false))
+                     "CANCEL"))
+           (div :class "ui divider")])
+     (div :class "ui styled fluid list"
+          (loop-tpl :bindings [input port-data]
+                    (port input)))]))
+
+(defn component [fbp-comp]
+  (div :class "ui form"
+       (div :class "column"
+            (div :class "ui form"
+                 (div :class "ui hidden divider")
+                 (label :text "Component name:")
+                 (textarea
+                   :placeholder "Use a hierarchical name similar to: \"/domain/specialty/component-name\" "
+                   :required true
+                   :rows 1))
+            (div :class "ui hidden divider"))
+       (div :class "ui equal width grid"
+            (div :class "equal width row"
+                 (div :class "four wide column"
+                      (port-list "input" (get fbp-comp :inputs)))
+                 (div :class "eight wide column"
+                      (div :class "ui form"
+                           (label
+                             :text "Describe the problem:")
+                           (textarea
+                             :required true
+                             :placeholder "Please clearly describe the problem you're facing. The community will set about implementing a component which matches these specifications. If you use the word \"and\", probably your component specification is too complex."
+                             :rows 14))
+                      (div :class "ui hidden divider")
+                      (div :class "ui right floated button"
+                           :style "background-color: rgba(64,170,84,1);"
+                           "Submit"))
+                 (div :class "four wide column"
+                      (port-list "output" (get fbp-comp :outputs)))))))
+
 (defn pg []
   (news-layout/primary
     :page-title "New Problem | Fractalide"
     :description "Fractalide is Free Software"
     :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (div
-      (div :class "column"
-           (div :class "ui form"
-                (div :class "ui hidden divider")
-                (textarea
-                  :rows 1
-                  :placeholder "Component Name"))
-           (div :class "ui hidden divider"))
-      (div :class "ui equal width grid"
-           (div :class "equal width row"
-                (div :class "column"
-                     (div :class "ui form"
-                          (textarea
-                            :placeholder "Problem"
-                            :rows 5))))
-           (div :class "ui equal width row"
-                (div :class "column"
-                     (div :class "ui form"
-                          (textarea
-                            :text examples/inverter
-                            :placeholder "Solution"
-                            :rows 20)
-                          (div :class "ui hidden divider")
-                          (div :class "ui button"
-                               :style "background-color: rgba(64,170,84,1);"
-                               "Run")))
-                (div :class "column"
-                     (div :class "ui form"
-                          (textarea
-                            :placeholder "Compilation output"
-                            :rows 20)
-                          (div :class "ui hidden divider"))))))))
-
-
-
+    (component fbp-comp)))
 
