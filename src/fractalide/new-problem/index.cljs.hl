@@ -4,25 +4,14 @@
     [fractalide.news-layout :as news-layout]))
 
 (defn pg []
+  (defc component-name "")
+  (defc component-desc "")
+  (defc src "")
+  (defc author "")
+  (defc inputs {})
+  (defc outputs {})
 
-  (defc fbp-comp
-    {:name "component name"
-     :desc "problem description"
-     :src "src"
-     :author "author"
-     :inputs []
-     :outputs []})
-
-  (defc inputs
-    {:input1 {:type "simple" :schema "schema1" :error "error" }
-     :input2 {:type "array" :schema "schema2" :error "ok" }})
-  (defc outputs
-    {:output1 {:type "simple" :schema "schema1" :error "ok"}
-     :output2 {:type "array" :schema "schema2" :error "error"}})
-
-  (defn edit-port [])
-
-  (defn port [port]
+  (defn port [port delete-port]
     (let [edit-port (cell true)
           port-name (cell (name (key @port)))
           port-schema (cell (get (val @port) :schema))
@@ -54,9 +43,9 @@
                                                                :click #(set-port-type "array")
                                                                :value port-type "ARRAY"))))
                                       (div :style "padding-bottom: 0.3em;"
-                                           (b (input
-                                                :value port-name
-                                                :change #(reset! port-name @%))))
+                                           (input
+                                             :value port-name
+                                             :change #(reset! port-name @%)))
                                       (div :style "padding-bottom: 0.3em;"
                                            (textarea
                                              :value port-schema
@@ -64,53 +53,63 @@
                                              :rows 5))))
                                (div :toggle (cell= (= edit-port true))
                                     (div
-                                      (div
-                                        (b (label
-                                             :text port-name))
-                                        (div (label :text port-type))
-                                        (pre (label
-                                               :text (cell= port-schema)
-                                               :rows 5))))))
+                                      (b (label
+                                           :text "name: "port-name))
+                                      (div (cell= (b (label :text "type: "port-type " port"))))
+                                      (div (b (label :text "schema: ")))
+                                      (pre (cell= (label
+                                             :text port-schema
+                                             :rows 5))))))
                           (div :class "twe wide column"
                                (div :toggle (cell= (= edit-port false))
-                                    (div :class "ui mini basic vertical icon buttons"
+                                    (div :class "fluid ui mini basic vertical icon buttons"
                                          (button :class "ui button"
                                                  :click #(reset! edit-port true)
                                                  (i :class "large edit icon"))
                                          (button :class "ui button"
+                                                 :click #(delete-port port-name)
                                                  (i :class "large red remove icon"))))
                                (div :toggle (cell= (= edit-port true))
-                                    ;(div; :style "padding-bottom: 10em; ")
-                                    (div :class "mini ui basic vertical icon centered buttons"
+                                    (div :class "fluid mini ui basic vertical icon centered buttons"
                                          (button :class "ui button"
                                                  :click #(reset! edit-port false)
                                                  (i :class "large edit icon"))
                                          (button :class "ui button"
+                                                 :click #(delete-port port-name)
                                                  (i :class "large red remove icon")))))))))))
 
-  (defn port-list [type ports]
+  (defn port-list [in-or-out? ports]
     (let [
           port-type (cell "simple")
           port-positive? (fn [pt] (if (= @port-type pt) "positive" "negative"))
           set-port-type (fn [pt] (reset! port-type pt))
           new-port (cell false)
+          delete-port (fn [port-name]
+                        (do
+                          (cell= (println "cannot delete component!"))
+                          (cell= (println "ports type: " (type ports)))
+                          (cell= (println "ports before: " ports))
+                          (cell= (println "port to be removed: " (keyword port-name)))
+                          (swap! ports dissoc (keyword port-name))
+                          (cell= (println "ports after: " ports))
+                          (cell= (println "--------"))))
           port-error (cell "ok")
           port-name (cell "")
           port-schema (cell "")
           reset-new-port (fn [] (reset! port-name "") (reset! port-schema "") (reset! port-type "simple") (reset! new-port false))
           ]
       [
-       (div :class "ui segments" ;"ui styled fluid list"
+       (div :class "ui segments"
             (div :class "ui segment"
                  (div :style "padding-bottom: 1em;"
-                      (b (label :text (clojure.string/capitalize type) " ports"
+                      (b (label :text (clojure.string/capitalize in-or-out?) " ports"
                                 (div :class "mini ui right floated button"
                                      :style "background-color: rgba(64,170,84,1);"
                                      :click #(reset! new-port true)
                                      "ADD") )))
                  (div :toggle new-port
                       [(div :class "ui raised segment"
-                            (label :class "ui small header" "New " type " port ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
+                            (label :class "ui small header" "New " in-or-out? " port ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
                                    (div :style "padding-bottom: 2.3em;"
                                         (cell= (div :class "mini ui right floated buttons"
                                                     (button :class (str "ui "(port-positive? "simple")" button")
@@ -135,8 +134,8 @@
                             (div :style "padding-bottom: 1.9em;"
                                  (div :class "mini ui right floated button"
                                       :style "background-color: rgba(64,170,84,1);"
-                                      :click #(dosync
-                                                (swap! ports conj {(keyword @port-name) {:type @port-type :schema @port-schema :error @port-error}})
+                                      :click #(do
+                                                (swap! ports assoc (keyword @port-name) {:type @port-type :schema @port-schema :error @port-error})
                                                 (reset-new-port))
                                       "INSERT")
                                  (div :class "mini ui right floated button"
@@ -144,19 +143,17 @@
                                       :click #(reset-new-port)
                                       "CANCEL")))]))
             (loop-tpl :bindings [a-port ports]
-                      (port a-port)))]))
+                      (port a-port delete-port)))]))
 
-  (defn component [fbp-comp]
-    (let [
-          component-name (cell "")
-          problem-desc (cell "")
-          author (cell "")])
+  (defn component []
     (div :class "ui form"
          (div :class "column"
               (div :class "ui form"
                    (div :class "ui hidden divider")
                    (h3 :text "Component name:")
                    (textarea
+                     :value component-name
+                     :change #(reset! component-name @%)
                      :placeholder "Use a hierarchical name similar to: \"/domain/specialty/component-name\" "
                      :required true
                      :rows 1))
@@ -170,7 +167,8 @@
                              (b (label
                                   :text "Describe the problem:"))
                              (textarea
-                               :required true
+                               :value component-desc
+                               :change #(reset! component-desc @%)
                                :placeholder "Please clearly describe the problem you're facing. The community will set about implementing a component which matches these specifications. If you use the word \"and\", probably your component specification is too complex."
                                :rows 14))
                         (div :class "ui hidden divider")
@@ -185,5 +183,5 @@
     :description "Fractalide is Free Software"
     :keywords "Noware, Fractalide, Build subnets, Build mobile apps, Mobile development platform"
     :page-css "index.inc.css"
-    (component fbp-comp)))
+    (component)))
 
