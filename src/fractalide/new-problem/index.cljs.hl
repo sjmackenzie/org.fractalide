@@ -23,9 +23,9 @@
     (let [ports (which-ports? in-or-out?)]
       (swap! ports assoc (key (first port)) (val (first port)))))
 
-  (defn edit-port [in-or-out? port-name]
+  (defn update-port [in-or-out? port-key port-item value]
     (let [ports (which-ports? in-or-out?)]
-      (cell= (println "edit port"))))
+      (swap! ports assoc-in [port-key port-item] value)))
 
   (defn port-list [in-or-out?]
     (let [
@@ -90,67 +90,67 @@
                                            port-type :type
                                            port-schema :schema
                                            port-error :error}] (which-ports? in-or-out?)]
-                     (let [edit-port (cell true)
-                           set-port-type (fn [pt] (reset! port-type pt))
+                     (let [edit-port (cell false)
+                           edit? (fn [e] (reset! edit-port e))
                            port-positive? (cell= (fn [pt] (if (= port-type pt) "positive" "negative")))
                            error? (fn [err] (case err
                                               "ok" "green"
                                               "error" "red"
                                               "warning" "orange"
-                                              "default"))
-                           err-colour #(error? port-error)
-                           segment-colour (cell= (str "ui " err-colour " segment"))
-                           ]
+                                              ""))
+                           err-colour (cell= (error? port-error))
+                           segment-colour (cell= (str "ui " err-colour " segment"))]
                        (div :class segment-colour
                             (div :class "content"
                                  (div :class "ui equal width grid"
-                                      (cell= (div :class "equal width row"
-                                                  (div :class "fourteen wide column"
-                                                       (div :toggle (cell= (= edit-port false))
-                                                            (div
-                                                              (div :style "padding-bottom: 0.3em;"
-                                                                   (cell= (div :class "mini ui floated buttons"
-                                                                               (button :class (str "ui "(port-positive? "simple")" button")
-                                                                                       :click #(set-port-type "simple")
-                                                                                       :value port-type "SIMPLE")
-                                                                               (div :class "or")
-                                                                               (button :class (str "ui "(port-positive? "array")" button ")
-                                                                                       :click #(set-port-type "array")
-                                                                                       :value port-type "ARRAY"))))
-                                                              (div :style "padding-bottom: 0.3em;"
-                                                                   (input
-                                                                     :value port-name
-                                                                     :change #(reset! port-name @%)))
-                                                              (div :style "padding-bottom: 0.3em;"
-                                                                   (textarea
-                                                                     :value port-schema
-                                                                     :change #(reset! port-schema @%)
-                                                                     :rows 5))))
-                                                       (div :toggle (cell= (= edit-port true))
-                                                            (div
-                                                              (b (label (text "port name: ~{port-name}")))
-                                                              (div (cell= (b (label (text "type: ~{port-type} port")))))
-                                                              (div (b (label (text "schema: "))))
-                                                              (pre (cell= (label
-                                                                            :rows 5
-                                                                            (text "~{port-schema}")))))))
-                                                  (div :class "twe wide column"
-                                                       (div :toggle (cell= (= edit-port false))
-                                                            (div :class "fluid ui mini basic vertical icon buttons"
-                                                                 (button :class "ui button"
-                                                                         :click #(reset! edit-port true)
-                                                                         (i :class "large edit icon"))
-                                                                 (button :class "ui button"
-                                                                         :click #(remove-port in-or-out? port-key)
-                                                                         (i :class "large red remove icon"))))
-                                                       (div :toggle (cell= (= edit-port true))
-                                                            (div :class "fluid mini ui basic vertical icon centered buttons"
-                                                                 (button :class "ui button"
-                                                                         :click #(reset! edit-port false)
-                                                                         (i :class "large edit icon"))
-                                                                 (button :class "ui button"
-                                                                         :click #(remove-port in-or-out? port-key)
-                                                                         (i :class "large red remove icon")))))))))))))))
+                                      (cell=
+                                        (div :class "equal width row"
+                                             (div :class "fourteen wide column"
+                                                  (div :toggle (cell= (= edit-port true))
+                                                       (div
+                                                         (div :style "padding-bottom: 0.3em;"
+                                                              (cell= (div :class "mini ui floated buttons"
+                                                                          (button :class (str "ui "(port-positive? "simple")" button")
+                                                                                  :click #(update-port in-or-out? port-key :type "simple")
+                                                                                  :value port-type "SIMPLE")
+                                                                          (div :class "or")
+                                                                          (button :class (str "ui "(port-positive? "array")" button ")
+                                                                                  :click #(update-port in-or-out? port-key :type "array")
+                                                                                  :value port-type "ARRAY"))))
+                                                         (div :style "padding-bottom: 0.3em;"
+                                                              (input
+                                                                :value port-name
+                                                                :change #(update-port in-or-out? port-key :name @%)))
+                                                         (div :style "padding-bottom: 0.3em;"
+                                                              (textarea
+                                                                :value port-schema
+                                                                :change #(update-port in-or-out? port-key :schema @%)
+                                                                :rows 5))))
+                                                  (div :toggle (cell= (= edit-port false))
+                                                       (div
+                                                         (b (label (text "port name: ~{port-name}")))
+                                                         (div (cell= (b (label (text "type: ~{port-type} port")))))
+                                                         (div (b (label (text "schema: "))))
+                                                         (pre (cell= (label
+                                                                       :rows 5
+                                                                       (text "~{port-schema}")))))))
+                                             (div :class "twe wide column"
+                                                  (div :toggle (cell= (= edit-port true))
+                                                       (div :class "fluid ui mini basic vertical icon buttons"
+                                                            (button :class "ui button"
+                                                                    :click #(edit? false)
+                                                                    (i :class "large edit icon"))
+                                                            (button :class "ui button"
+                                                                    :click #(remove-port in-or-out? port-key)
+                                                                    (i :class "large red remove icon"))))
+                                                  (div :toggle (cell= (= edit-port false))
+                                                       (div :class "fluid mini ui basic vertical icon centered buttons"
+                                                            (button :class "ui button"
+                                                                    :click #(edit? true)
+                                                                    (i :class "large edit icon"))
+                                                            (button :class "ui button"
+                                                                    :click #(remove-port in-or-out? port-key)
+                                                                    (i :class "large red remove icon")))))))))))))))
 
   (defn component []
     (div :class "ui form"
