@@ -1,7 +1,8 @@
 (ns fractalide.new-problem.index
   (:require
     [fractalide.new-problem.examples :as examples]
-    [fractalide.news-layout :as news-layout]))
+    [fractalide.news-layout :as news-layout]
+    [hoplon.storage-atom :refer [local-storage]]))
 
 (defn pg []
   (defc component-name "")
@@ -11,139 +12,145 @@
   (defc inputs {})
   (defc outputs {})
 
-  (defn port [port delete-port]
-    (let [edit-port (cell true)
-          port-name (cell (name (key @port)))
-          port-schema (cell (get (val @port) :schema))
-          port-type (cell (get (val @port) :type))
-          set-port-type (fn [pt] (reset! port-type pt))
-          port-positive? (fn [pt] (if (= @port-type pt) "positive" "negative"))
-          error? (fn [err] (case err
-                             "ok" "green"
-                             "error" "red"
-                             "warning" "orange"
-                             "default"))
-          err-colour (cell= (error? (get (val port) :error)))
-          segment-colour (cell= (str "ui " err-colour " segment"))
-          ]
-      (div :class segment-colour
-           (div :class "content"
-                (div :class "ui equal width grid"
-                     (div :class "equal width row"
-                          (div :class "fourteen wide column"
-                               (div :toggle (cell= (= edit-port false))
-                                    (div
-                                      (div :style "padding-bottom: 0.3em;"
-                                           (cell= (div :class "mini ui floated buttons"
-                                                       (button :class (str "ui "(port-positive? "simple")" button")
-                                                               :click #(set-port-type "simple")
-                                                               :value port-type "SIMPLE")
-                                                       (div :class "or")
-                                                       (button :class (str "ui "(port-positive? "array")" button ")
-                                                               :click #(set-port-type "array")
-                                                               :value port-type "ARRAY"))))
-                                      (div :style "padding-bottom: 0.3em;"
-                                           (input
-                                             :value port-name
-                                             :change #(reset! port-name @%)))
-                                      (div :style "padding-bottom: 0.3em;"
-                                           (textarea
-                                             :value port-schema
-                                             :change #(reset! port-schema @%)
-                                             :rows 5))))
-                               (div :toggle (cell= (= edit-port true))
-                                    (div
-                                      (b (label
-                                           :text "name: "port-name))
-                                      (div (cell= (b (label :text "type: "port-type " port"))))
-                                      (div (b (label :text "schema: ")))
-                                      (pre (cell= (label
-                                             :text port-schema
-                                             :rows 5))))))
-                          (div :class "twe wide column"
-                               (div :toggle (cell= (= edit-port false))
-                                    (div :class "fluid ui mini basic vertical icon buttons"
-                                         (button :class "ui button"
-                                                 :click #(reset! edit-port true)
-                                                 (i :class "large edit icon"))
-                                         (button :class "ui button"
-                                                 :click #(delete-port port-name)
-                                                 (i :class "large red remove icon"))))
-                               (div :toggle (cell= (= edit-port true))
-                                    (div :class "fluid mini ui basic vertical icon centered buttons"
-                                         (button :class "ui button"
-                                                 :click #(reset! edit-port false)
-                                                 (i :class "large edit icon"))
-                                         (button :class "ui button"
-                                                 :click #(delete-port port-name)
-                                                 (i :class "large red remove icon")))))))))))
+  (defn which-ports? [in-or-out?]
+    (if (= in-or-out? :input) inputs outputs))
 
-  (defn port-list [in-or-out? ports]
+  (defn remove-port [in-or-out? port-key ]
+    (let [ports (which-ports? in-or-out?)]
+      (reset! ports (dissoc @ports port-key))))
+
+  (defn add-port [in-or-out? port]
+    (let [ports (which-ports? in-or-out?)]
+      (swap! ports assoc (key (first port)) (val (first port)))))
+
+  (defn edit-port [in-or-out? port-name]
+    (let [ports (which-ports? in-or-out?)]
+      (cell= (println "edit port"))))
+
+  (defn port-list [in-or-out?]
     (let [
           port-type (cell "simple")
           port-positive? (fn [pt] (if (= @port-type pt) "positive" "negative"))
           set-port-type (fn [pt] (reset! port-type pt))
           new-port (cell false)
-          delete-port (fn [port-name]
-                        (do
-                          (cell= (println "cannot delete component!"))
-                          (cell= (println "ports type: " (type ports)))
-                          (cell= (println "ports before: " ports))
-                          (cell= (println "port to be removed: " (keyword port-name)))
-                          (swap! ports dissoc (keyword port-name))
-                          (cell= (println "ports after: " ports))
-                          (cell= (println "--------"))))
           port-error (cell "ok")
           port-name (cell "")
           port-schema (cell "")
           reset-new-port (fn [] (reset! port-name "") (reset! port-schema "") (reset! port-type "simple") (reset! new-port false))
           ]
-      [
-       (div :class "ui segments"
-            (div :class "ui segment"
-                 (div :style "padding-bottom: 1em;"
-                      (b (label :text (clojure.string/capitalize in-or-out?) " ports"
+      (div :class "ui segments"
+           (div :class "ui segment"
+                (div :style "padding-bottom: 1em;"
+                     (b (label :text (clojure.string/capitalize (name in-or-out?)) " ports"
+                               (div :class "mini ui right floated button"
+                                    :style "background-color: rgba(64,170,84,1);"
+                                    :click #(reset! new-port true)
+                                    "ADD") )))
+                (div :toggle new-port
+                     [(div :class "ui raised segment"
+                           (label :class "ui small header" "New " (name in-or-out?) " port ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
+                                  (div :style "padding-bottom: 2.3em;"
+                                       (cell= (div :class "mini ui right floated buttons"
+                                                   (button :class (str "ui "(port-positive? "simple")" button")
+                                                           :click #(set-port-type "simple")
+                                                           :value port-type "SIMPLE")
+                                                   (div :class "or")
+                                                   (button :class (str "ui "(port-positive? "array")" button ")
+                                                           :click #(set-port-type "array")
+                                                           :value port-type "ARRAY")))))
+                           (div :style "padding-bottom: 0.3em;"
+                                (input :class "ui input"
+                                       :value port-name
+                                       :change #(reset! port-name @%)
+                                       :placeholder "new port name"))
+                           (div :style "padding-bottom: 0.3em;"
+                                (textarea
+                                  :value port-schema
+                                  :change #(reset! port-schema @%)
+                                  :placeholder (cell= examples/capnp)
+                                  :rows 5))
+                           (div :style "padding-bottom: 1.9em;"
                                 (div :class "mini ui right floated button"
                                      :style "background-color: rgba(64,170,84,1);"
-                                     :click #(reset! new-port true)
-                                     "ADD") )))
-                 (div :toggle new-port
-                      [(div :class "ui raised segment"
-                            (label :class "ui small header" "New " in-or-out? " port ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
-                                   (div :style "padding-bottom: 2.3em;"
-                                        (cell= (div :class "mini ui right floated buttons"
-                                                    (button :class (str "ui "(port-positive? "simple")" button")
-                                                            :click #(set-port-type "simple")
-                                                            :value port-type "SIMPLE")
-                                                    (div :class "or")
-                                                    (button :class (str "ui "(port-positive? "array")" button ")
-                                                            :click #(set-port-type "array")
-                                                            :value port-type "ARRAY")))))
-                            (div :style "padding-bottom: 0.3em;"
-                                 (input :class "ui input"
-                                        :value port-name
-                                        :change #(reset! port-name @%)
-                                        :placeholder "new port name"))
-                            (div :style "padding-bottom: 0.3em;"
-                                 (textarea
-                                   :required true
-                                   :value port-schema
-                                   :change #(reset! port-schema @%)
-                                   :placeholder (cell= examples/capnp)
-                                   :rows 5))
-                            (div :style "padding-bottom: 1.9em;"
-                                 (div :class "mini ui right floated button"
-                                      :style "background-color: rgba(64,170,84,1);"
-                                      :click #(do
-                                                (swap! ports assoc (keyword @port-name) {:type @port-type :schema @port-schema :error @port-error})
-                                                (reset-new-port))
-                                      "INSERT")
-                                 (div :class "mini ui right floated button"
-                                      :style "background-color: rgba(64,170,84,1);"
-                                      :click #(reset-new-port)
-                                      "CANCEL")))]))
-            (loop-tpl :bindings [a-port ports]
-                      (port a-port delete-port)))]))
+                                     :click #(do
+                                               (add-port in-or-out?
+                                                         {(keyword @port-name)
+                                                          {:name @port-name
+                                                           :type @port-type
+                                                           :schema @port-schema
+                                                           :error @port-error}})
+                                               (reset-new-port))
+                                     "INSERT")
+                                (div :class "mini ui right floated button"
+                                     :style "background-color: rgba(64,170,84,1);"
+                                     :click #(reset-new-port)
+                                     "CANCEL")))]))
+           (loop-tpl :bindings [[port-key {
+                                           port-name :name
+                                           port-type :type
+                                           port-schema :schema
+                                           port-error :error}] (which-ports? in-or-out?)]
+                     (let [edit-port (cell true)
+                           set-port-type (fn [pt] (reset! port-type pt))
+                           port-positive? (cell= (fn [pt] (if (= port-type pt) "positive" "negative")))
+                           error? (fn [err] (case err
+                                              "ok" "green"
+                                              "error" "red"
+                                              "warning" "orange"
+                                              "default"))
+                           err-colour #(error? port-error)
+                           segment-colour (cell= (str "ui " err-colour " segment"))
+                           ]
+                       (div :class segment-colour
+                            (div :class "content"
+                                 (div :class "ui equal width grid"
+                                      (cell= (div :class "equal width row"
+                                                  (div :class "fourteen wide column"
+                                                       (div :toggle (cell= (= edit-port false))
+                                                            (div
+                                                              (div :style "padding-bottom: 0.3em;"
+                                                                   (cell= (div :class "mini ui floated buttons"
+                                                                               (button :class (str "ui "(port-positive? "simple")" button")
+                                                                                       :click #(set-port-type "simple")
+                                                                                       :value port-type "SIMPLE")
+                                                                               (div :class "or")
+                                                                               (button :class (str "ui "(port-positive? "array")" button ")
+                                                                                       :click #(set-port-type "array")
+                                                                                       :value port-type "ARRAY"))))
+                                                              (div :style "padding-bottom: 0.3em;"
+                                                                   (input
+                                                                     :value port-name
+                                                                     :change #(reset! port-name @%)))
+                                                              (div :style "padding-bottom: 0.3em;"
+                                                                   (textarea
+                                                                     :value port-schema
+                                                                     :change #(reset! port-schema @%)
+                                                                     :rows 5))))
+                                                       (div :toggle (cell= (= edit-port true))
+                                                            (div
+                                                              (b (label (text "port name: ~{port-name}")))
+                                                              (div (cell= (b (label (text "type: ~{port-type} port")))))
+                                                              (div (b (label (text "schema: "))))
+                                                              (pre (cell= (label
+                                                                            :rows 5
+                                                                            (text "~{port-schema}")))))))
+                                                  (div :class "twe wide column"
+                                                       (div :toggle (cell= (= edit-port false))
+                                                            (div :class "fluid ui mini basic vertical icon buttons"
+                                                                 (button :class "ui button"
+                                                                         :click #(reset! edit-port true)
+                                                                         (i :class "large edit icon"))
+                                                                 (button :class "ui button"
+                                                                         :click #(remove-port in-or-out? port-key)
+                                                                         (i :class "large red remove icon"))))
+                                                       (div :toggle (cell= (= edit-port true))
+                                                            (div :class "fluid mini ui basic vertical icon centered buttons"
+                                                                 (button :class "ui button"
+                                                                         :click #(reset! edit-port false)
+                                                                         (i :class "large edit icon"))
+                                                                 (button :class "ui button"
+                                                                         :click #(remove-port in-or-out? port-key)
+                                                                         (i :class "large red remove icon")))))))))))))))
 
   (defn component []
     (div :class "ui form"
@@ -160,8 +167,8 @@
               (div :class "ui hidden divider"))
          (div :class "ui equal width grid"
               (div :class "equal width row"
-                   (div :class "four wide column"
-                        (port-list "input" inputs))
+                   (cell= (div :class "four wide column"
+                               (port-list :input)))
                    (div :class "eight wide column"
                         (div :class "ui form"
                              (b (label
@@ -175,8 +182,8 @@
                         (div :class "ui right floated button"
                              :style "background-color: rgba(64,170,84,1);"
                              "Submit"))
-                   (div :class "four wide column"
-                        (port-list "output" outputs))))))
+                   (cell= (div :class "four wide column"
+                               (port-list :output)))))))
 
   (news-layout/primary
     :page-title "New Problem | Fractalide"
