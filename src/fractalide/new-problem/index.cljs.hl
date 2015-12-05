@@ -5,24 +5,47 @@
     [hoplon.storage-atom :refer [local-storage]]))
 
 (defn pg []
-  (defc component-name "")
+
+  (defc fbpcomp {
+                 :name ""
+                 :problem-statement ""
+                 :src ""
+                 :author ""
+                 :inputs {:input1 {:type "intype" :name "inname" :error "ok" :schema "inschema"}
+                          :input2{:type "intype" :name "inname" :error "ok" :schema "inschema"}}
+                 :outputs{:output1 {:type "outtype" :name "outname" :error "warning" :schema "outschema"}
+                          :output2 {:type "outtype" :name "outname" :error "warning" :schema "outschema"}}})
+
   (defc component-desc "")
   (defc src "")
   (defc author "")
   (defc inputs {})
   (defc outputs {})
 
+  (defc= comp-name (get fbpcomp :name))
+  (defc= comp-src (get fbpcomp :src))
+  (defc= comp-problem-statement (get fbpcomp :problem-statement))
+
+  (defn get-ports [in-or-out?]
+      (cell= (get fbpcomp in-or-out?)))
+  (defn update-comp-name! [n]
+    (let [debug (cell= (println "comp-name: " comp-name))])
+    (swap! fbpcomp assoc-in [:name] n))
+  (defn update-comp-src! [n]
+    (let [debug (cell= (println "comp-src: " comp-src))])
+    (swap! fbpcomp assoc-in [:src] n))
+  (defn update-comp-problem-statement! [n]
+    (let [debug (cell= (println "comp-problem-statement: " comp-problem-statement))])
+    (swap! fbpcomp assoc-in [:problem-statement] n))
   (defn which-ports? [in-or-out?]
-    (if (= in-or-out? :input) inputs outputs))
+    (if (= in-or-out? :inputs) inputs outputs))
 
   (defn remove-port [in-or-out? port-key ]
     (let [ports (which-ports? in-or-out?)]
       (reset! ports (dissoc @ports port-key))))
-
   (defn add-port [in-or-out? port]
     (let [ports (which-ports? in-or-out?)]
       (swap! ports assoc (key (first port)) (val (first port)))))
-
   (defn update-port [in-or-out? port-key port-item value]
     (let [ports (which-ports? in-or-out?)]
       (swap! ports assoc-in [port-key port-item] value)))
@@ -41,14 +64,14 @@
       (div :class "ui segments"
            (div :class "ui segment"
                 (div :style "padding-bottom: 1em;"
-                     (b (label :text (clojure.string/capitalize (name in-or-out?)) " ports"
+                     (b (label :text (clojure.string/capitalize (name in-or-out?))
                                (div :class "mini ui right floated button"
                                     :style "background-color: rgba(64,170,84,1);"
                                     :click #(reset! new-port true)
                                     "ADD") )))
                 (div :toggle new-port
                      [(div :class "ui raised segment"
-                           (label :class "ui small header" "New " (name in-or-out?) " port ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
+                           (label :class "ui small header" "New " (name in-or-out?) " ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
                                   (div :style "padding-bottom: 2.3em;"
                                        (cell= (div :class "mini ui right floated buttons"
                                                    (button :class (str "ui "(port-positive? "simple")" button")
@@ -89,7 +112,7 @@
                                            port-name :name
                                            port-type :type
                                            port-schema :schema
-                                           port-error :error}] (which-ports? in-or-out?)]
+                                           port-error :error}] (get-ports in-or-out?)]
                      (let [edit-port (cell false)
                            edit? (fn [e] (reset! edit-port e))
                            port-positive? (cell= (fn [pt] (if (= port-type pt) "positive" "negative")))
@@ -98,6 +121,7 @@
                                               "error" "red"
                                               "warning" "orange"
                                               ""))
+                           debug (cell= (println "in-or-out? " in-or-out? port-key port-name port-type port-schema port-error))
                            err-colour (cell= (error? port-error))
                            segment-colour (cell= (str "ui " err-colour " segment"))]
                        (div :class segment-colour
@@ -159,8 +183,9 @@
                    (div :class "ui hidden divider")
                    (h3 :text "Component name:")
                    (textarea
-                     :value component-name
-                     :change #(reset! component-name @%)
+                     :value comp-name
+                     ; :change #(swap! fbp-comp assoc (key (first port)) (val (first port)))
+                     :change #(update-comp-name! @%)
                      :placeholder "Use a hierarchical name similar to: \"/domain/specialty/component-name\" "
                      :required true
                      :rows 1))
@@ -168,14 +193,14 @@
          (div :class "ui equal width grid"
               (div :class "equal width row"
                    (cell= (div :class "four wide column"
-                               (port-list :input)))
+                               (port-list :inputs)))
                    (div :class "eight wide column"
                         (div :class "ui form"
                              (b (label
                                   :text "Describe the problem:"))
                              (textarea
-                               :value component-desc
-                               :change #(reset! component-desc @%)
+                               :value comp-problem-statement
+                               :change #(update-comp-problem-statement! @%)
                                :placeholder "Please clearly describe the problem you're facing. The community will set about implementing a component which matches these specifications. If you use the word \"and\", probably your component specification is too complex."
                                :rows 14))
                         (div :class "ui hidden divider")
@@ -183,7 +208,7 @@
                              :style "background-color: rgba(64,170,84,1);"
                              "Submit"))
                    (cell= (div :class "four wide column"
-                               (port-list :output)))))))
+                               (port-list :outputs)))))))
 
   (news-layout/primary
     :page-title "New Problem | Fractalide"
