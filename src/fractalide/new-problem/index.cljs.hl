@@ -11,49 +11,33 @@
                  :problem-statement ""
                  :src ""
                  :author ""
-                 :inputs {:input1 {:type "intype" :name "inname" :error "ok" :schema "inschema"}
-                          :input2{:type "intype" :name "inname" :error "ok" :schema "inschema"}}
-                 :outputs{:output1 {:type "outtype" :name "outname" :error "warning" :schema "outschema"}
-                          :output2 {:type "outtype" :name "outname" :error "warning" :schema "outschema"}}})
+                 :inputs {}
+                 :outputs{}})
 
-  (defc component-desc "")
-  (defc src "")
-  (defc author "")
-  (defc inputs {})
-  (defc outputs {})
 
   (defc= comp-name (get fbpcomp :name))
   (defc= comp-src (get fbpcomp :src))
   (defc= comp-problem-statement (get fbpcomp :problem-statement))
 
   (defn get-ports [in-or-out?]
-      (cell= (get fbpcomp in-or-out?)))
+    (cell= (get fbpcomp in-or-out?)))
   (defn update-comp-name! [n]
-    (let [debug (cell= (println "comp-name: " comp-name))])
     (swap! fbpcomp assoc-in [:name] n))
   (defn update-comp-src! [n]
-    (let [debug (cell= (println "comp-src: " comp-src))])
     (swap! fbpcomp assoc-in [:src] n))
   (defn update-comp-problem-statement! [n]
-    (let [debug (cell= (println "comp-problem-statement: " comp-problem-statement))])
     (swap! fbpcomp assoc-in [:problem-statement] n))
-  (defn which-ports? [in-or-out?]
-    (if (= in-or-out? :inputs) inputs outputs))
-
   (defn remove-port [in-or-out? port-key ]
-    (let [ports (which-ports? in-or-out?)]
-      (reset! ports (dissoc @ports port-key))))
+    (reset! fbpcomp (update-in @fbpcomp [in-or-out?] dissoc port-key)))
   (defn add-port [in-or-out? port]
-    (let [ports (which-ports? in-or-out?)]
-      (swap! ports assoc (key (first port)) (val (first port)))))
+    (swap! fbpcomp assoc-in [in-or-out? (key (first port))] (val (first port))))
   (defn update-port [in-or-out? port-key port-item value]
-    (let [ports (which-ports? in-or-out?)]
-      (swap! ports assoc-in [port-key port-item] value)))
+    (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value))
 
   (defn port-list [in-or-out?]
     (let [
           port-type (cell "simple")
-          port-positive? (fn [pt] (if (= @port-type pt) "positive" "negative"))
+          port-positive? (cell= (let [pn ["positive" "negative"]] (if (= port-type "simple") pn (reverse pn))))
           set-port-type (fn [pt] (reset! port-type pt))
           new-port (cell false)
           port-error (cell "ok")
@@ -74,11 +58,11 @@
                            (label :class "ui small header" "New " (name in-or-out?) " ("(a :target "_blank" :href "https://capnproto.org/language.html" "help")")"
                                   (div :style "padding-bottom: 2.3em;"
                                        (cell= (div :class "mini ui right floated buttons"
-                                                   (button :class (str "ui "(port-positive? "simple")" button")
+                                                   (button :class (str "ui "(first port-positive?)" button")
                                                            :click #(set-port-type "simple")
                                                            :value port-type "SIMPLE")
                                                    (div :class "or")
-                                                   (button :class (str "ui "(port-positive? "array")" button ")
+                                                   (button :class (str "ui "(second port-positive?)" button ")
                                                            :click #(set-port-type "array")
                                                            :value port-type "ARRAY")))))
                            (div :style "padding-bottom: 0.3em;"
@@ -115,13 +99,12 @@
                                            port-error :error}] (get-ports in-or-out?)]
                      (let [edit-port (cell false)
                            edit? (fn [e] (reset! edit-port e))
-                           port-positive? (cell= (fn [pt] (if (= port-type pt) "positive" "negative")))
+                           port-positive? (cell= (let [pn ["positive" "negative"]] (if (= port-type "simple") pn (reverse pn))))
                            error? (fn [err] (case err
                                               "ok" "green"
                                               "error" "red"
                                               "warning" "orange"
                                               ""))
-                           debug (cell= (println "in-or-out? " in-or-out? port-key port-name port-type port-schema port-error))
                            err-colour (cell= (error? port-error))
                            segment-colour (cell= (str "ui " err-colour " segment"))]
                        (div :class segment-colour
@@ -133,12 +116,12 @@
                                                   (div :toggle (cell= (= edit-port true))
                                                        (div
                                                          (div :style "padding-bottom: 0.3em;"
-                                                              (cell= (div :class "mini ui floated buttons"
-                                                                          (button :class (str "ui "(port-positive? "simple")" button")
+                                                              (div :class "mini ui floated buttons"
+                                                                   (cell= (button :class (str "ui "(first port-positive?)" button")
                                                                                   :click #(update-port in-or-out? port-key :type "simple")
-                                                                                  :value port-type "SIMPLE")
-                                                                          (div :class "or")
-                                                                          (button :class (str "ui "(port-positive? "array")" button ")
+                                                                                  :value port-type "SIMPLE"))
+                                                                   (div :class "or")
+                                                                   (cell= (button :class (str "ui "(second port-positive?)" button ")
                                                                                   :click #(update-port in-or-out? port-key :type "array")
                                                                                   :value port-type "ARRAY"))))
                                                          (div :style "padding-bottom: 0.3em;"
@@ -184,7 +167,6 @@
                    (h3 :text "Component name:")
                    (textarea
                      :value comp-name
-                     ; :change #(swap! fbp-comp assoc (key (first port)) (val (first port)))
                      :change #(update-comp-name! @%)
                      :placeholder "Use a hierarchical name similar to: \"/domain/specialty/component-name\" "
                      :required true
