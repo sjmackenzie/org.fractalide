@@ -32,7 +32,11 @@
   (defn add-port [in-or-out? port]
     (swap! fbpcomp assoc-in [in-or-out? (key (first port))] (val (first port))))
   (defn update-port [in-or-out? port-key port-item value]
-    (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value))
+    (if-let [is-name? (= :name port-item)]
+      (let [new-key (keyword value) old-key port-key]
+        (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value)
+        (reset! fbpcomp (update-in @fbpcomp [in-or-out?] clojure.set/rename-keys {old-key new-key})))
+      (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value)))
 
   (defn port-list [in-or-out?]
     (let [
