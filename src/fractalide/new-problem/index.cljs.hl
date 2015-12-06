@@ -14,7 +14,6 @@
                  :inputs {}
                  :outputs{}})
 
-
   (defc= comp-name (get fbpcomp :name))
   (defc= comp-src (get fbpcomp :src))
   (defc= comp-problem-statement (get fbpcomp :problem-statement))
@@ -104,11 +103,7 @@
                      (let [edit-port (cell false)
                            edit? (fn [e] (reset! edit-port e))
                            port-positive? (cell= (let [pn ["positive" "negative"]] (if (= port-type "simple") pn (reverse pn))))
-                           error? (fn [err] (case err
-                                              "ok" "green"
-                                              "error" "red"
-                                              "warning" "orange"
-                                              ""))
+                           error? (fn [err] (case err "ok" "green" "error" "red" "warning" "orange" ""))
                            err-colour (cell= (error? port-error))
                            segment-colour (cell= (str "ui " err-colour " segment"))]
                        (div :class segment-colour
