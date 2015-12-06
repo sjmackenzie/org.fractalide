@@ -1,8 +1,7 @@
 (ns fractalide.new-problem.index
   (:require
     [fractalide.new-problem.examples :as examples]
-    [fractalide.news-layout :as news-layout]
-    [hoplon.storage-atom :refer [local-storage]]))
+    [fractalide.news-layout :as news-layout]))
 
 (defn pg []
 
