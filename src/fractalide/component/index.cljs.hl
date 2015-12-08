@@ -1,7 +1,9 @@
-(ns fractalide.new-problem.index
+(ns fractalide.component.index
   (:require
-    [fractalide.new-problem.examples :as examples]
-    [fractalide.news-layout :as news-layout]))
+    [fractalide.component.examples :as examples]
+    [fractalide.component.rpc :refer [compile-port port-compilation-result]]
+    [fractalide.news-layout :as news-layout]
+    ))
 
 (defn pg []
 
@@ -18,6 +20,10 @@
   (defc= comp-src (get fbpcomp :src))
   (defc= comp-src-feedback (get fbpcomp :src-feedback))
   (defc= comp-problem-statement (get fbpcomp :problem-statement))
+  #_(defc= port-compilation-result?
+      (if port-compilation-result
+        "something"
+        "nothing"))
 
   (defn get-ports [in-or-out?]
     (cell= (get fbpcomp in-or-out?)))
@@ -37,7 +43,8 @@
         (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value)
         (reset! fbpcomp (update-in @fbpcomp [in-or-out?] clojure.set/rename-keys {old-key new-key})))
       (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value)))
-  (defn compile-port [in-or-out? port-key]
+  (defn prep-compile-port [in-or-out? port-key]
+
     ;{port-key {:name port-name :type port-type :schema port-schema :contract port-contract}}
     )
 
@@ -113,17 +120,21 @@
                                            port-schema :schema
                                            port-error :error
                                            port-contract :contract}] (get-ports in-or-out?)]
-                     (let [edit-port (cell false)
+                     (let [
+                           edit-port (cell false)
                            invert-edit (fn [] (reset! edit-port (not @edit-port)))
                            port-positive? (cell= (let [pn ["positive" "negative"]] (if (= port-type "simple") pn (reverse pn))))
                            error? (fn [err] (case err "ok" ["green" " " "smile"] "error" ["red" " " "frown"] "warning" ["orange" " " "meh"] ""))
                            err-colour (cell= (first (error? port-error)))
                            err-face (cell= (apply str (error? port-error)))
-                           contract? (fn [cs] (case cs "experimental" "E" "stable" "S" "legacy" "L" "deprecated" "D"))
+                           contract? (fn [cs] (case cs "experimental" "E" "stable" "S" "legacy" "L" "retired" "R"))
                            contract-state (cell= (contract? port-contract))
                            contract-popup (cell false)
                            contract-popup-visible (fn [] (reset! contract-popup (not @contract-popup)))
-                           segment-colour (cell= (str "ui " err-colour " segment"))]
+                           segment-colour (cell= (str "ui " err-colour " segment"))
+
+                           ]
+
                        (div :class segment-colour
                             (div :class "content"
                                  (div :class "ui equal width grid"
@@ -171,30 +182,32 @@
                                                    (div :class "mini ui basic fluid button"
                                                         :click #(do
                                                                   (update-port in-or-out? port-key :contract "experimental")
-                                                                  (contract-popup-visible false))
+                                                                  (contract-popup-visible))
                                                         "Experimental")
                                                    (div :class "mini ui basic fluid button"
                                                         :click #(do
                                                                   (update-port in-or-out? port-key :contract "stable")
-                                                                  (contract-popup-visible false))
+                                                                  (contract-popup-visible))
                                                         "Stable")
                                                    (div :class "mini ui basic fluid button"
                                                         :click #(do
                                                                   (update-port in-or-out? port-key :contract "legacy")
-                                                                  (contract-popup-visible false))
+                                                                  (contract-popup-visible))
                                                         "Legacy")
                                                    (div :class "mini ui basic fluid button"
                                                         :click #(do
-                                                                  (update-port in-or-out? port-key :contract "deprecated")
-                                                                  (contract-popup-visible false))
-                                                        "Deprecated")))
+                                                                  (update-port in-or-out? port-key :contract "retired")
+                                                                  (contract-popup-visible))
+                                                        "Retired")))
                                              (div :class "one wide column"
                                                   (div :class "fluid ui mini basic vertical icon buttons"
                                                        (b (button :class "ui button"
                                                                   :click #(contract-popup-visible)
                                                                   (i :class "icon" contract-state)))
                                                        (button :class "ui button"
-                                                               :click #(compile-port in-or-out? port-key)
+                                                               :click #(do
+                                                                         (update-port in-or-out? port-key :error "warning")
+                                                                         (compile-port))
                                                                (i :class (str "large " err-face " icon")))
                                                        (button :class "ui button"
                                                                :click #(invert-edit)
@@ -204,9 +217,13 @@
                                                                (i :class "large red remove icon"))))))))))))))
 
   (defn component []
-    (let [problem-or-solution? (cell :problem)
-          reset-view (fn [v] (reset! problem-or-solution? v) )
-          problem-active? (cell= (let [pn ["active" ""]] (if (= problem-or-solution? :problem) pn (reverse pn))))]
+    (let [which-view? (cell :problem)
+          reset-view (fn [v] (reset! which-view? v) )
+          reset-view-to-port-on-error (cell= (when (not (empty? port-compilation-result)) (reset-view :ports)))
+          problem-active? (cell= (case which-view?
+                                       :problem ["active" "" ""]
+                                       :solution ["" "active" ""]
+                                       :ports ["" "" "active red"]))]
       (div :class "ui form"
            (div :class "column"
                 (div :class "ui form"
@@ -225,19 +242,23 @@
                      (div :class "eight wide column"
                           (div :class "ui segment"
                                (div :class "ui secondary menu"
-                                    (cell= (a :class (str (first problem-active?) " item")
+                                    (cell= (a :class (str (nth problem-active? 0) " item")
                                               :click #(reset-view :problem)
                                               "Problem" ))
-                                    (cell= (a :class (str (second problem-active?) " item")
+                                    (cell= (a :class (str (nth problem-active? 1) " item")
                                               :click #(reset-view :solution)
                                               "Solution"))
+                                    (cell= (a :class (str (nth problem-active? 2) " item")
+                                              :toggle (not (empty? port-compilation-result))
+                                              :click #(reset-view :ports)
+                                              "Port Results"))
                                     (div :class "right menu"
-                                         (div :toggle (cell= (= problem-or-solution? :solution ))
+                                         (div :toggle (cell= (= which-view? :solution ))
                                               (div :class "item"
                                                    (div :class "ui button"
                                                         :style "background-color: rgba(64,170,84,1);"
                                                         "Compile")))))
-                               (div :toggle (cell= (= problem-or-solution? :solution))
+                               (div :toggle (cell= (= which-view? :solution))
                                     (div (textarea
                                            :value comp-src
                                            :change #(update-comp-src! @%)
@@ -248,12 +269,16 @@
                                          (span "Rust Compiler Results")
                                          (div :class "ui hidden divider")
                                          (p "error: ")))
-                               (div :toggle (cell= (= problem-or-solution? :problem))
+                               (div :toggle (cell= (= which-view? :problem))
                                     (textarea
                                       :value comp-problem-statement
                                       :change #(update-comp-problem-statement! @%)
                                       :placeholder "Please clearly describe the problem you're facing. The community will set about implementing a component which matches these specifications. If you use the word \"and\", probably your component specification is too complex."
-                                      :rows 14)))
+                                      :rows 14))
+                               (div :toggle (cell= (and (not (empty? port-compilation-result)) (= which-view? :ports)))
+                                    (div (textarea
+                                           :value port-compilation-result
+                                           :rows 14))))
                           (div :class "ui hidden divider")
                           (div :class "ui right floated button"
                                :style "background-color: rgba(64,170,84,1);"

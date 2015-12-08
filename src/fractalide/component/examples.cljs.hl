@@ -1,4 +1,4 @@
-(ns fractalide.new-problem.examples)
+(ns fractalide.component.examples)
 
 ; separate file used to stop the editor formatter from destroying examples whitespace.
 
