@@ -2,58 +2,63 @@
 
 ; separate file used to stop the editor formatter from destroying examples whitespace.
 
-(def inverter
-"// Simple example solution - please change it
-#![feature(braced_empty_structs)]
-extern crate nanomsg;
-extern crate capnp;
+(def cargo-toml
+  "[package]
+name = \"load_balancer\"
+version = \"0.1.0\"
 
-mod date_capnp {
-    include!(\"./schema/date_capnp.rs\");
-}
-use date_capnp::date;
+[lib]
+name = \"load_balancer\"
+crate-type = [\"dylib\"]
 
-mod result;
-#[macro_use]
-mod component;
-use component::*;
-
-mod ports;
-
-component! {
-    Display,
-    inputs(a),
-    inputs_array(x),
-    outputs(output),
-    outputs_array(x),
-    fn run(&mut self) {
-        let m = self.inputs.a.recv().expect(\"cannot receive\");
-        let m: date::Reader = m.get_root().expect(\"not a date reader\");
-
-        let year = m.get_year();
-        let month = m.get_month();
-        let day = m.get_day();
-
-        println!(\"The date is {}/{}/{}\", day, month, year);
-
-        let mut date = capnp::message::Builder::new_default();
-        date.set_root(m).expect(\"Not a date builder\");
-
-        let _ = self.outputs.output.send(&date);
-
-    }
-    extern crate capnp;
-    mod date_capnp {
-        include!(\"./schema/date_capnp.rs\");
-    }
-    use date_capnp::date;
-}
+[dependencies]
+capnp = \"*\"
+rustfbp = { path = \"/home/stewart/dev/fractalide/rustfbp\" }
 ")
 
+(def nix-expression
+"with import <nixpkgs> {};
+   {
+     rustfbpEnv = myEnvFun {
+       name = \"rustfbp\";
+       buildInputs = [ stdenv rustcMaster cargo nanomsg];
+     };
+   }")
+
+(def playdate
+"#[macro_use]
+extern crate rustfbp;
+
+use rustfbp::component::*;
+
+component! {
+    LoadBalancer,
+    inputs(input),
+    inputs_array(),
+    outputs(),
+    outputs_array(outputs),
+    fn run(&mut self) {
+        // Find the good output port
+        let mut actual = self.ports.recv_vecu8(\"acc\".into()).unwrap();
+        let mut list = self.ports.get_output_selections(\"outputs\".into()).expect(\"cannot get outputs\");
+        if (actual[0] as usize) > list.len()-1 { actual[0] = 0; }
+        list.sort_by(|a, b| { (a).cmp((&b)) });
+        let port = list.get_mut(actual[0] as usize).unwrap();
+
+        // send the IP
+        let ip = self.ports.recv_vecu8(\"input\".into()).unwrap();
+        self.ports.send_array_vecu8(\"outputs\".into(), port.clone(), &ip).ok().expect(\"LoadBalancer: cannot send\");
+        actual[0] = actual[0] + 1;
+        self.ports.send_vecu8(\"acc\".into(), &actual).expect(\"LoadBalancer : cannot send acc\");
+    }
+}"
+)
+
 (def capnp
-"@0xba54b95877b229c7;
+"@0xd820674da3f9d4c1;
 struct Date {
-  year @0 :Int16;
-  month @1 :UInt8;
-  day @2 :UInt8;
-}")
+        year @0 :Int16;
+        month @1 :Int8;
+        day @2 :Int8;
+}
+")

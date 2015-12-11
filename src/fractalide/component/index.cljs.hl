@@ -1,30 +1,47 @@
 (ns fractalide.component.index
   (:require
     [fractalide.component.examples :as examples]
-    [fractalide.component.rpc :refer [compile-port port-compilation-result]]
-    [fractalide.news-layout :as news-layout]))
+    [fractalide.component.rpc :refer [
+                                      compile-port port-compilation-result
+                                      compile-solution solution-compilation-result]]
+    [fractalide.news-layout :as news-layout]
+    [clojure.string :refer [split]]))
 
 (defn pg []
 
   (defc fbpcomp {
                  :name "/long/arse/component-name"
                  :problem-statement ""
-                 :src ""
-                 :src-feedback ""
+                 :rust-src examples/playdate
+                 :rust-feedback ""
+                 :nix-src examples/nix-expression
+                 :nix-feedback ""
+                 :cargo-src examples/cargo-toml
+                 :cargo-feedback ""
                  :author ""
-                 :inputs {:port-name-xyz {
-                                          :name "port-name-xyz"
-                                          :schema examples/capnp
-                                          :type "simple"
-                                          :error "error"
-                                          :error-msg ""
-                                          :contract "experimental"}}
-                 :outputs {}})
+                 :inputs {
+                          :in {
+                               :name "in"
+                               :schema examples/capnp
+                               :type "simple"
+                               :error "error"
+                               :error-msg ""
+                               :contract "experimental"}}
+                 :outputs {
+                           :out {
+                                 :name "out"
+                                 :schema examples/capnp
+                                 :type "simple"
+                                 :error "error"
+                                 :error-msg ""
+                                 :contract "experimental"}}})
 
   (defc= comp-name (get fbpcomp :name))
-  (defc= comp-src (get fbpcomp :src))
-  (defc= comp-src-feedback (get fbpcomp :src-feedback))
+  (defc= comp-src (get fbpcomp :rust-src))
+  (defc= comp-src-feedback (get fbpcomp :rust-feedback))
   (defc= comp-problem-statement (get fbpcomp :problem-statement))
+
+  (cell= (println "fbpcomp: " fbpcomp))
 
   (defn get-ports [in-or-out?]
     (cell= (get fbpcomp in-or-out?)))
@@ -33,7 +50,7 @@
   (defn update-comp-name! [n]
     (swap! fbpcomp assoc-in [:name] n))
   (defn update-comp-src! [n]
-    (swap! fbpcomp assoc-in [:src] n))
+    (swap! fbpcomp assoc-in [:rust-src] n))
   (defn update-comp-problem-statement! [n]
     (swap! fbpcomp assoc-in [:problem-statement] n))
   (defn remove-port [in-or-out? port-key ]
@@ -53,7 +70,8 @@
       (swap! fbpcomp assoc-in [in-or-out? port-key port-item] value)))
   (defn prep-compile-port [in-or-out? port-key]
     (compile-port @comp-name in-or-out? @(get-port in-or-out? port-key)))
-
+  (defn prep-compile-solution []
+    (compile-solution @fbpcomp))
   (defc= port-compilation-view
     (when (not (nil? port-compilation-result))
       (do
@@ -61,6 +79,9 @@
         (if (= "ok" (get (nth port-compilation-result 2) :error))
           nil
           (get (nth port-compilation-result 2) :error-msg)))))
+  (defc= solution-compilation-view
+    (when (not (nil? solution-compilation-result))
+      solution-compilation-result))
 
   (defn port-list [in-or-out?]
     (let [
@@ -175,7 +196,8 @@
                                                                           (textarea
                                                                             :value port-schema
                                                                             :change #(update-port in-or-out? port-key :schema @%)
-                                                                            :rows 5))))
+                                                                            :rows (cell= (let [line-count (count (split port-schema #"\n"))]
+                                                                                           (if (< line-count 5) 5 line-count)))))))
                                                               (div :toggle (cell= (= edit-port false))
                                                                    (div
                                                                      (b (label (text "port name: ~{port-name}")))
@@ -232,7 +254,7 @@
   (defn component []
     (let [which-view? (cell :problem)
           reset-view (fn [v] (reset! which-view? v) )
-          reset-view-to-port-on-error (cell= (if (not (empty? port-compilation-view)) (reset-view :ports) (reset-view :problem)))
+          reset-view-to-port-on-error (cell= (if (not (empty? port-compilation-view)) (reset-view :ports) (reset-view :solution)))
           problem-active? (cell= (case which-view?
                                    :problem ["active" "" ""]
                                    :solution ["" "active" ""]
@@ -269,25 +291,28 @@
                                          (div :toggle (cell= (= which-view? :solution ))
                                               (div :class "item"
                                                    (div :class "ui button"
+                                                        :click #(prep-compile-solution)
                                                         :style "background-color: rgba(64,170,84,1);"
                                                         "Compile")))))
-                               (div :toggle (cell= (= which-view? :solution))
-                                    (div (textarea
-                                           :value comp-src
-                                           :change #(update-comp-src! @%)
-                                           :placeholder "Please implement the solution."
-                                           :rows 14))
-                                    (div :class "ui segment"
-                                         (label :class "tiny ui red ribbon label" "Failed")
-                                         (span "Rust Compiler Results")
-                                         (div :class "ui hidden divider")
-                                         (p "error: ")))
                                (div :toggle (cell= (= which-view? :problem))
                                     (textarea
                                       :value comp-problem-statement
                                       :change #(update-comp-problem-statement! @%)
                                       :placeholder "Please clearly describe the problem you're facing. The community will set about implementing a component which matches these specifications. If you use the word \"and\", probably your component specification is too complex."
-                                      :rows 14))
+                                      :rows (cell= (let [line-count (count (split comp-problem-statement #"\n"))]
+                                                     (if (< line-count 15) 15 line-count)))))
+                               (div :toggle (cell= (= which-view? :solution))
+                                    (div (textarea
+                                           :value comp-src
+                                           :change #(update-comp-src! @%)
+                                           :placeholder "Please implement the solution."
+                                           :rows (cell= (let [line-count (count (split comp-src #"\n"))]
+                                                          (if (< line-count 15) 15 line-count)))))
+                                    (div :class "ui segment"
+                                         (label :class "tiny ui red ribbon label" "Failed")
+                                         (span "Rust Compiler Results")
+                                         (div :class "ui hidden divider")
+                                         (p (pre (text "~{solution-compilation-view}")))))
                                (div :toggle (cell= (and (not (empty? port-compilation-view)) (= which-view? :ports)))
                                     (div (textarea
                                            :value port-compilation-view

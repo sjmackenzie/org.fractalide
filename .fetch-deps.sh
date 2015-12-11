@@ -25,6 +25,10 @@ fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/t
 fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.jar.sha1
 fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.pom
 fetchArtifact https://repo1.maven.org/maven2/ com/cognitect/transit-js/0.8.755/transit-js-0.8.755.pom.sha1
+fetchArtifact https://clojars.org/repo/ cljsjs/codemirror/5.8.0-0/codemirror-5.8.0-0.jar
+fetchArtifact https://clojars.org/repo/ cljsjs/codemirror/5.8.0-0/codemirror-5.8.0-0.jar.sha1
+fetchArtifact https://clojars.org/repo/ cljsjs/codemirror/5.8.0-0/codemirror-5.8.0-0.pom
+fetchArtifact https://clojars.org/repo/ cljsjs/codemirror/5.8.0-0/codemirror-5.8.0-0.pom.sha1
 fetchArtifact https://clojars.org/repo/ fractalide/boot-nix/0.1.0-SNAPSHOT/boot-nix-0.1.0-SNAPSHOT.jar
 fetchArtifact https://clojars.org/repo/ fractalide/boot-nix/0.1.0-SNAPSHOT/boot-nix-0.1.0-SNAPSHOT.jar.sha1
 fetchArtifact https://clojars.org/repo/ fractalide/boot-nix/0.1.0-SNAPSHOT/boot-nix-0.1.0-SNAPSHOT.pom

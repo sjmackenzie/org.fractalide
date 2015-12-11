@@ -9,6 +9,7 @@
     [org.clojure/clojurescript "1.7.48"]
     [adzerk/cljs-console "0.1.1"]
     [adzerk/boot-cljs "1.7.48-5"]
+    [cljsjs/codemirror "5.8.0-0"]
     [com.cognitect/transit-cljs "0.8.232"]
     [fractalide/boot-nix "0.1.0-SNAPSHOT"]
     [cljsjs/boot-cljsjs "0.5.0" :scope "test"]
@@ -86,9 +87,9 @@
     (sift :move {#"^semantic-ui.inc.css$" "semantic-ui.css"})
     (watch)
     (nixos)
-    ;   (speak)
+    ; (speak)
     (hoplon :pretty-print true)
-    ; (reload)   ; Causes the `with-init` functions called infinitely
+    ; (reload)
     (cljs :optimizations :none
           :source-map true)
     (copy-index-htmls)))
